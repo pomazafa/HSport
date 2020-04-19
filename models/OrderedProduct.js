@@ -1,11 +1,13 @@
 const Sequelize = require('sequelize');
+const Product = require('./Product.js');
+const Order = require('./Order.js');
 
 const Model = Sequelize.Model;
 
-module.export = class Ordered_product extends Model {
+module.exports = class OrderedProduct extends Model {
     static init(sequelize) {
         return super.init({
-            id: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true },
+            id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
             product_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
@@ -19,8 +21,8 @@ module.export = class Ordered_product extends Model {
             count_of_products: { type: Sequelize.INTEGER, allowNull: false }
         }, {
             sequelize,
-            modelName: 'Ordered_product',
-            tableName: 'Ordered_product',
+            modelName: 'OrderedProduct',
+            tableName: 'OrderedProducts',
             timestamps: false
         });
     }

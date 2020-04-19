@@ -1,11 +1,12 @@
 const Sequelize = require('sequelize');
+const User = require('./User.js');
 
 const Model = Sequelize.Model;
 
-module.export = class Order extends Model {
+module.exports = class Order extends Model {
     static init(sequelize) {
         return super.init({
-            id: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true },
+            id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
             order_status: { type: Sequelize.STRING, allowNull: false },
             user_id: {
                 type: Sequelize.INTEGER,
@@ -15,7 +16,7 @@ module.export = class Order extends Model {
         }, {
             sequelize,
             modelName: 'Order',
-            tableName: 'Order',
+            tableName: 'Orders',
             timestamps: false
         });
     }

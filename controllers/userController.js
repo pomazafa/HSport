@@ -1,4 +1,4 @@
-const User = require("../models/user.js");
+const User = require("../models/User.js");
 
 exports.addUser = function (request, response){
     response.render("create.hbs");
