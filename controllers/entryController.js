@@ -2,7 +2,9 @@
 //const User = require('../models/model.js').ORM(sequelize).User;
 
 exports.index = function (request, response){
-    //response.render("create.hbs");
+    response.render("entry.hbs", {
+    	bodyClass: "body-entry"
+    });
 };
 // exports.addUser = function (request, response){
 //     response.render("create.hbs");

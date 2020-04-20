@@ -6,7 +6,7 @@ const OrderModel = require('./Order.js');
 const OrderedProductModel = require('./OrderedProduct.js');
 const CommentModel = require('./Comment.js');
 
-function models(sequelize) {
+module.exports = function models(sequelize) {
   return {
     Product: ProductModel.init(sequelize),
 	User: UserModel.init(sequelize, Sequelize),
@@ -15,10 +15,3 @@ function models(sequelize) {
 	Comment: CommentModel.init(sequelize, Sequelize)
   };
 }
-
-module.exports.ORM = (s) => { models(s);
-	s.sync({force: false}).then(() => {
-		console.log('sync done');
-	})
-	return {ProductModel, UserModel, OrderModel, OrderedProductModel, 
-	CommentModel}};
