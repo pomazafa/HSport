@@ -9,8 +9,9 @@ module.exports = class User extends Model {
             Surname: { type: Sequelize.STRING, allowNull: true },
             Name: { type: Sequelize.STRING, allowNull: true },
             Phone: { type: Sequelize.STRING, allowNull: true },
-            Mail: { type: Sequelize.STRING, allowNull: false },
+            Mail: { type: Sequelize.STRING, allowNull: false, unique:true },
             Password: { type: Sequelize.STRING, allowNull: false },
+            PasswordSalt: {type: Sequelize.STRING, allowNull: false},
             Status: { type: Sequelize.STRING, allowNull: false }
         }, {
             sequelize,
@@ -19,4 +20,17 @@ module.exports = class User extends Model {
             timestamps: false
         });
     }
+
+    // constructor(name, tel, surname, mail, password, salt, status) {
+    //     super();
+
+    //     this.Name = name;
+    //     this.Phone = tel;
+    //     this.Surname = surname;
+    //     this.Mail = mail;
+    //     this.Password = password;
+    //     this.PasswordSalt = salt;
+    //     this.Status = "active";
+
+    // }
 };

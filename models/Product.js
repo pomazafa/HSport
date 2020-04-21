@@ -8,6 +8,7 @@ module.exports = class Product extends Model {
             id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
             product_name: { type: Sequelize.STRING, allowNull: false },
             product_description: { type: Sequelize.STRING, allowNull: true },
+            brand: {type: Sequelize.STRING, allowNull:true},
             product_price: { type: Sequelize.DOUBLE(7, 2), allowNull: false }
         }, {
             sequelize,
