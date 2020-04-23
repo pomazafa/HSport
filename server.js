@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const hbs = require("hbs");
 
 const homeRouter = require("./routes/homeRouter.js");
+const catalogRouter = require("./routes/catalogRouter.js");
 const entryRouter = require("./routes/entryRouter.js");
 const models = require("./models/model.js")
 
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/entry", entryRouter);
 app.use("/", homeRouter);
+app.use("/catalog", catalogRouter);
 
 app.use(function(req, res, next) {
     res.status(404).send("Not Found");

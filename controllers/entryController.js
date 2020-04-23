@@ -94,6 +94,7 @@ exports.authenticate = async function(request, response) {
     if (result === null) {
         form = {
             mailA: userMail,
+            changeNav: true,
             messageA: 'Пользователя с такой почтой не существует'
         };
         response.redirect('/entry');
@@ -111,20 +112,10 @@ exports.authenticate = async function(request, response) {
         } else {
             form = {
             mailA: userMail,
+            changeNav: true,
             messageA: 'Неверный пароль'
         };
         response.redirect('/entry');
         }
     }
 };
-exports.asd = async (req, res) => {
-    //console.log(verifyToken(req, res));
-    if (await verifyToken(req, res) != null) {
-        res.end('asd');
-    } else {
-        res.end('(((');
-    }
-}
-exports.dsa = async (req, res) => {
-    res.end('dsa');
-}

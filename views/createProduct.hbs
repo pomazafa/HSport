@@ -1,0 +1,42 @@
+<style>
+	input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+input[type=text], input[type=number] {
+  background-color: bisque;
+  padding-left: 40px;
+  color:black;
+}
+
+</style>
+
+<form action="/catalog/addProduct" method="POST">
+  <label for="pname">Название продукта:</label><br>
+  <input type="text" id="pname" name="pname" /><br>
+  <label for="pdescription">Описание:</label><br>
+  <textarea id="pdescription" name="pdescription"> </textarea><br><br>
+  <label for="pbrand">Бренд:</label><br>
+  <input type="text" id="pbrand" name="pbrand" /><br>
+  <label for="pimage">Фото товара:</label><br>
+  <input type="file" id="pimage" name="pimage" accept="image/jpeg,image/png,image/gif"><br>
+  <label for="pprice">Цена:</label><br>
+  <input type="number" id="pprice" name="pprice" min="0.01" step="0.01" />
+  <input type="submit" value="Добавить">
+</form>
