@@ -12,7 +12,8 @@ module.exports = class User extends Model {
             Mail: { type: Sequelize.STRING, allowNull: false, unique:true },
             Password: { type: Sequelize.STRING, allowNull: false },
             PasswordSalt: {type: Sequelize.STRING, allowNull: false},
-            Status: { type: Sequelize.STRING, allowNull: false }
+            Status: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }},
+            Role: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }}
         }, {
             sequelize,
             modelName: 'User',

@@ -186,4 +186,16 @@ $('.js-form-validate').submit(function () {
 $('[data-mask="phone"]').mask('+375? (99) 999-99-99', {
 	autoclear: false
 });
+
+// Links
+$(".sub-header__menu").on("click", "a", function (event) {
+	event.preventDefault();
+	var id = $(this).attr('href').substring(1),
+		top = $(id).offset().top;
+	$('body,html').animate({
+		scrollTop: top
+	}, 1500);
+});
+
+//---
 });

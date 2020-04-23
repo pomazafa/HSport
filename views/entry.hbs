@@ -1,5 +1,5 @@
 <section class="entry">
-        <div class="container">
+       <div class="container">
             <div class="entry__wrapper tabs">
                <div class="entry-header">
                     <a href="#" class="entry-header__button tab__navitem active">Зарегистрироваться</a>
@@ -7,6 +7,7 @@
                 </div>
                 <div class="entry-content">
                     <form action="entry/registration" method="POST" class="js-form-validate entry-content__form tab__item active">
+                        <span class="entry-content__label">{{form.messageR}}</span>
                         <input class="entry-content__input" name="name" type="text" placeholder="Имя" value="{{form.name}}">
                         <input class="entry-content__input" name="surname" type="text" placeholder="Фамилия" value="{{form.surname}}">
                         <input class="entry-content__input" type="tel" name="tel"placeholder="Номер телефона" value="{{form.tel}}" data-mask="phone"> 
@@ -22,6 +23,7 @@
                     </form>
 
                      <form action="entry/authentication" method="POST" class="js-form-validate entry-content__form tab__item">
+                        <span class="entry-content__label">{{form.messageA}}</span>
                         <div class="form-group">
                             <input class="entry-content__input" name="mail" type="email" placeholder="Почта*" value="{{form.mailA}}" data-validate>
                             <span class="some-form__hint">Обязательно для заполнения</span>

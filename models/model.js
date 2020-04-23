@@ -23,7 +23,6 @@ function models(sequelize) {
     };
 }
 
-
 try {
     sequelize.authenticate()
         .then(() => {
