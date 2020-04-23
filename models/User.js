@@ -6,14 +6,14 @@ module.exports = class User extends Model {
     static init(sequelize) {
         return super.init({
             id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
-            Surname: { type: Sequelize.STRING, allowNull: true },
-            Name: { type: Sequelize.STRING, allowNull: true },
-            Phone: { type: Sequelize.STRING, allowNull: true },
-            Mail: { type: Sequelize.STRING, allowNull: false, unique:true },
-            Password: { type: Sequelize.STRING, allowNull: false },
-            PasswordSalt: {type: Sequelize.STRING, allowNull: false},
-            Status: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }},
-            Role: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }}
+            surname: { type: Sequelize.STRING, allowNull: true },
+            name: { type: Sequelize.STRING, allowNull: true },
+            phone: { type: Sequelize.STRING, allowNull: true },
+            mail: { type: Sequelize.STRING, allowNull: false, unique:true },
+            password: { type: Sequelize.STRING, allowNull: false },
+            passwordSalt: {type: Sequelize.STRING, allowNull: false},
+            status: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }},
+            role: { type: Sequelize.INTEGER, allowNull: false, validate: { min: 0, max: 1 }}
         }, {
             sequelize,
             modelName: 'User',

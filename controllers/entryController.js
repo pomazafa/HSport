@@ -30,12 +30,12 @@ exports.index = async function(request, response) {
             bodyClass: "body-entry",
             form:form
         });
+        form = null;
     }
 };
 
 exports.exit = async function(request, response) {
     response.cookie('token', '');
-    form = null;
     response.redirect("/entry");
 };
 
@@ -47,7 +47,7 @@ exports.register = async function(request, response) {
     const userPassword = request.body.password;
     const result = await User.findOne({
         where: {
-            Mail: userMail
+            mail: userMail
         }
     })
     if (result != null) {
@@ -60,22 +60,22 @@ exports.register = async function(request, response) {
         };
         response.redirect('/entry');
     } else {
-    	form = null;
         const salt = makeSalt(6);
         const passwordHash = crypto.createHash('sha512').update(`${userPassword}${salt}`).digest('hex');
 
         const user = User.build({
-            Name: userName,
-            Surname: userSurname,
-            Mail: userMail,
-            Password: passwordHash,
-            PasswordSalt: salt,
-            Status: 1,
-            Role: 0
+            name: userName,
+            surname: userSurname,
+            mail: userMail,
+            password: passwordHash,
+            passwordSalt: salt,
+            status: 1,
+            role: 0
         })
         user.save();
         form = {
         	mailA: userMail,
+            changeNav: true,
             messageA: 'Пользователь успешно зарегистрирован. Попробуйте войти в аккаунт'
         };
 
@@ -88,7 +88,7 @@ exports.authenticate = async function(request, response) {
     const userPassword = request.body.password;
     const result = await User.findOne({
         where: {
-            Mail: userMail
+            mail: userMail
         }
     })
     if (result === null) {

@@ -8,7 +8,7 @@ module.exports = class Order extends Model {
         return super.init({
             id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
             order_status: { type: Sequelize.STRING, allowNull: false },
-            user_id: {
+            userId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: { model: User, key: 'id' }

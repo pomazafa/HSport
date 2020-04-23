@@ -27,7 +27,8 @@ input[type=text], input[type=number] {
 
 </style>
 
-<form action="/catalog/addProduct" method="POST">
+<form action="/catalog/add" method="POST" enctype="multipart/form-data">
+  <label>{{errMessage}}</label><br>
   <label for="pname">Название продукта:</label><br>
   <input type="text" id="pname" name="pname" /><br>
   <label for="pdescription">Описание:</label><br>
@@ -38,5 +39,8 @@ input[type=text], input[type=number] {
   <input type="file" id="pimage" name="pimage" accept="image/jpeg,image/png,image/gif"><br>
   <label for="pprice">Цена:</label><br>
   <input type="number" id="pprice" name="pprice" min="0.01" step="0.01" />
+	
+	<!-- добавить валидацию названия и цены -->
+
   <input type="submit" value="Добавить">
 </form>

@@ -13,12 +13,12 @@ module.exports = class OrderedProduct extends Model {
                 allowNull: false,
                 references: { model: Product, key: 'id' }
             },
-            order_id: {
+            orderId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: { model: Order, key: 'id' }
             },
-            count_of_products: { type: Sequelize.INTEGER, allowNull: false }
+            countOfProducts: { type: Sequelize.INTEGER, allowNull: false }
         }, {
             sequelize,
             modelName: 'OrderedProduct',
