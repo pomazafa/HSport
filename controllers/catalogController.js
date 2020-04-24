@@ -5,16 +5,53 @@ const {
     OrderedProduct,
     Comment
 } = require('../models/model.js');
+const { secret } = require('../config/config.js');
+const verifyToken = require('../public/js/func.js');
+const jwt = require('jsonwebtoken');
+
 
 var errMessage = null;
 
 exports.index = async function(request, response) {
-    response.render("catalog.hbs", { Products: await Product.findAll() });
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.role == 1) {
+                response.render("catalog.hbs", { Products: await Product.findAll(), isAuth: true, isAdmin: true });
+            } else {
+                response.render("catalog.hbs", { Products: await Product.findAll(), isAuth: true });
+            }
+        } else {
+            response.render("catalog.hbs", { Products: await Product.findAll() });
+        }
+    } else {
+        response.render("catalog.hbs", { Products: await Product.findAll() });
+    }
 };
 
 exports.add = async function(request, response) {
-    response.render('createProduct.hbs', { errMessage: errMessage });
-    errMessage = "";
+
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.role == 1) {
+                response.render('createProduct.hbs', { errMessage: errMessage, isAuth: true });
+                errMessage = "";
+                return;
+            } else {
+                response.redirect('/catalog');
+            }
+        }
+        errMessage = "";
+    }
 }
 
 exports.addPost = async function(request, response) {

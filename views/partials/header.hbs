@@ -5,7 +5,7 @@
                 <nav class="sub-header__menu">
                     <ul>
                         <li class="sub-header__menu-item"><a href="/">Главная</a></li>
-                        <li class="sub-header__menu-item"><a href="/">Каталог товаров</a></li>
+                        <li class="sub-header__menu-item"><a href="/catalog">Каталог товаров</a></li>
                         <li class="sub-header__menu-item"><a href="/#link-brands">Бренды</a></li>
                         <li class="sub-header__menu-item"><a href="/#link-reviews">Отзывы</a></li>
                         <li class="sub-header__menu-item"><a href="/#link-about-us">О нас</a></li>
@@ -29,7 +29,7 @@
             </div>
             <div class="sub-header">
                 <nav class="sub-header-left sub-header__menu">
-                   	<ul>
+                    <ul>
                         <li class="sub-header__menu-item"><a href="/">Главная</a></li>
                         <li class="sub-header__menu-item"><a href="/">Каталог товаров</a></li>
                         <li class="sub-header__menu-item"><a href="/#link-brands">Бренды</a></li>
@@ -39,6 +39,8 @@
                     </ul>
                 </nav>
                 <ul class="header-actions sub-header-right">
+                    {{#unless isEntry}}
+                    {{#if isAuth}}
                     <li>
                         <button class="header-actions__item">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,15 +62,20 @@
                             </svg>
                         </button>
                     </li>
+                    {{#if isAdmin}}
                     <li>
                         <a href="/catalog/add" class="btn btn-catalog"><span></span>Добавить товар</a>
                     </li>
-                    <li>
-                        <a href="/entry" class="btn btn-catalog"><span></span>Войти</a>
-                    </li>
+                    {{/if}}
                     <li>
                         <a href="/entry/exit" class="btn btn-catalog"><span></span>Выйти</a>
                     </li>
+                    {{else}}
+                    <li>
+                        <a href="/entry" class="btn btn-catalog"><span></span>Войти</a>
+                    </li>
+                    {{/if}}
+                    {{/unless}}
                 </ul>
             </div>
         </div>

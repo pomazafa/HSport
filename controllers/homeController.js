@@ -1,6 +1,37 @@
-exports.index = function (request, response) {
-    response.render('index.hbs')
-};
-exports.about = function (request, response) {
-    response.send("О сайте");
+const { secret } = require('../config/config.js');
+const verifyToken = require('../public/js/func.js');
+const jwt = require('jsonwebtoken');
+const {
+    Product,
+    User,
+    Order,
+    OrderedProduct,
+    Comment
+} = require('../models/model.js');
+
+
+exports.index = async function(request, response) {
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.role == 1) {
+                response.render('index.hbs', {
+                    isAuth: true,
+                    isAdmin: true
+                })
+            } else {
+                response.render('index.hbs', {
+                    isAuth: true
+                })
+            }
+        } else {
+            response.render('index.hbs')
+        }
+    } else {
+        response.render('index.hbs')
+    }
 };

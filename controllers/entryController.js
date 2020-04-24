@@ -28,7 +28,8 @@ exports.index = async function(request, response) {
     } else {
         response.render("entry.hbs", {
             bodyClass: "body-entry",
-            form:form
+            form: form,
+            isEntry: true
         });
         form = null;
     }
@@ -67,6 +68,7 @@ exports.register = async function(request, response) {
             name: userName,
             surname: userSurname,
             mail: userMail,
+            phone: userTel,
             password: passwordHash,
             passwordSalt: salt,
             status: 1,
@@ -74,11 +76,10 @@ exports.register = async function(request, response) {
         })
         user.save();
         form = {
-        	mailA: userMail,
+            mailA: userMail,
             changeNav: true,
             messageA: 'Пользователь успешно зарегистрирован. Попробуйте войти в аккаунт'
         };
-
         response.redirect("/entry");
     }
 };
@@ -99,10 +100,10 @@ exports.authenticate = async function(request, response) {
         };
         response.redirect('/entry');
     } else {
-        const salt = result.PasswordSalt;
+        const salt = result.passwordSalt;
         const passwordHash = crypto.createHash('sha512').update(`${userPassword}${salt}`).digest('hex');
 
-        if (passwordHash === result.Password) {
+        if (passwordHash === result.password) {
             const token = jwt.sign({ id: result.id }, secret, {});
             response.cookie('token', token, {
                 secure: false, // set to true if your using https
@@ -111,11 +112,11 @@ exports.authenticate = async function(request, response) {
             //response.end('token = ' + token);
         } else {
             form = {
-            mailA: userMail,
-            changeNav: true,
-            messageA: 'Неверный пароль'
-        };
-        response.redirect('/entry');
+                mailA: userMail,
+                changeNav: true,
+                messageA: 'Неверный пароль'
+            };
+            response.redirect('/entry');
         }
     }
 };

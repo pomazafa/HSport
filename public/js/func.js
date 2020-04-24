@@ -8,9 +8,11 @@ module.exports = async (req, res) => {
       return null;
     }
     const decrypt = await jwt.verify(token, secret);
-    req.user = {
-      id: decrypt.id,
-    };
+    req.user = await User.findOne({
+        where: {
+            id: decrypt.id
+        }
+      });
     //console.log(req.user.id);
     return req.user;
   } catch (err) {
