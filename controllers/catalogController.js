@@ -9,7 +9,7 @@ const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-
+var form = null;
 
 var errMessage = null;
 
@@ -63,8 +63,13 @@ exports.add = async function(request, response) {
         })
         if (result != null) {
             if (result.role == 1) {
-                response.render('createProduct.hbs', { errMessage: errMessage, isAuth: true });
+                response.render('createProduct.hbs', {
+                    errMessage: errMessage,
+                    isAuth: true,
+                    form: form
+                });
                 errMessage = "";
+                form = null;
                 return;
             } else {
                 response.redirect('/catalog');
@@ -79,19 +84,25 @@ exports.add = async function(request, response) {
 
 exports.addPost = async function(request, response) {
     const pname = request.body.pname;
+    const pdescription = request.body.pdescription == "" ? null : request.body.pdescription;
+    const pbrand = request.body.pbrand == "" ? null : request.body.pbrand;
+    const pprice = request.body.pprice;
+
     const result = await Product.findOne({
         where: {
             productName: pname
         }
     })
     if (result != null) {
+        form = {
+            pname: pname,
+            pdescription: pdescription,
+            pbrand: pbrand,
+            pprice: pprice
+        };
         errMessage = "Товар с данным наименованием уже существует.";
         response.redirect('/catalog/add');
     } else {
-        const pdescription = request.body.pdescription;
-        const pbrand = request.body.pbrand;
-        const pprice = request.body.pprice;
-
         const filedata = request.file;
         var fileExt;
         if (!filedata) {

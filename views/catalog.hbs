@@ -1,4 +1,21 @@
-         {{#each Products}}
-
-{{this.id}}
-         {{/each}}
+<style>
+span {
+    margin: 10px;
+}
+</style>
+{{#each Products}}
+<span>{{this.id}}</span><br>
+<span>{{this.productName}}</span><br>
+<span>{{this.productDescription}}</span><br>
+<span>{{this.brand}}</span><br>
+<span>{{this.productPrice}}</span><br>
+<span>
+    {{#if this.imageExt}}
+    <img src="/static/images/products/{{this.productName}}{{this.imageExt}}" alt="{{this.productName}}">
+    {{else}}
+    <img src="/static/images/products/default.png" alt="{{this.productName}}">
+    {{/if}}
+</span>
+<br>
+<br>
+{{/each}}
