@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const expressHbs = require("express-handlebars");
 const cookieParser = require('cookie-parser');
 const hbs = require("hbs");
-const multer  = require("multer");
+const multer = require("multer");
 const path = require("path");
 
 const homeRouter = require("./routes/homeRouter.js");
@@ -17,16 +17,16 @@ app.use(cookieParser());
 
 
 const storageConfig = multer.diskStorage({
-    destination: (req, file, cb) =>{
+    destination: (req, file, cb) => {
         cb(null, "./public/images/products");
     },
-    filename: (req, file, cb) =>{
+    filename: (req, file, cb) => {
         cb(null, req.body.pname + path.extname(file.originalname));
     }
 });
 
 
-app.use(multer({storage:storageConfig}).single("pimage"));
+app.use(multer({ storage: storageConfig }).single("pimage"));
 
 app.engine("hbs", expressHbs({
     layoutsDir: "views/layouts",

@@ -8,6 +8,7 @@ const {
 const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 
 var errMessage = null;
@@ -21,15 +22,34 @@ exports.index = async function(request, response) {
         })
         if (result != null) {
             if (result.role == 1) {
-                response.render("catalog.hbs", { Products: await Product.findAll(), isAuth: true, isAdmin: true });
+                const products = await Product.findAll().then(products => {
+                    response.render('catalog.hbs', {
+                        Products: products.map(product => product.toJSON()),
+                        isAuth: true,
+                        isAdmin: true
+                    })
+                });
             } else {
-                response.render("catalog.hbs", { Products: await Product.findAll(), isAuth: true });
+                const products = await Product.findAll().then(products => {
+                    response.render('catalog.hbs', {
+                        Products: products.map(product => product.toJSON()),
+                        isAuth: true
+                    })
+                });
             }
         } else {
-            response.render("catalog.hbs", { Products: await Product.findAll() });
+            const products = await Product.findAll().then(products => {
+                response.render('catalog.hbs', {
+                    Products: products.map(product => product.toJSON())
+                })
+            });
         }
     } else {
-        response.render("catalog.hbs", { Products: await Product.findAll() });
+        const products = await Product.findAll().then(products => {
+            response.render('catalog.hbs', {
+                Products: products.map(product => product.toJSON())
+            })
+        });
     }
 };
 
@@ -49,8 +69,11 @@ exports.add = async function(request, response) {
             } else {
                 response.redirect('/catalog');
             }
+        } else {
+            response.redirect('/catalog');
         }
-        errMessage = "";
+    } else {
+        response.redirect('/catalog');
     }
 }
 
@@ -70,18 +93,22 @@ exports.addPost = async function(request, response) {
         const pprice = request.body.pprice;
 
         const filedata = request.file;
-        if (!filedata)
-            console.log("Ошибка при загрузке файла");
+        var fileExt;
+        if (!filedata) {
+            fileExt = null;
+        } else {
+            fileExt = path.extname(filedata.originalname);
+        }
 
         const product = Product.build({
             Name: pname,
             productName: pname,
             productDescription: pdescription,
             brand: pbrand,
-            productPrice: pprice
+            productPrice: pprice,
+            imageExt: fileExt
         })
         product.save();
-
-        response.redirect('/catalog/');
+        response.redirect('/catalog');
     }
 }
