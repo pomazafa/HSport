@@ -1,49 +1,41 @@
-<style>
-	input[type=button], input[type=submit], input[type=reset] {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-}
+<section class="section-add">
+  <div class="container">
+    <div class="form__wrapper">
+      <form class="form-add" action="/catalog/add" method="POST" enctype="multipart/form-data">
 
-input[type=text], input[type=number] {
-  background-color: bisque;
-  padding-left: 40px;
-  color:black;
-}
+        <span class="form-add__error-message" id="error-message">{{errMessage}}</span>
 
-</style>
+        <div class="form-add__item">
+            <label class="form-add__label" for="pname">Название продукта:</label>
+            <input class="content__input form-add__input" type="text" id="pname" name="pname" value="{{form.pname}}"></input>
+        </div>
 
+        <div class="form-add__item">
+            <label class="form-add__label" for="pdescription">Описание:</label>
+            <textarea class="form-add__textarea" id="pdescription" name="pdescription">{{form.pdescription}}</textarea>
+        </div>
 
-<form action="/catalog/add" method="POST" enctype="multipart/form-data">
-  <!--   не удалять id error-message-->
-  <span id="error-message">{{errMessage}}</span><br>
-  <label for="pname">Название продукта:</label><br>
-  <!--   не удалять id pname -->
-  <input type="text" id="pname" name="pname" value="{{form.pname}}"></input><br>
-  <label for="pdescription">Описание:</label><br>
-  <textarea id="pdescription" name="pdescription">{{form.pdescription}}</textarea><br><br>
-  <label for="pbrand">Бренд:</label><br>
-  <input type="text" id="pbrand" name="pbrand" value="{{form.pbrand}}"></input<br>
-  <label for="pimage">Фото товара:</label><br>
-  <input type="file" id="pimage" name="pimage" accept="image/jpeg,image/png,image/gif"><br>
-  <label for="pprice">Цена:</label><br>
-  <!--   не удалять id pprice -->
-  <input type="number" id="pprice" name="pprice" min="0.01" step="0.01" value="{{form.pprice}}"></input>
-  <input type="submit" id="addProduct" value="Добавить">
-</form>
+        <div class="form-add__item">
+            <label class="form-add__label" for="pbrand">Бренд:</label>
+            <input class="content__input form-add__input" type="text" id="pbrand" name="pbrand" value="{{form.pbrand}}"></input>
+        </div>
+
+        <div class="form-add__item">
+            <label class="form-add__label" for="pimage">Фото товара:</label>
+            <input class="form-add__file" type="file" id="pimage" name="pimage" accept="image/jpeg,image/png,image/gif">
+        </div>
+
+        <div class="form-add__item">
+            <label class="form-add__label" for="pprice">Цена:</label>
+            <input class="content__input form-add__input" type="number" id="pprice" name="pprice" min="0.01" step="0.01" value="{{form.pprice}}"></input>
+        </div>
+
+        <button class="btn-gray content__btn" type="submit" id="addProduct">Добавить</button>
+      </form>
+    </div>
+
+</div>
+</section>
+
 
 <script type="text/javascript" src="/static/js/addProduct.js"></script>

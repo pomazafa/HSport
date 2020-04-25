@@ -27,7 +27,7 @@ exports.index = async function(request, response) {
         response.redirect('/');
     } else {
         response.render("entry.hbs", {
-            bodyClass: "body-entry",
+            bodyClass: "body-grey",
             form: form,
             isEntry: true
         });

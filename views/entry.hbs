@@ -1,6 +1,6 @@
 <section class="entry">
     <div class="container">
-        <div class="entry__wrapper tabs">
+        <div class="form__wrapper tabs">
             <div class="entry-header">
                 <a href="#" {{#if form.changeNav}}
                 class="entry-header__button tab__navitem"
@@ -13,34 +13,34 @@
                 class="js-form-validate entry-content__form tab__item"
                 {{else}}class="js-form-validate entry-content__form tab__item active"
 {{/if}}>
-                    <span class="entry-content__label">{{form.messageR}}</span>
-                    <input class="entry-content__input" name="name" type="text" placeholder="Имя" value="{{form.name}}">
-                    <input class="entry-content__input" name="surname" type="text" placeholder="Фамилия" value="{{form.surname}}">
-                    <input class="entry-content__input" type="tel" name="tel" placeholder="Номер телефона" value="{{form.tel}}" data-mask="phone">
+                    <span class="content__label">{{form.messageR}}</span>
+                    <input class="content__input" name="name" type="text" placeholder="Имя" value="{{form.name}}">
+                    <input class="content__input" name="surname" type="text" placeholder="Фамилия" value="{{form.surname}}">
+                    <input class="content__input" type="tel" name="tel" placeholder="Номер телефона" value="{{form.tel}}" data-mask="phone">
                     <div class="form-group">
-                        <input class="entry-content__input" name="mail" value="{{form.mailR}}" type="email" placeholder="Почта*" data-validate>
+                        <input class="content__input" name="mail" value="{{form.mailR}}" type="email" placeholder="Почта*" data-validate>
                         <span class="some-form__hint">Обязательно для заполнения</span>
                     </div>
                     <div class="form-group">
-                        <input class="entry-content__input" name="password" type="password" placeholder="Пароль*" data-validate>
+                        <input class="content__input" name="password" type="password" placeholder="Пароль*" data-validate>
                         <span class="some-form__hint">Обязательно для заполнения</span>
                     </div>
-                    <button id="register_sumbit" class="btn-gray entry-content__btn" type="submit">Зарегистрироваться</button>
+                    <button id="register_sumbit" class="btn-gray content__btn" type="submit">Зарегистрироваться</button>
                 </form>
                 <form action="entry/authentication" method="POST" {{#if form.changeNav}}
                 class="js-form-validate entry-content__form tab__item  active"
                 {{else}}class="js-form-validate entry-content__form tab__item"
 {{/if}}>
-                    <span class="entry-content__label">{{form.messageA}}</span>
+                    <span class="content__label">{{form.messageA}}</span>
                     <div class="form-group">
-                        <input class="entry-content__input" name="mail" type="email" placeholder="Почта*" value="{{form.mailA}}" data-validate>
+                        <input class="content__input" name="mail" type="email" placeholder="Почта*" value="{{form.mailA}}" data-validate>
                         <span class="some-form__hint">Обязательно для заполнения</span>
                     </div>
                     <div class="form-group">
-                        <input class="entry-content__input" name="password" type="password" placeholder="Пароль*" data-validate>
+                        <input class="content__input" name="password" type="password" placeholder="Пароль*" data-validate>
                         <span class="some-form__hint">Обязательно для заполнения</span>
                     </div>
-                    <button id="authenticate_sumbit" class="btn-gray entry-content__btn" type="submit">Войти</button>
+                    <button id="authenticate_sumbit" class="btn-gray content__btn" type="submit">Войти</button>
                 </form>
             </div>
         </div>
