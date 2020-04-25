@@ -20,18 +20,24 @@ exports.index = async function(request, response) {
         if (result != null) {
             if (result.role == 1) {
                 response.render('index.hbs', {
+                    Title: 'Главная',
                     isAuth: true,
                     isAdmin: true
                 })
             } else {
                 response.render('index.hbs', {
+                    Title: 'Главная',
                     isAuth: true
                 })
             }
         } else {
-            response.render('index.hbs')
+            response.render('index.hbs', {
+                    Title: 'Главная'
+            })
         }
     } else {
-        response.render('index.hbs')
+        response.render('index.hbs', {
+                    Title: 'Главная'
+        })
     }
 };

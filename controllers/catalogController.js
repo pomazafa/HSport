@@ -26,6 +26,7 @@ exports.index = async function(request, response) {
                     response.render('catalog.hbs', {
                         Products: products.map(product => product.toJSON()),
                         isAuth: true,
+            			Title: 'Каталог',
                         isAdmin: true
                     })
                 });
@@ -33,6 +34,7 @@ exports.index = async function(request, response) {
                 const products = await Product.findAll().then(products => {
                     response.render('catalog.hbs', {
                         Products: products.map(product => product.toJSON()),
+            			Title: 'Каталог',
                         isAuth: true
                     })
                 });
@@ -40,6 +42,7 @@ exports.index = async function(request, response) {
         } else {
             const products = await Product.findAll().then(products => {
                 response.render('catalog.hbs', {
+            		Title: 'Каталог',
                     Products: products.map(product => product.toJSON())
                 })
             });
@@ -47,6 +50,7 @@ exports.index = async function(request, response) {
     } else {
         const products = await Product.findAll().then(products => {
             response.render('catalog.hbs', {
+            	Title: 'Каталог',
                 Products: products.map(product => product.toJSON())
             })
         });
@@ -64,6 +68,7 @@ exports.add = async function(request, response) {
         if (result != null) {
             if (result.role == 1) {
                 response.render('createProduct.hbs', {
+            		Title: 'Добавление товара',
                     errMessage: errMessage,
                     isAuth: true,
                     form: form
@@ -112,7 +117,6 @@ exports.addPost = async function(request, response) {
         }
 
         const product = Product.build({
-            Name: pname,
             productName: pname,
             productDescription: pdescription,
             brand: pbrand,

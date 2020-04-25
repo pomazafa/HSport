@@ -29,6 +29,7 @@ exports.index = async function(request, response) {
         response.render("entry.hbs", {
             bodyClass: "body-grey",
             form: form,
+            Title: 'Вход',
             isEntry: true
         });
         form = null;
