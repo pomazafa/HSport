@@ -1,10 +1,23 @@
 async function addToCart (id, element) {
-    let response = await fetch("http://localhost:3000/cart/add?id=" + id);
-   	//console.log(element);
+	if(element.innerHTML === "Добавлено в корзину")
+	{
+    	
+	}
+	else
+	{
+		let response = await fetch("http://localhost:3000/cart/add?id=" + id);
+   		//console.log(response.headers.get('message'));
    	
-   	console.log(response.status);
-    if (response.ok) {
-       	element.innerHTML = "Добавлено в корзину";
-    } else {
-       	element.innerHTML = "Ошибка, попробуйте позже";
-}}
+   		//console.log(response.status);
+    	if (response.ok) {
+       		element.innerHTML = "Добавлено в корзину";
+		} 
+		else if (response.status == 401)
+		{
+			window.location.href = "http://localhost:3000/entry/exit";
+		}
+		else {
+		   element.innerHTML = "Ошибка, попробуйте позже";
+		}
+	}
+}
