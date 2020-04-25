@@ -26,23 +26,47 @@ exports.add = async function(request, response) {
         if (result != null) {
             if (result.role != 1) {
                 try {
+                    var order = await Order.findOne({
+                        where: {
+                            userId: request.user.id,
+                            orderStatus: 'created'
+                        }
+                    })
+                    if(order == null)
+                    {
+                        order = await Order.create({
+                            orderStatus: 'created',
+                            userId: request.user.id
+                        });
+                    }
                     
-                    //проверить, создан ли у него заказ, и если нет, то создать
-            
-                    //проверить, что пользователь ещё не добавлял этот товар
-            
-                    // const orderedProduct = OrderedProduct.build({
-                    //     product_id: currentProductId,
-                    //     orderId: ??????????????????????????,
-                    //     countOfProducts: 1
-                    // })
-                    // orderedProduct.save();
-                    response.send();
+                    var orderedProduct = await OrderedProduct.findOne({
+                        where: {
+                            orderId: order.id,
+                            productId: +currentProductId
+                        }
+                    });
+
+                    if(orderedProduct == null)
+                    {
+                        orderedProduct = OrderedProduct.create({
+                        productId: +currentProductId,
+                        orderId: order.id,
+                        countOfProducts: 1
+                        })
+                    }
+
+                    response.status(201).send();
                 } 
                 catch (e) {
-                    response.status(500).send({ error: "something wrong" });
+                    console.log(e);
+                    response.status(520).send({ error: "something wrong" });
                 }
             } 
+            else
+            {
+                response.status(403).send();
+            }
         } else {
             response.status(401).send();
         }

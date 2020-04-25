@@ -9,9 +9,12 @@ async function addToCart (id, element) {
    		//console.log(response.headers.get('message'));
    	
    		//console.log(response.status);
-    	if (response.ok) {
+    	if (response.status == 201) {
        		element.innerHTML = "Добавлено в корзину";
 		} 
+		else if (response.status == 403) {
+			element.innerHTML = "Действие недоступно";
+	 	} 
 		else if (response.status == 401)
 		{
 			window.location.href = "http://localhost:3000/entry/exit";

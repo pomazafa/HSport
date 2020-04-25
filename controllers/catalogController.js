@@ -26,8 +26,8 @@ exports.index = async function(request, response) {
                     response.render('catalog.hbs', {
                         Products: products.map(product => product.toJSON()),
                         isAuth: true,
-            			Title: 'Каталог',
-                        isAdmin: true
+                        isAdmin: true,
+            			Title: 'Каталог'
                     })
                 });
             } else {

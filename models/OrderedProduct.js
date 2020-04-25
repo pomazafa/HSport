@@ -8,7 +8,7 @@ module.exports = class OrderedProduct extends Model {
     static init(sequelize) {
         return super.init({
             id: { type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true },
-            product_id: {
+            productId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: { model: Product, key: 'id' }

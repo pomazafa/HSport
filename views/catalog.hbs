@@ -32,6 +32,9 @@
                         <div class="rating__focus"></div>
                     </div>
                     <p class="block-text">{{this.productDescription}}</p>
+                    {{#if this.brand}}
+                        <p class="block-text">Бренд: {{this.brand}}</p>
+                    {{/if}}
                     <p class="goods-cards__price px13"><span>{{this.productPrice}} руб.</span></p>
                     <div class="goods-action">
                         <button class="btn-gray" onclick="addToCart('{{this.id}}', this)">В корзину</button>
