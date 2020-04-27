@@ -14,13 +14,25 @@ sequelize.sync({ force: false }).then(() => {
 });
 
 function models(sequelize) {
-    return {
-        Product: ProductModel.init(sequelize),
-        User: UserModel.init(sequelize, Sequelize),
-        Order: OrderModel.init(sequelize, Sequelize),
-        OrderedProduct: OrderedProductModel.init(sequelize, Sequelize),
-        Comment: CommentModel.init(sequelize, Sequelize)
+    var model =  {
+        Product: ProductModel(sequelize),
+        User: UserModel(sequelize),
+        Order: OrderModel(sequelize),
+        OrderedProduct: OrderedProductModel(sequelize),
+        Comment: CommentModel(sequelize)
     };
+
+    model.Product.belongsToMany(model.User, { through: model.Comment});
+    model.User.belongsToMany(model.Product, { through: model.Comment});
+
+    model.User.hasMany(model.Order);
+    model.Order.belongsTo(model.User);
+
+    model.Product.belongsToMany(model.Order, { through: model.OrderedProduct});
+    model.Order.belongsToMany(model.Product, { through: model.OrderedProduct});
+    model.OrderedProduct.belongsTo(model.Product);
+    model.OrderedProduct.belongsTo(model.Order);
+    return model;
 }
 
 try {
