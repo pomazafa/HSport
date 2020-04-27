@@ -21,10 +21,12 @@ exports.index = async function(request, response) {
         })
         if (result != null) {
             if (result.role != 1) {
-                const products = await Product.findAll({
+                const products = await OrderedProduct.findAll({
                     include: [{
                         model: Order,
-                        where: { UserId: request.user.id }
+                        where: { UserId: request.user.id, orderStatus: 'created'} 
+                    }, {
+                        model: Product
                     }]
                 }).then(products => {
                     response.render('cart.hbs', {

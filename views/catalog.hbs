@@ -37,7 +37,9 @@
                     {{/if}}
                     <p class="goods-cards__price px13"><span>{{this.productPrice}} руб.</span></p>
                     <div class="goods-action">
-                        <button class="btn-gray" onclick="addToCart('{{this.id}}', this)">В корзину</button>
+                        <div>
+                            <button class="btn-gray" onclick="addToCart('{{this.id}}', this)">В корзину</button>
+                        </div>
                         <button class="goods-action-btn">
                             <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.57933 0H7.57933V12H4.57933V0ZM9.15888 2.99999H12.1589V12H9.15888V2.99999ZM2.99979 5.99998H-0.000213623V12H2.99979V5.99998Z" fill="#BABABA" />

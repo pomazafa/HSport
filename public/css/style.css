@@ -2255,4 +2255,38 @@ textarea:active {
     margin-top: 7px;
 }
 
+.btncart {
+    display: inline-block;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border-radius: 50%;
+    background-color: #007EF9;
+    border: none;
+    cursor: pointer;
+}
+
+.btncart:hover {
+    background-color: #0089f9;
+}
+
+.btn_minus::after, .btn_plus::after {
+    width: 30px;
+    margin-left: -15px;
+    position: absolute;
+    font-size: 30px;
+    line-height: 1;
+    color: #fff;
+}
+
+.btn_minus::after {
+    content: '-';
+    margin-top: -16px;
+}
+
+.btn_plus::after {
+    content: '+';
+    margin-top: -16px;
+}
 
