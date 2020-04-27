@@ -43,9 +43,9 @@
                             </svg>
                         </button>
 
-                        <button class="btncart btn_minus"></button>
-                         <h4 class="block-title">{{this.countOfProducts}}</h4>
-						<button class="btncart btn_plus"></button>
+                        <button class="btncart btn_minus goods-action-btn" onclick="decreaseCountCart({{this.Product.id}}, this)"></button>
+                            <h4 class="block-title">{{this.countOfProducts}}</h4>
+						<button class="btncart btn_plus goods-action-btn" onclick="increaseCountCart({{this.Product.id}}, this)"></button>
                        <!--  <button class="btn-gray" onclick="removeFromCart('{{this.id}}', this)">Удалить</button> -->
                     </div>
                 </div>

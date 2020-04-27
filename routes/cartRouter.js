@@ -5,5 +5,7 @@ const cartRouter = express.Router();
 cartRouter.get('/', cartController.index);
 cartRouter.get('/add', cartController.add);
 cartRouter.get('/remove', cartController.remove);
+cartRouter.get('/increase', cartController.increase);
+cartRouter.get('/decrease', cartController.decrease);
 
 module.exports = cartRouter;

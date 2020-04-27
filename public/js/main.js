@@ -187,17 +187,20 @@ $('[data-mask="phone"]').mask('+375? (99) 999-99-99', {
 });
 
 // // Links
-// $(".sub-header__menu").on("click", "a", function (event) {
-// 	event.preventDefault();
-// 	var id = $(this).attr('href').substring(1);
-// 	if(id)
-// 	{
-// 	var top = $(id).offset().top;
-// 	$('body,html').animate({
-// 		scrollTop: top
-// 	}, 1500);
-// 	}
-// });
+$(".sub-header__menu").on("click", "a", function (event) {
+	if(window.location.pathname === '/' && $(this).attr('href').substring(1).startsWith('#'))
+	{
+		event.preventDefault();
+		var id = $(this).attr('href').substring(1);
+		if(id)
+		{
+		var top = $(id).offset().top;
+		$('body,html').animate({
+			scrollTop: top
+		}, 1500);
+		}
+	}
+});
 
 //---
 });
