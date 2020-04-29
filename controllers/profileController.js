@@ -38,6 +38,7 @@ exports.index = async function(request, response) {
                             errMessage: errMessage
                         })
                     }
+                    errMessage = null;
                 } else {
 
                     // страница ошибки
@@ -55,9 +56,70 @@ exports.index = async function(request, response) {
 };
 
 exports.update = async function(request, response) {
-    //const pname = request.body.pname;
+    if (await verifyToken(request, response)) {
+        const userName = request.body.name;
+        const userTel = request.body.tel;
+        const userSurname = request.body.surname;
+        const userMail = request.body.mail;
+        var userPassword = request.body.password;
+        const userPasswordNew = request.body.passwordNew;
+
+
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result === null) {
+            // страница ошибки
+
+            response.send('Вы не авторизованы');
+
+        } else {
+            if (userPassword != "") {
+                if (userPasswordNew != "") {
+                    const salt = result.passwordSalt;
+                    const passwordHash = crypto.createHash('sha512').update(`${userPassword}${salt}`).digest('hex');
+                    if (passwordHash === result.password) {
+                        userPassword = crypto.createHash('sha512').update(`${userPasswordNew}${salt}`).digest('hex');
+                    } else {
+                        errMessage = "Старый пароль введён неверно";
+                        response.redirect('/profile');
+                        return;
+                    }
+                } else {
+                    errMessage = "Вы не ввели новый пароль";
+                    response.redirect('/profile');
+                    return;
+                }
+            } else {
+                userPassword = result.password;
+            }
+            let values = {
+                name: userName,
+                surname: userSurname,
+                mail: userMail,
+                phone: userTel,
+                password: userPassword
+            };
+            result.update(values);
+
+            errMessage = "Данные успешно сохранены";
+            response.redirect('/profile');
+
+        }
+    } else {
+        // страница ошибки
+
+        response.send('Вы не авторизованы');
+
+    }
 }
 
 exports.delete = async function(request, response) {
+	
+}
+
+exports.deleted = async function(request, response) {
 
 }
