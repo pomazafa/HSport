@@ -1,4 +1,3 @@
-const User = require('./User.js');
 const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = function(sequelize) {
