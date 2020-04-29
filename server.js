@@ -12,6 +12,7 @@ const homeRouter = require("./routes/homeRouter.js");
 const catalogRouter = require("./routes/catalogRouter.js");
 const cartRouter = require("./routes/cartRouter.js");
 const entryRouter = require("./routes/entryRouter.js");
+const profileRouter = require("./routes/profileRouter.js");
 const models = require("./models/model.js")
 
 app.use(cookieParser());
@@ -44,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/entry", entryRouter);
 app.use("/", homeRouter);
 app.use("/catalog", catalogRouter);
+app.use("/profile", profileRouter);
 app.use("/cart", cartRouter);
 
 app.use(function(req, res, next) {

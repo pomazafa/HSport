@@ -9,9 +9,10 @@ const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-var form = null;
 
+var form = null;
 var errMessage = null;
+
 
 exports.index = async function(request, response) {
     if (await verifyToken(request, response)) {

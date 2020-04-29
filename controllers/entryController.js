@@ -11,16 +11,7 @@ const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 var form = null;
-
-function makeSalt(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
+const makeSalt = require('../public/js/createSalt.js');
 
 exports.index = async function(request, response) {
     if (await verifyToken(request, response)) {
