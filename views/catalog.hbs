@@ -33,18 +33,29 @@
                     </div>
                     <p class="block-text">{{this.productDescription}}</p>
                     {{#if this.brand}}
-                        <p class="block-text">Бренд: {{this.brand}}</p>
+                    <p class="block-text">Бренд: {{this.brand}}</p>
                     {{/if}}
                     <p class="goods-cards__price px13"><span>{{this.productPrice}} руб.</span></p>
                     <div class="goods-action">
-                        <div>
+                        {{!-- <div>
                             <button class="btn-gray" onclick="addToCart('{{this.id}}', this)">В корзину</button>
-                        </div>
+                        </div> --}}
                         <button class="goods-action-btn">
                             <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.57933 0H7.57933V12H4.57933V0ZM9.15888 2.99999H12.1589V12H9.15888V2.99999ZM2.99979 5.99998H-0.000213623V12H2.99979V5.99998Z" fill="#BABABA" />
                             </svg>
                         </button>
+                        <div>
+                            {{#if this.Orders.0.OrderedProduct.countOfProducts}}
+                            <button class="btncart btn_minus goods-action-btn" onclick="decreaseCountCart({{this.id}}, this)"></button>
+                            <h4 class="block-title">{{this.Orders.0.OrderedProduct.countOfProducts}}</h4>
+                            <button class="btncart btn_plus goods-action-btn" onclick="increaseCountCart({{this.id}}, this)"></button>
+                            {{else}}
+                            <div>
+                                <button class="btn-gray" onclick="addToCart('{{this.id}}', this)">В корзину</button>
+                            </div>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,5 +63,4 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="/static/js/cart.js"></script>

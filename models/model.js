@@ -27,7 +27,7 @@ function models(sequelize) {
 
     model.User.hasMany(model.Order);
     model.Order.belongsTo(model.User);
-
+    
     model.Product.belongsToMany(model.Order, { through: model.OrderedProduct});
     model.Order.belongsToMany(model.Product, { through: model.OrderedProduct});
     model.OrderedProduct.belongsTo(model.Product);

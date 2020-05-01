@@ -23,19 +23,30 @@ exports.index = async function(request, response) {
         })
         if (result != null) {
             if (result.role == 1) {
-                const products = await Product.findAll().then(products => {
+                const products = await Product.findAll()
+                .then(products => {
                     response.render('catalog.hbs', {
                         Products: products.map(product => product.toJSON()),
                         isAuth: true,
-                        isAdmin: true,
-            			Title: 'Каталог'
+                        isAdmin: 'true',
+                        Title: 'Каталог'
                     })
                 });
             } else {
-                const products = await Product.findAll().then(products => {
+                const products = await Product.findAll({
+                    include: [
+                        {
+                            model: Order,
+                            required: false,
+                            where: {
+                                UserId: request.user.id
+                            }
+                        }
+                    ]
+                }).then(products => {
                     response.render('catalog.hbs', {
                         Products: products.map(product => product.toJSON()),
-            			Title: 'Каталог',
+                        Title: 'Каталог',
                         isAuth: true
                     })
                 });
@@ -43,7 +54,7 @@ exports.index = async function(request, response) {
         } else {
             const products = await Product.findAll().then(products => {
                 response.render('catalog.hbs', {
-            		Title: 'Каталог',
+                    Title: 'Каталог',
                     Products: products.map(product => product.toJSON())
                 })
             });
@@ -51,7 +62,7 @@ exports.index = async function(request, response) {
     } else {
         const products = await Product.findAll().then(products => {
             response.render('catalog.hbs', {
-            	Title: 'Каталог',
+                Title: 'Каталог',
                 Products: products.map(product => product.toJSON())
             })
         });
@@ -69,7 +80,7 @@ exports.add = async function(request, response) {
         if (result != null) {
             if (result.role == 1) {
                 response.render('createProduct.hbs', {
-            		Title: 'Добавление товара',
+                    Title: 'Добавление товара',
                     errMessage: errMessage,
                     isAuth: true,
                     form: form

@@ -1,7 +1,8 @@
 async function addToCart(id, element) {
     let response = await fetch("http://localhost:3000/cart/add?id=" + id);
     if (response.status == 201) {
-        element.closest('div').innerHTML = '<button class="btn-gray" onclick="removeFromCart(' + id + ', this)">Удалить</button>';
+        element.closest('div').innerHTML = "<button class=\"btncart btn_minus goods-action-btn\" onclick=\"decreaseCountCart(" + id + ", this)\"></button><h4 class=\"block-title\">1</h4><button class=\"btncart btn_plus goods-action-btn\" onclick=\"increaseCountCart(" + id + ", this)\"></button>";
+        //  '<button class="btn-gray" onclick="removeFromCart(' + id + ', this)">Удалить</button>';
     } else if (response.status == 403) {
         element.innerHTML = "Действие недоступно";
     } else if (response.status == 401) {
@@ -48,10 +49,14 @@ async function decreaseCountCart(id, element) {
     if (response.status == 200) {
         element.nextElementSibling.innerHTML--;
         if (element.nextElementSibling.innerHTML == 0) {
-            // if(window.location.toString().substr('catalog') == -1)
-            // {
-            element.closest('.goods-cards__item').style.display = "none"
-            //}
+            if(!window.location.toString().includes('catalog'))
+            {
+                element.closest('.goods-cards__item').style.display = "none"
+            }
+            else
+            {
+                element.closest('div').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>;"
+            }
         }
     } else if (response.status == 403) {
         alert("Действие недоступно");
