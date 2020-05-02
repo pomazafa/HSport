@@ -49,13 +49,13 @@ async function decreaseCountCart(id, element) {
     if (response.status == 200) {
         element.nextElementSibling.innerHTML--;
         if (element.nextElementSibling.innerHTML == 0) {
-            if(!window.location.toString().includes('catalog'))
+            if(!(window.location.toString().includes('catalog') || window.location.toString().includes('product')))
             {
                 element.closest('.goods-cards__item').style.display = "none"
             }
             else
             {
-                element.closest('div').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>;"
+                element.closest('div').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>"
             }
         }
     } else if (response.status == 403) {
@@ -67,4 +67,6 @@ async function decreaseCountCart(id, element) {
     }
 }
 
-async function completeOrder() {}
+async function completeOrder() {
+    
+}
