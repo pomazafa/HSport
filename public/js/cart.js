@@ -67,6 +67,17 @@ async function decreaseCountCart(id, element) {
     }
 }
 
-async function completeOrder() {
-    
+async function completeOrder(element) {
+    let response = await fetch("http://localhost:3000/cart/complete");
+    if (response.status == 200) {
+        window.location.href = "http://localhost:3000/cart/carts";
+    } else if (response.status == 403) {
+        alert("Действие недоступно");
+    } else if (response.status == 500) {
+        alert("Ошибка сервера, попробуйте позже");
+    } else if (response.status == 401) {
+        window.location.href = "http://localhost:3000/entry/exit";
+    } else {
+        alert("Ошибка, попробуйте позже");
+    }
 }

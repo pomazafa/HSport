@@ -1,6 +1,6 @@
 <div class="grey-section">
     <div class="container">
-        <div class="goods-cards tab__item active">
+        <div class="goods-cards">
             {{#each Products}}
             <div class="goods-cards__item">
                 <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">{{this.Product.productName}}</h4>
@@ -15,19 +15,19 @@
                     <h4 class="block-title mobile-hidden">{{this.Product.productName}}</h4>
                     <div class="goods-cards__rating rating__group">
                         <label class="rating__star" aria-label="Ужасно">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="1">
+                            <input class="rating__input" type="radio" value="1">
                         </label>
                         <label class="rating__star" aria-label="Сносно">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="2">
+                            <input class="rating__input" type="radio" value="2">
                         </label>
                         <label class="rating__star" aria-label="Нормально">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="3" checked>
+                            <input class="rating__input" type="radio"  value="3" checked>
                         </label>
                         <label class="rating__star" aria-label="Хорошо">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="4">
+                            <input class="rating__input" type="radio" value="4">
                         </label>
                         <label class="rating__star" aria-label="Отлично">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="5">
+                            <input class="rating__input" type="radio" value="5">
                         </label>
                         <div class="rating__focus"></div>
                     </div>
@@ -52,7 +52,7 @@
             </div>
             {{/each}}
         </div>
-         <button class="btn-gray" onclick="completeOrder()">Завершить заказ</button>
+         <button class="btn-gray" onclick="completeOrder(this)">Отправить заказ</button>
     </div>
 </div>
 

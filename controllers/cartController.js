@@ -36,7 +36,7 @@ exports.index = async function(request, response) {
                     })
                 })
             } else {
-                response.send('Вы зашли под записью администратора, Вам недоступна функция')
+                response.send('Вы зашли под записью администратора, Вам недоступна эта функция')
 
 
                 // сделать красивую страничку
@@ -248,7 +248,6 @@ exports.decrease = async function(request, response) {
                             }
                         });
                     }
-                      
                       })
 
                     response.status(200).send();
@@ -256,6 +255,43 @@ exports.decrease = async function(request, response) {
                     console.log(e);
                     response.status(520).send({ error: "something wrong" });
                 }
+            } else {
+                response.status(403).send();
+            }
+        } else {
+            response.status(401).send();
+        }
+    } else {
+        response.status(401).send();
+    }
+}
+
+exports.complete = async function(request, response) {
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.role != 1) {
+                const order = await Order.findOne({
+                    where: {
+                        UserId: request.user.id,
+                        orderStatus: 'created'
+                    }
+                })
+                if (order == null) {
+                    response.status(500).send();
+                    return;
+                }
+                else {
+                    const values = {
+                        orderStatus : 'being processed'
+                      }
+                      order.update(values);
+                }
+                response.status(200).send();
             } else {
                 response.status(403).send();
             }

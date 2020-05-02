@@ -14,19 +14,19 @@
                     <h4 class="block-title mobile-hidden">{{Product.productName}}</h4>
                     <div class="goods-cards__rating rating__group">
                         <label class="rating__star" aria-label="Ужасно">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="1">
+                            <input class="rating__input" type="radio" value="1">
                         </label>
                         <label class="rating__star" aria-label="Сносно">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="2">
+                            <input class="rating__input" type="radio" value="2">
                         </label>
                         <label class="rating__star" aria-label="Нормально">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="3" checked>
+                            <input class="rating__input" type="radio" value="3" checked>
                         </label>
                         <label class="rating__star" aria-label="Хорошо">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="4">
+                            <input class="rating__input" type="radio" value="4">
                         </label>
                         <label class="rating__star" aria-label="Отлично">
-                            <input class="rating__input" type="radio" name="Protein-Shake" value="5">
+                            <input class="rating__input" type="radio" value="5">
                         </label>
                         <div class="rating__focus"></div>
                     </div>
@@ -52,5 +52,33 @@
             </div>
         </div>
     </div>
+
+    {{!-- .Users[0].Comment --}}
+
+     {{#each Product.Users}}
+
+        <div>
+            <label>{{this.Comment.message}}</label>
+        </div>
+
+     {{/each}}
+
+    <div class="container">
+      <form action="/product/addComment" method="POST">
+
+        <span>{{errMessage}}</span>
+        <input type="text" style="visibility: hidden;" name="id" value="{{Product.id}}"></input>
+        <div>
+            <label for="review">Текст отзыва:</label>
+            <textarea id="review" name="review">{{form.review}}</textarea>
+        </div>
+
+        <button class="btn-gray" type="submit">Отправить</button>
+      </form>
+    </div>
+
+    </div>
+
 </div>
+
 <script type="text/javascript" src="/static/js/cart.js"></script>

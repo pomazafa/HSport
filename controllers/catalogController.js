@@ -39,7 +39,8 @@ exports.index = async function(request, response) {
                             model: Order,
                             required: false,
                             where: {
-                                UserId: request.user.id
+                                UserId: request.user.id,
+                                orderStatus: 'created'
                             }
                         }
                     ]
@@ -70,7 +71,6 @@ exports.index = async function(request, response) {
 };
 
 exports.add = async function(request, response) {
-
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {

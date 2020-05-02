@@ -82,6 +82,7 @@ exports.index = async function(request, response) {
                             model: User
                         }
                     ]
+                    
                 }).then(product => {
                     response.render('product.hbs', {
                         Title: product.productName,
@@ -94,4 +95,25 @@ exports.index = async function(request, response) {
     {
         response.redirect('/catalog');
     }
+}
+
+exports.addComment = async function(request, response) {
+    const productId = request.body.id;
+    if (await verifyToken(request, response)) {
+    const review = request.body.review;
+    const rate = 5;
+
+    const comment = Comment.build({
+        commentDate: Date.now(),
+        rating: rate,
+        message: review,
+        UserId: request.user.id,
+        ProductId: productId
+    })
+    comment.save();
+    response.redirect('/product?id=' + productId);
+}
+else{
+    response.redirect('/entry/exit');
+}
 }
