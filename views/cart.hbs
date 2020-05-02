@@ -1,59 +1,66 @@
 <div class="grey-section">
-    <div class="container">
-        <div class="goods-cards">
-            {{#each Products}}
-            <div class="goods-cards__item">
-                <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">{{this.Product.productName}}</h4>
-                <div class="goods-cards__img">
-                    {{#if this.Product.imageExt}}
-                    <img src="/static/images/products/{{this.Product.productName}}{{this.Product.imageExt}}" alt="{{this.Product.productName}}">
-                    {{else}}
-                    <img src="/static/images/products/default.png" alt="{{this.Product.productName}}">
-                    {{/if}}
-                </div>
-                <div class="goods-cards__content">
-                    <h4 class="block-title mobile-hidden">{{this.Product.productName}}</h4>
-                    <div class="goods-cards__rating rating__group">
-                        <label class="rating__star" aria-label="Ужасно">
-                            <input class="rating__input" type="radio" value="1">
-                        </label>
-                        <label class="rating__star" aria-label="Сносно">
-                            <input class="rating__input" type="radio" value="2">
-                        </label>
-                        <label class="rating__star" aria-label="Нормально">
-                            <input class="rating__input" type="radio"  value="3" checked>
-                        </label>
-                        <label class="rating__star" aria-label="Хорошо">
-                            <input class="rating__input" type="radio" value="4">
-                        </label>
-                        <label class="rating__star" aria-label="Отлично">
-                            <input class="rating__input" type="radio" value="5">
-                        </label>
-                        <div class="rating__focus"></div>
-                    </div>
-                    <p class="block-text">{{this.Product.productDescription}}</p>
-                    {{#if this.Product.brand}}
-                        <p class="block-text">Бренд: {{this.Product.brand}}</p>
-                    {{/if}}
-                    <p class="goods-cards__price px13"><span>{{this.Product.productPrice}} руб.</span></p>
-                    <div class="goods-action">
-                        <button class="goods-action-btn">
-                            <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.57933 0H7.57933V12H4.57933V0ZM9.15888 2.99999H12.1589V12H9.15888V2.99999ZM2.99979 5.99998H-0.000213623V12H2.99979V5.99998Z" fill="#BABABA" />
-                            </svg>
-                        </button>
-
-                        <button class="btncart btn_minus goods-action-btn" onclick="decreaseCountCart({{this.Product.id}}, this)"></button>
-                            <h4 class="block-title">{{this.countOfProducts}}</h4>
-						<button class="btncart btn_plus goods-action-btn" onclick="increaseCountCart({{this.Product.id}}, this)"></button>
-                       <!--  <button class="btn-gray" onclick="removeFromCart('{{this.id}}', this)">Удалить</button> -->
-                    </div>
-                </div>
+   <div class="container">
+      <div class="goods-cards">
+         {{#each Products}}
+         <div class="goods-cards__item">
+            <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
+               {{this.Product.productName}}</h4>
+            <div class="goods-cards__img">
+               {{#if this.Product.imageExt}}
+               <img src="/static/images/products/{{this.Product.productName}}{{this.Product.imageExt}}"
+                  alt="{{this.Product.productName}}">
+               {{else}}
+               <img src="/static/images/products/default.png" alt="{{this.Product.productName}}">
+               {{/if}}
             </div>
-            {{/each}}
-        </div>
-         <button class="btn-gray" onclick="completeOrder(this)">Отправить заказ</button>
-    </div>
+            <div class="goods-cards__content">
+               <h4 class="block-title mobile-hidden">{{this.Product.productName}}</h4>
+               <div class="goods-cards__rating rating__group">
+                  <label class="rating__star" aria-label="Ужасно">
+                     <input class="rating__input" type="radio" value="1">
+                  </label>
+                  <label class="rating__star" aria-label="Сносно">
+                     <input class="rating__input" type="radio" value="2">
+                  </label>
+                  <label class="rating__star" aria-label="Нормально">
+                     <input class="rating__input" type="radio" value="3" checked>
+                  </label>
+                  <label class="rating__star" aria-label="Хорошо">
+                     <input class="rating__input" type="radio" value="4">
+                  </label>
+                  <label class="rating__star" aria-label="Отлично">
+                     <input class="rating__input" type="radio" value="5">
+                  </label>
+                  <div class="rating__focus"></div>
+               </div>
+               <p class="block-text">{{this.Product.productDescription}}</p>
+               {{#if this.Product.brand}}
+               <p class="block-text">Бренд: {{this.Product.brand}}</p>
+               {{/if}}
+               <p class="goods-cards__price px13"><span>{{this.Product.productPrice}} руб.</span></p>
+               <div class="goods-action">
+                  <button class="goods-action-btn">
+                     <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                           d="M4.57933 0H7.57933V12H4.57933V0ZM9.15888 2.99999H12.1589V12H9.15888V2.99999ZM2.99979 5.99998H-0.000213623V12H2.99979V5.99998Z"
+                           fill="#BABABA" />
+                     </svg>
+                  </button>
+                  <div class="goods-action__item-content">
+                     <button class="btn-cart btn-cart--minus"
+                        onclick="decreaseCountCart({{this.Product.id}}, this)"></button>
+                     <h4 class="goods-action__title">{{this.countOfProducts}}</h4>
+                     <button class="btn-cart btn-cart--plus"
+                        onclick="increaseCountCart({{this.Product.id}}, this)"></button>
+                     <!--  <button class="btn-gray" onclick="removeFromCart('{{this.id}}', this)">Удалить</button> -->
+                  </div>
+               </div>
+            </div>
+         </div>
+         {{/each}}
+      </div>
+      <button class="btn-gray" onclick="completeOrder(this)">Отправить заказ</button>
+   </div>
 </div>
 
 <script type="text/javascript" src="/static/js/cart.js"></script>

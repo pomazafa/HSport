@@ -57,10 +57,23 @@ html {
 }
 
 body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
     margin: 0;
     padding: 0;
     font-family: "Open Sans", "Roboto", sans-serif;
     font-size: 14px;
+}
+
+main {
+    flex-grow: 1;
 }
 
 body.lock {
@@ -1225,10 +1238,18 @@ header {
     color: #BFBFBF;
 }
 
+.goods-action__item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90px;
+}
+
 .goods-action {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    align-items: center;
 }
 
 @media (max-width: 767.98px) {
@@ -1251,9 +1272,12 @@ header {
     align-items: center;
     width: 31px;
     height: 31px;
-    margin-left: 15px;
     background: #E9E9E9;
     border-radius: 50%;
+}
+
+.goods-action-btn {
+    margin-right: 15px;
 }
 
 .goods-action-btn:active,
@@ -1511,7 +1535,6 @@ header {
 }
 
 footer {
-    margin-top: auto;
     background: #282B31;
 }
 
@@ -1603,14 +1626,6 @@ footer a {
 }
 
 .body-grey {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    height: 100vh;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
     background-color: #212429;
     background-image: url("/static/images/footer-bg.svg");
     background-repeat: no-repeat;
@@ -1721,9 +1736,8 @@ footer a {
 }
 
 .content__label {
-    width: 100%;
-    margin-top: -20px;
-    margin-bottom: 30px;
+    position: relative;
+    top: -10px;
     color: #fff;
 }
 
@@ -1766,9 +1780,18 @@ footer a {
     margin-left: auto;
 }
 
-.form-content .form-group {
+.form__wrapper .form-group {
     position: relative;
     width: 100%;
+}
+
+.form-button__wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-button__wrapper button {
+    margin-left: 0;
 }
 
 .some-form__line-required input[type=email],
@@ -2255,38 +2278,43 @@ textarea:active {
     margin-top: 7px;
 }
 
-.btncart {
+.btn-cart {
     display: inline-block;
     padding: 0;
     width: 30px;
     height: 30px;
     position: relative;
     border-radius: 50%;
-    background-color: #007EF9;
+    background-color: #E9E9E9;
     border: none;
     cursor: pointer;
 }
 
-.btncart:hover {
-    background-color: #0089f9;
+.btn-cart:hover {
+    background-color: #38C0EC;
 }
 
-.btn_minus::after, .btn_plus::after {
+.btn-cart--minus::after, .btn-cart--plus::after {
     width: 30px;
     margin-left: -15px;
     position: absolute;
     font-size: 30px;
     line-height: 1;
-    color: #fff;
+    color: rgb(186, 186, 186);;
 }
 
-.btn_minus::after {
+.btn-cart--minus::after {
     content: '-';
-    margin-top: -16px;
+    margin-top: -17px;
 }
 
-.btn_plus::after {
+.btn-cart--plus::after {
     content: '+';
-    margin-top: -16px;
+    margin-top: -15px;
+}
+
+.btn-cart:hover.btn-cart--minus::after,
+.btn-cart:hover.btn-cart--plus::after {
+    color: #fff;
 }
 

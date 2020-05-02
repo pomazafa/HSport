@@ -1,22 +1,27 @@
 <section class="section-add">
-  <div class="container">
-    <div class="form__wrapper">
-      <form class="form-add js-form-validate " action="/profile/update" method="POST">
+   <div class="container">
+      <div class="form__wrapper">
+         <form class="form-add js-form-validate " action="/profile/update" method="POST">
 
-        <span class="content__label">{{Message}}</span>
+            <span class="content__label">{{Message}}</span>
 
-         <input class="content__input" name="name" type="text" placeholder="Имя" value="{{User.name}}">
-                    <input class="content__input" name="surname" type="text" placeholder="Фамилия" value="{{User.surname}}">
-                    <input class="content__input" type="tel" name="tel" placeholder="Номер телефона" value="{{User.phone}}" data-mask="phone">
-                    <div class="form-group">
-                        <input class="content__input" name="mail" value="{{User.mail}}" type="email" placeholder="Почта*" data-validate>
-                        <span class="some-form__hint">Обязательно для заполнения</span>
-                    </div>
-                    <input class="content__input" name="password" type="password" placeholder="Старый пароль">
-                    <input class="content__input" name="passwordNew" type="password" placeholder="Новый пароль">
-        <button class="btn-gray content__btn" data-validate type="submit">Изменить</button>
-        <button class="btn-gray content__btn" onclick="window.location.href='http://localhost:3000/profile/delete';">Удалить аккаунт</button>
-      </form>
-    </div>
-</div>
+            <input class="content__input" name="name" type="text" placeholder="Имя" value="{{User.name}}">
+            <input class="content__input" name="surname" type="text" placeholder="Фамилия" value="{{User.surname}}">
+            <input class="content__input" type="tel" name="tel" placeholder="Номер телефона" value="{{User.phone}}"
+               data-mask="phone">
+            <div class="form-group">
+               <input class="content__input" name="mail" value="{{User.mail}}" type="email" placeholder="Почта*"
+                  data-validate>
+               <span class="some-form__hint">Обязательно для заполнения</span>
+            </div>
+            <input class="content__input" name="password" type="password" placeholder="Старый пароль">
+            <input class="content__input" name="passwordNew" type="password" placeholder="Новый пароль">
+            <div class="form-button__wrapper">
+               <button class="btn-gray content__btn" type="submit">Изменить</button>
+               <button class="btn-gray content__btn" type="button"
+                  onclick="window.location.href='http://localhost:3000/profile/delete';">Удалить аккаунт</button>
+            </div>
+         </form>
+      </div>
+   </div>
 </section>

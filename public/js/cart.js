@@ -1,7 +1,7 @@
 async function addToCart(id, element) {
     let response = await fetch("http://localhost:3000/cart/add?id=" + id);
     if (response.status == 201) {
-        element.closest('div').innerHTML = "<button class=\"btncart btn_minus goods-action-btn\" onclick=\"decreaseCountCart(" + id + ", this)\"></button><h4 class=\"block-title\">1</h4><button class=\"btncart btn_plus goods-action-btn\" onclick=\"increaseCountCart(" + id + ", this)\"></button>";
+        element.closest('.goods-action__item').innerHTML = "<div class=\"goods-action__item-content\"><button class=\"btn-cart btn-cart--minus\" onclick=\"decreaseCountCart(" + id + ", this)\"></button><h4 class=\"goods-action__title\">1</h4><button class=\"btn-cart btn-cart--plus\" onclick=\"increaseCountCart(" + id + ", this)\"></button></div>";
         //  '<button class="btn-gray" onclick="removeFromCart(' + id + ', this)">Удалить</button>';
     } else if (response.status == 403) {
         element.innerHTML = "Действие недоступно";
@@ -25,7 +25,7 @@ async function removeFromCart(id, element) {
             element.closest('.goods-cards__item').style.display = "none"
         } else {
             console.log(response.status);
-            element.closest('div').innerHTML = '<button class="btn-gray" onclick="addToCart(' + id + ', this)">В корзину</button>';
+            element.closest('.goods-action__item').innerHTML = '<button class="btn-gray" onclick="addToCart(' + id + ', this)">В корзину</button>';
         }
     }
 }
@@ -51,11 +51,11 @@ async function decreaseCountCart(id, element) {
         if (element.nextElementSibling.innerHTML == 0) {
             if(!(window.location.toString().includes('catalog') || window.location.toString().includes('product')))
             {
-                element.closest('.goods-cards__item').style.display = "none"
+                element.closest('.goods-cards__item').style.display = "none";
             }
             else
             {
-                element.closest('div').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>"
+                element.closest('.goods-action__item').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>"
             }
         }
     } else if (response.status == 403) {
