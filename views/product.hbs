@@ -78,6 +78,32 @@
 
          <span>{{errMessage}}</span>
          <input type="text" style="visibility: hidden;" name="id" value="{{Product.id}}"></input>
+         <label>Вы можете оставить свой отзыв!</label>
+         <label>{{form.errMessage}}</label>
+
+         <div class="goods-cards__rating rating__group">
+                  <input class="rating__input" type="radio" name="rating"
+                     id="rating-1" value="1">
+                  <label class="rating__star" for="rating-1" aria-label="Ужасно"></label>
+
+                  <input class="rating__input" type="radio" name="rating"
+                     id="rating-2" value="2">
+                  <label class="rating__star" for="rating-2" aria-label="Сносно"></label>
+
+                  <input class="rating__input" type="radio" name="rating"
+                     id="rating-3" value="3">
+                  <label class="rating__star" for="rating-3" aria-label="Нормально"></label>
+
+                  <input class="rating__input" type="radio" name="rating"
+                     id="rating-4" value="4">
+                  <label class="rating__star" for="rating-4" aria-label="Хорошо"></label>
+
+                  <input class="rating__input" type="radio" name="rating"
+                     id="rating-5" value="5">
+                  <label class="rating__star" for="rating-5" aria-label="Отлично"></label>
+
+                  <div class="rating__focus"></div>
+               </div>
          <div>
             <label for="review">Текст отзыва:</label>
             <textarea id="review" name="review">{{form.review}}</textarea>

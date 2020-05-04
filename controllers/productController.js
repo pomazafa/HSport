@@ -8,6 +8,7 @@ const {
 const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
+var form = null;
 
 var currentProductId = null;
 
@@ -42,8 +43,10 @@ exports.index = async function(request, response) {
                             Title: product.productName,
                             Rating: Math.round(rating / product.toJSON().Users.length),
                             Product: product.toJSON(),
+                            form:form,
                             isAuth: true
                         })
+                        form = null;
                     })
                 } else {
                     const products = Product.findOne({
@@ -59,9 +62,11 @@ exports.index = async function(request, response) {
                             Title: product.productName,
                             Product: product.toJSON(),
                             Rating: Math.round(rating / product.toJSON().Users.length),
+                            form:form,
                             isAuth: true,
                             isAdmin: true
                         })
+                        form = null;
                     })
                 }
             } else {
@@ -77,7 +82,7 @@ exports.index = async function(request, response) {
                     response.render('product.hbs', {
                         Rating: Math.round(rating / product.toJSON().Users.length),
                         Title: product.productName,
-                        Product: product.toJSON()
+                            Product: product.toJSON()
                     })
                 })
             }
@@ -95,7 +100,7 @@ exports.index = async function(request, response) {
                     response.render('product.hbs', {
                         Rating: Math.round(rating / product.toJSON().Users.length),
                         Title: product.productName,
-                        Product: product.toJSON()
+                            Product: product.toJSON()
                     })
                 })
         }
@@ -110,7 +115,9 @@ exports.addComment = async function(request, response) {
     const productId = request.body.id;
     if (await verifyToken(request, response)) {
     const review = request.body.review;
-    const rate = 1;
+    if(request.body.rating)
+    {
+    const rate = request.body.rating;
 
     const comment = Comment.build({
         commentDate: Date.now(),
@@ -120,6 +127,14 @@ exports.addComment = async function(request, response) {
         ProductId: productId
     })
     comment.save();
+}
+else
+{
+    form = {
+        errMessage: "Оцените этот товар от 1 до 5, пожалуйста!",
+        review:review
+    }
+}
     response.redirect('/product?id=' + productId);
 }
 else{
