@@ -2318,3 +2318,7 @@ textarea:active {
     color: #fff;
 }
 
+fieldset {
+    pointer-events:none;
+    border:0 none;
+}

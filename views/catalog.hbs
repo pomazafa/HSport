@@ -15,26 +15,27 @@
                 <div class="goods-cards__content">
                     <h4 class="block-title mobile-hidden">{{this.productName}}</h4>
                     <div class="goods-cards__rating rating__group">
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-1" value="1" {{#when this.rating 1}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-1" aria-label="Ужасно"></label>
+                        <fieldset>
+                            <input class="rating__input" type="radio" name="{{this.productName}}"
+                                id="{{this.productName}}-1" value="1" {{#when this.rating 1}}checked{{/when}}>
+                            <label class="rating__star" for="{{this.productName}}-1" aria-label="Ужасно"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-2" value="2" {{#when this.rating 2}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-2" aria-label="Сносно"></label>
+                            <input class="rating__input" type="radio" name="{{this.productName}}"
+                                id="{{this.productName}}-2" value="2" {{#when this.rating 2}}checked{{/when}}>
+                            <label class="rating__star" for="{{this.productName}}-2" aria-label="Сносно"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-3" value="3" {{#when this.rating 3}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-3" aria-label="Нормально"></label>
+                            <input class="rating__input" type="radio" name="{{this.productName}}"
+                                id="{{this.productName}}-3" value="3" {{#when this.rating 3}}checked{{/when}}>
+                            <label class="rating__star" for="{{this.productName}}-3" aria-label="Нормально"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-4" value="4" {{#when this.rating 4}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-4" aria-label="Хорошо"></label>
+                            <input class="rating__input" type="radio" name="{{this.productName}}"
+                                id="{{this.productName}}-4" value="4" {{#when this.rating 4}}checked{{/when}}>
+                            <label class="rating__star" for="{{this.productName}}-4" aria-label="Хорошо"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-5" value="5" {{#when this.rating 5}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-5" aria-label="Отлично"></label>
-
+                            <input class="rating__input" type="radio" name="{{this.productName}}"
+                                id="{{this.productName}}-5" value="5" {{#when this.rating 5}}checked{{/when}}>
+                            <label class="rating__star" for="{{this.productName}}-5" aria-label="Отлично"></label>
+                        </fieldset>
                         <div class="rating__focus"></div>
                     </div>
                     <p class="block-text">{{this.productDescription}}</p>

@@ -7,8 +7,7 @@
                {{this.productName}}</h4>
             <div class="goods-cards__img">
                {{#if this.imageExt}}
-               <img src="/static/images/products/{{this.productName}}{{this.imageExt}}"
-                  alt="{{this.productName}}">
+               <img src="/static/images/products/{{this.productName}}{{this.imageExt}}" alt="{{this.productName}}">
                {{else}}
                <img src="/static/images/products/default.png" alt="{{this.productName}}">
                {{/if}}
@@ -16,35 +15,37 @@
             <div class="goods-cards__content">
                <h4 class="block-title mobile-hidden">{{this.productName}}</h4>
                <div class="goods-cards__rating rating__group">
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-1" value="1" {{#when this.rating 1}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-1" aria-label="Ужасно"></label>
+                  <fieldset>
+                     <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-1"
+                        value="1" {{#when this.rating 1}}checked{{/when}}>
+                     <label class="rating__star" for="{{this.productName}}-1" aria-label="Ужасно"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-2" value="2" {{#when this.rating 2}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-2" aria-label="Сносно"></label>
+                     <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-2"
+                        value="2" {{#when this.rating 2}}checked{{/when}}>
+                     <label class="rating__star" for="{{this.productName}}-2" aria-label="Сносно"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-3" value="3" {{#when this.rating 3}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-3" aria-label="Нормально"></label>
+                     <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-3"
+                        value="3" {{#when this.rating 3}}checked{{/when}}>
+                     <label class="rating__star" for="{{this.productName}}-3" aria-label="Нормально"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-4" value="4" {{#when this.rating 4}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-4" aria-label="Хорошо"></label>
+                     <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-4"
+                        value="4" {{#when this.rating 4}}checked{{/when}}>
+                     <label class="rating__star" for="{{this.productName}}-4" aria-label="Хорошо"></label>
 
-                        <input class="rating__input" type="radio" name="{{this.productName}}"
-                            id="{{this.productName}}-5" value="5" {{#when this.rating 5}}checked{{/when}}>
-                        <label class="rating__star" for="{{this.productName}}-5" aria-label="Отлично"></label>
-
-                        <div class="rating__focus"></div>
-                    </div>
+                     <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-5"
+                        value="5" {{#when this.rating 5}}checked{{/when}}>
+                     <label class="rating__star" for="{{this.productName}}-5" aria-label="Отлично"></label>
+                  </fieldset>
+                  <div class="rating__focus"></div>
+               </div>
                <p class="block-text">{{this.productDescription}}</p>
                {{#if this.brand}}
                <p class="block-text">Бренд: {{this.brand}}</p>
                {{/if}}
                <p class="goods-cards__price px13"><span>{{this.productPrice}} руб.</span></p>
                <div class="goods-action">
-                  <button class="goods-action-btn" onClick="window.location.href = 'http://localhost:3000/product?id={{this.id}}';">
+                  <button class="goods-action-btn"
+                     onClick="window.location.href = 'http://localhost:3000/product?id={{this.id}}';">
                      <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                            d="M4.57933 0H7.57933V12H4.57933V0ZM9.15888 2.99999H12.1589V12H9.15888V2.99999ZM2.99979 5.99998H-0.000213623V12H2.99979V5.99998Z"
@@ -52,11 +53,9 @@
                      </svg>
                   </button>
                   <div class="goods-action__item-content">
-                     <button class="btn-cart btn-cart--minus"
-                        onclick="decreaseCountCart({{this.id}}, this)"></button>
+                     <button class="btn-cart btn-cart--minus" onclick="decreaseCountCart({{this.id}}, this)"></button>
                      <h4 class="goods-action__title">{{this.Orders.0.OrderedProduct.countOfProducts}}</h4>
-                     <button class="btn-cart btn-cart--plus"
-                        onclick="increaseCountCart({{this.id}}, this)"></button>
+                     <button class="btn-cart btn-cart--plus" onclick="increaseCountCart({{this.id}}, this)"></button>
                      <!--  <button class="btn-gray" onclick="removeFromCart('{{this.id}}', this)">Удалить</button> -->
                   </div>
                </div>
