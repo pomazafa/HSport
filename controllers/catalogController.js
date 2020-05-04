@@ -5,8 +5,11 @@ const {
     OrderedProduct,
     Comment
 } = require('../models/model.js');
-const { secret } = require('../config/config.js');
+const {
+    secret
+} = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
+const getRating = require('../public/js/rating.js');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
@@ -14,7 +17,7 @@ var form = null;
 var errMessage = null;
 
 
-exports.index = async function(request, response) {
+exports.index = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -23,69 +26,80 @@ exports.index = async function(request, response) {
         })
         if (result != null) {
             if (result.role == 1) {
-                const products = await Product.findAll()
-                .then(products => {
-                    response.render('catalog.hbs', {
-                        Products: products.map(product => product.toJSON()),
-                        isAuth: true,
-                        isAdmin: 'true',
-                        Title: 'Каталог'
+                const products = await Product.findAll({
+                        include: [{
+                            model: User
+                        }]
                     })
-                });
+                    .then(products => {
+                        getRating(products);
+                        response.render('catalog.hbs', {
+                            Products: products.map(product => Object.assign(product.toJSON(), {
+                                rating: product.rating
+                            })),
+                            isAuth: true,
+                            isAdmin: 'true',
+                            Title: 'Каталог'
+                        })
+                    });
             } else {
                 const products = await Product.findAll({
-                    include: [
+                    include: [{
+                            model: User
+                        },
                         {
                             model: Order,
-                            required: false,
                             where: {
                                 UserId: request.user.id,
                                 orderStatus: 'created'
-                            }
-                        },
-                        {
-                            model: User
+                            },
+                            required: false
                         }
                     ]
                 }).then(products => {
-                    products.forEach(product => {
-                        product.rating = 0;
-                        product.Users.forEach((user) => product.rating += user.Comment.rating);
-                        if(product.Users.length)
-                        {
-                            product.rating = Math.round(product.rating / product.Users.length);
-                        }
-                    })
+                    getRating(products);
                     response.render('catalog.hbs', {
-                        Products: products.map(product => 
-                            {
-                                return Object.assign(product.toJSON(), {rating: product.rating});
-                            }
-                            ),
+                        Products: products.map(product => Object.assign(product.toJSON(), {
+                            rating: product.rating
+                        })),
                         Title: 'Каталог',
                         isAuth: true
                     })
                 });
             }
         } else {
-            const products = await Product.findAll().then(products => {
+            const products = await Product.findAll({
+                include: [{
+                    model: User
+                }]
+            }).then(products => {
+                getRating(products);
                 response.render('catalog.hbs', {
                     Title: 'Каталог',
-                    Products: products.map(product => product.toJSON())
+                    Products: products.map(product => Object.assign(product.toJSON(), {
+                        rating: product.rating
+                    })),
                 })
             });
         }
     } else {
-        const products = await Product.findAll().then(products => {
+        const products = await Product.findAll({
+            include: [{
+                model: User
+            }]
+        }).then(products => {
+            getRating(products);
             response.render('catalog.hbs', {
                 Title: 'Каталог',
-                Products: products.map(product => product.toJSON())
+                Products: products.map(product => Object.assign(product.toJSON(), {
+                    rating: product.rating
+                })),
             })
         });
     }
 };
 
-exports.add = async function(request, response) {
+exports.add = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -114,7 +128,7 @@ exports.add = async function(request, response) {
     }
 }
 
-exports.addPost = async function(request, response) {
+exports.addPost = async function (request, response) {
     const pname = request.body.pname;
     const pdescription = request.body.pdescription == "" ? null : request.body.pdescription;
     const pbrand = request.body.pbrand == "" ? null : request.body.pbrand;
