@@ -13,6 +13,7 @@ var currentProductId = null;
 
 exports.index = async function(request, response) {
     currentProductId = request.query.id;
+    var rating = 0;
     if (currentProductId) {
         if (await verifyToken(request, response)) {
             const result = await User.findOne({
@@ -36,8 +37,10 @@ exports.index = async function(request, response) {
                             }
                         ]
                     }).then(product => {
+                        product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                         response.render('product.hbs', {
                             Title: product.productName,
+                            Rating: Math.round(rating / product.toJSON().Users.length),
                             Product: product.toJSON(),
                             isAuth: true
                         })
@@ -51,9 +54,11 @@ exports.index = async function(request, response) {
                             }
                         ]
                     }).then(product => {
+                        product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                         response.render('product.hbs', {
                             Title: product.productName,
                             Product: product.toJSON(),
+                            Rating: Math.round(rating / product.toJSON().Users.length),
                             isAuth: true,
                             isAdmin: true
                         })
@@ -68,7 +73,9 @@ exports.index = async function(request, response) {
                         }
                     ]
                 }).then(product => {
+                    product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                     response.render('product.hbs', {
+                        Rating: Math.round(rating / product.toJSON().Users.length),
                         Title: product.productName,
                         Product: product.toJSON()
                     })
@@ -84,7 +91,9 @@ exports.index = async function(request, response) {
                     ]
                     
                 }).then(product => {
+                    product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                     response.render('product.hbs', {
+                        Rating: Math.round(rating / product.toJSON().Users.length),
                         Title: product.productName,
                         Product: product.toJSON()
                     })
@@ -101,7 +110,7 @@ exports.addComment = async function(request, response) {
     const productId = request.body.id;
     if (await verifyToken(request, response)) {
     const review = request.body.review;
-    const rate = 5;
+    const rate = 1;
 
     const comment = Comment.build({
         commentDate: Date.now(),

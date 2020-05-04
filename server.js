@@ -33,6 +33,13 @@ app.use(multer({ storage: storageConfig }).single("pimage"));
 
 app.engine("hbs", expressHbs({
     layoutsDir: "views/layouts",
+    helpers: {
+        when: function(operand_1, operand_2, options) {
+            result = operand_1 == operand_2;
+            if(result) return options.fn(this); 
+            return options.inverse(this);    
+          }
+    },
     defaultLayout: "main",
     extname: "hbs"
 }))

@@ -42,11 +42,26 @@ exports.index = async function(request, response) {
                                 UserId: request.user.id,
                                 orderStatus: 'created'
                             }
+                        },
+                        {
+                            model: User
                         }
                     ]
                 }).then(products => {
+                    products.forEach(product => {
+                        product.rating = 0;
+                        product.Users.forEach((user) => product.rating += user.Comment.rating);
+                        if(product.Users.length)
+                        {
+                            product.rating = Math.round(product.rating / product.Users.length);
+                        }
+                    })
                     response.render('catalog.hbs', {
-                        Products: products.map(product => product.toJSON()),
+                        Products: products.map(product => 
+                            {
+                                return Object.assign(product.toJSON(), {rating: product.rating});
+                            }
+                            ),
                         Title: 'Каталог',
                         isAuth: true
                     })
