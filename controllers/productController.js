@@ -9,6 +9,7 @@ const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 var form = null;
+const error401 = require('../public/js/error401.js')
 
 var currentProductId = null;
 
@@ -43,7 +44,7 @@ exports.index = async function(request, response) {
                             Title: product.productName,
                             Rating: Math.round(rating / product.toJSON().Users.length),
                             Product: product.toJSON(),
-                            form:form,
+                            form: form,
                             isAuth: true
                         })
                         form = null;
@@ -51,18 +52,16 @@ exports.index = async function(request, response) {
                 } else {
                     const products = Product.findOne({
                         where: { id: currentProductId },
-                        include: [
-                            {
-                                model: User
-                            }
-                        ]
+                        include: [{
+                            model: User
+                        }]
                     }).then(product => {
                         product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                         response.render('product.hbs', {
                             Title: product.productName,
                             Product: product.toJSON(),
                             Rating: Math.round(rating / product.toJSON().Users.length),
-                            form:form,
+                            form: form,
                             isAuth: true,
                             isAdmin: true
                         })
@@ -72,41 +71,35 @@ exports.index = async function(request, response) {
             } else {
                 const products = Product.findOne({
                     where: { id: currentProductId },
-                    include: [
-                        {
-                            model: User
-                        }
-                    ]
+                    include: [{
+                        model: User
+                    }]
                 }).then(product => {
                     product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
                     response.render('product.hbs', {
                         Rating: Math.round(rating / product.toJSON().Users.length),
                         Title: product.productName,
-                            Product: product.toJSON()
+                        Product: product.toJSON()
                     })
                 })
             }
         } else {
             const products = Product.findOne({
-                    where: { id: currentProductId },
-                    include: [
-                        {
-                            model: User
-                        }
-                    ]
-                    
-                }).then(product => {
-                    product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
-                    response.render('product.hbs', {
-                        Rating: Math.round(rating / product.toJSON().Users.length),
-                        Title: product.productName,
-                            Product: product.toJSON()
-                    })
+                where: { id: currentProductId },
+                include: [{
+                    model: User
+                }]
+
+            }).then(product => {
+                product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
+                response.render('product.hbs', {
+                    Rating: Math.round(rating / product.toJSON().Users.length),
+                    Title: product.productName,
+                    Product: product.toJSON()
                 })
+            })
         }
-    }
-    else
-    {
+    } else {
         response.redirect('/catalog');
     }
 }
@@ -114,30 +107,26 @@ exports.index = async function(request, response) {
 exports.addComment = async function(request, response) {
     const productId = request.body.id;
     if (await verifyToken(request, response)) {
-    const review = request.body.review;
-    if(request.body.rating)
-    {
-    const rate = request.body.rating;
+        const review = request.body.review;
+        if (request.body.rating) {
+            const rate = request.body.rating;
 
-    const comment = Comment.build({
-        commentDate: Date.now(),
-        rating: rate,
-        message: review,
-        UserId: request.user.id,
-        ProductId: productId
-    })
-    comment.save();
-}
-else
-{
-    form = {
-        errMessage: "Оцените этот товар от 1 до 5, пожалуйста!",
-        review:review
+            const comment = Comment.build({
+                commentDate: Date.now(),
+                rating: rate,
+                message: review,
+                UserId: request.user.id,
+                ProductId: productId
+            })
+            comment.save();
+        } else {
+            form = {
+                errMessage: "Оцените этот товар от 1 до 5, пожалуйста!",
+                review: review
+            }
+        }
+        response.redirect('/product?id=' + productId);
+    } else {
+        error401(request, response);
     }
-}
-    response.redirect('/product?id=' + productId);
-}
-else{
-    response.redirect('/entry/exit');
-}
 }

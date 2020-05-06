@@ -12,6 +12,8 @@ const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const getRating = require('../public/js/rating.js');
 var form = null;
+const error401 = require('../public/js/error401.js');
+const errorAdmin = require('../public/js/errorAdmin.js');
 
 var currentProductId = null;
 
@@ -45,18 +47,15 @@ exports.index = async function (request, response) {
                     })
                 })
             } else {
-                response.send('Вы зашли под записью администратора, Вам недоступна эта функция')
-
-
-                // сделать красивую страничку
-
-
+                errorAdmin(request, response);
             }
         } else {
-            response.redirect('/entry/exit');
+        error401(request, response);
+            
         }
     } else {
-        response.redirect('/entry/exit');
+        error401(request, response);
+        
     }
 }
 

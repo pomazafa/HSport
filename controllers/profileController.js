@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const makeSalt = require('../public/js/createSalt.js');
 var Message = null;
+const error401 = require('../public/js/error401.js');
 
 exports.index = async function(request, response) {
     if (await verifyToken(request, response)) {
@@ -45,17 +46,12 @@ exports.index = async function(request, response) {
                         response.redirect('/profile/deleted');
                     }
                 } else {
+                    error401(request, response);
 
-                    // страница ошибки
-
-                    response.send('Вы не авторизованы');
                 }
             })
     } else {
-
-        // страница ошибки
-
-        response.send('Вы не авторизованы');
+        error401(request, response);
 
     }
 };
@@ -76,9 +72,7 @@ exports.update = async function(request, response) {
             }
         })
         if (result === null) {
-            // страница ошибки
-
-            response.send('Вы не авторизованы');
+            error401(request, response);
 
         } else {
             if (result.status == 1) {
@@ -132,8 +126,8 @@ exports.delete = async function(request, response) {
             }
         })
         if (result === null) {
-        	//страница ошибки
-            response.send('Вы не авторизованы');
+            error401(request, response);
+
         } else {
             let values = {
                 status: 0
@@ -144,9 +138,7 @@ exports.delete = async function(request, response) {
 
         }
     } else {
-        // страница ошибки
-        response.send('Вы не авторизованы');
-
+        error401(request, response);
     }
 }
 
@@ -177,33 +169,29 @@ exports.deleted = async function(request, response) {
                         response.redirect('/profile');
                     }
                 } else {
+                    error401(request, response);
 
-                    // страница ошибки
-
-                    response.send('Вы не авторизованы');
                 }
             })
     } else {
 
-        // страница ошибки
+        error401(request, response);
 
-        response.send('Вы не авторизованы');
 
     }
 
 }
 
 exports.restore = async function(request, response) {
-	if (await verifyToken(request, response)) {
+    if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
                 id: request.user.id
             }
         })
         if (result === null) {
+            error401(request, response);
 
-        	//страница ошибки
-            response.send('Вы не авторизованы');
         } else {
             let values = {
                 status: 1
@@ -214,8 +202,7 @@ exports.restore = async function(request, response) {
 
         }
     } else {
-        // страница ошибки
-        response.send('Вы не авторизованы');
+        error401(request, response);
 
     }
 }

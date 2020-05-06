@@ -58,7 +58,12 @@ app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 
 app.use(function(req, res, next) {
-    res.status(404).send("Not Found");
+    res.render('message.hbs', {
+            Title: "Страница не найдена",
+            message: "Кажется, такой страницы не существует, попробуйте перейти в наш каталог, нажав на кнопку!",
+            buttonAction: "window.location.href = 'http://localhost:3000/catalog'",
+            buttonValue: "К каталогу"
+        });
 });
 
 app.listen(3000);

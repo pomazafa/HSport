@@ -17,7 +17,7 @@ var form = null;
 var errMessage = null;
 
 
-exports.index = async function (request, response) {
+exports.index = async function(request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -99,7 +99,7 @@ exports.index = async function (request, response) {
     }
 };
 
-exports.add = async function (request, response) {
+exports.add = async function(request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -128,43 +128,57 @@ exports.add = async function (request, response) {
     }
 }
 
-exports.addPost = async function (request, response) {
-    const pname = request.body.pname;
-    const pdescription = request.body.pdescription == "" ? null : request.body.pdescription;
-    const pbrand = request.body.pbrand == "" ? null : request.body.pbrand;
-    const pprice = request.body.pprice;
-
-    const result = await Product.findOne({
-        where: {
-            productName: pname
-        }
-    })
-    if (result != null) {
-        form = {
-            pname: pname,
-            pdescription: pdescription,
-            pbrand: pbrand,
-            pprice: pprice
-        };
-        errMessage = "Товар с данным наименованием уже существует.";
-        response.redirect('/catalog/add');
-    } else {
-        const filedata = request.file;
-        var fileExt;
-        if (!filedata) {
-            fileExt = null;
-        } else {
-            fileExt = path.extname(filedata.originalname);
-        }
-
-        const product = Product.build({
-            productName: pname,
-            productDescription: pdescription,
-            brand: pbrand,
-            productPrice: pprice,
-            imageExt: fileExt
+exports.addPost = async function(request, response) {
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
         })
-        product.save();
+        if (result != null) {
+            if (result.role == 1) {
+                const pname = request.body.pname;
+                const pdescription = request.body.pdescription == "" ? null : request.body.pdescription;
+                const pbrand = request.body.pbrand == "" ? null : request.body.pbrand;
+                const pprice = request.body.pprice;
+
+                const result = await Product.findOne({
+                    where: {
+                        productName: pname
+                    }
+                })
+                if (result != null) {
+                    form = {
+                        pname: pname,
+                        pdescription: pdescription,
+                        pbrand: pbrand,
+                        pprice: pprice
+                    };
+                    errMessage = "Товар с данным наименованием уже существует.";
+                    response.redirect('/catalog/add');
+                } else {
+                    const filedata = request.file;
+                    var fileExt;
+                    if (!filedata) {
+                        fileExt = null;
+                    } else {
+                        fileExt = path.extname(filedata.originalname);
+                    }
+
+                    const product = Product.build({
+                        productName: pname,
+                        productDescription: pdescription,
+                        brand: pbrand,
+                        productPrice: pprice,
+                        imageExt: fileExt
+                    })
+                    product.save();
+                    response.redirect('/catalog');
+                }
+            }
+            response.redirect('/catalog');
+        }
         response.redirect('/catalog');
     }
+    response.redirect('/catalog');
 }
