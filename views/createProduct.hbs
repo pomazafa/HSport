@@ -1,7 +1,7 @@
 <section class="section-add">
   <div class="container">
     <div class="form__wrapper">
-      <form class="form-add" action="/catalog/add" method="POST" enctype="multipart/form-data">
+      <form class="form-add" action="{{submitAction}}" method="POST" enctype="multipart/form-data">
 
         <span class="form-add__error-message" id="error-message">{{errMessage}}</span>
 
@@ -30,7 +30,7 @@
             <input class="content__input form-add__input" type="number" id="pprice" name="pprice" min="0.01" step="0.01" value="{{form.pprice}}"></input>
         </div>
 
-        <button class="btn-gray content__btn" type="submit" id="addProduct">Добавить</button>
+        <button class="btn-gray content__btn" type="submit" id="addProduct">{{submitMessage}}</button>
       </form>
     </div>
 

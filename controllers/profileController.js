@@ -10,7 +10,6 @@ const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const makeSalt = require('../public/js/createSalt.js');
 var Message = null;
 const error401 = require('../public/js/error401.js');
 
@@ -47,12 +46,10 @@ exports.index = async function(request, response) {
                     }
                 } else {
                     error401(request, response);
-
                 }
             })
     } else {
         error401(request, response);
-
     }
 };
 
