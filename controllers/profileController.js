@@ -6,14 +6,16 @@ const {
     Comment
 } = require('../models/model.js');
 
-const { secret } = require('../config/config.js');
+const {
+    secret
+} = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 var Message = null;
 const error401 = require('../public/js/error401.js');
 
-exports.index = async function(request, response) {
+exports.index = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
                 where: {
@@ -53,7 +55,7 @@ exports.index = async function(request, response) {
     }
 };
 
-exports.update = async function(request, response) {
+exports.update = async function (request, response) {
     if (await verifyToken(request, response)) {
         const userName = request.body.name;
         const userTel = request.body.tel;
@@ -73,8 +75,8 @@ exports.update = async function(request, response) {
 
         } else {
             if (result.status == 1) {
-                if (userPassword != "") {
-                    if (userPasswordNew != "") {
+                if (userPasswordNew != "") {
+                    if (userPassword != "") {
                         const salt = result.passwordSalt;
                         const passwordHash = crypto.createHash('sha512').update(`${userPassword}${salt}`).digest('hex');
                         if (passwordHash === result.password) {
@@ -85,12 +87,18 @@ exports.update = async function(request, response) {
                             return;
                         }
                     } else {
-                        Message = "Вы не ввели новый пароль";
+                        Message = "Вы не ввели старый пароль";
                         response.redirect('/profile');
                         return;
                     }
                 } else {
-                    userPassword = result.password;
+                    if (userPassword != "") {
+                        userPassword = result.password;
+                    } else {
+                        Message = "Вы не ввели новый пароль";
+                        response.redirect('/profile');
+                        return;
+                    }
                 }
                 let values = {
                     name: userName,
@@ -115,7 +123,7 @@ exports.update = async function(request, response) {
     }
 }
 
-exports.delete = async function(request, response) {
+exports.delete = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -139,7 +147,7 @@ exports.delete = async function(request, response) {
     }
 }
 
-exports.deleted = async function(request, response) {
+exports.deleted = async function (request, response) {
 
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
@@ -179,7 +187,7 @@ exports.deleted = async function(request, response) {
 
 }
 
-exports.restore = async function(request, response) {
+exports.restore = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {

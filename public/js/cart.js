@@ -1,23 +1,23 @@
 async function addToCart(id, element) {
-    let response = await fetch("http://localhost:3000/cart/add?id=" + id);
+    let response = await fetch("/cart/add?id=" + id);
     if (response.status == 201) {
         element.closest('.goods-action__item').innerHTML = "<div class=\"goods-action__item-content\"><button class=\"btn-cart btn-cart--minus\" onclick=\"decreaseCountCart(" + id + ", this)\"></button><h4 class=\"goods-action__title\">1</h4><button class=\"btn-cart btn-cart--plus\" onclick=\"increaseCountCart(" + id + ", this)\"></button></div>";
         //  '<button class="btn-gray" onclick="removeFromCart(' + id + ', this)">Удалить</button>';
     } else if (response.status == 403) {
         element.innerHTML = "Действие недоступно";
     } else if (response.status == 401) {
-        window.location.href = "http://localhost:3000/entry/exit";
+        window.location.href = "/entry/exit";
     } else {
         element.innerHTML = "Ошибка, попробуйте позже";
     }
 }
 
 async function removeFromCart(id, element) {
-    let response = await fetch("http://localhost:3000/cart/remove?id=" + id);
+    let response = await fetch("/cart/remove?id=" + id);
     if (response.status == 403) {
         element.innerHTML = "Действие недоступно";
     } else if (response.status == 401) {
-        window.location.href = "http://localhost:3000/entry/exit";
+        window.location.href = "/entry/exit";
     } else if (response.status == 520) {
         element.innerHTML = "Ошибка сервера, попробуйте позже";
     } else {
@@ -32,20 +32,20 @@ async function removeFromCart(id, element) {
 
 
 async function increaseCountCart(id, element) {
-    let response = await fetch("http://localhost:3000/cart/increase?id=" + id);
+    let response = await fetch("/cart/increase?id=" + id);
     if (response.status == 200) {
         element.previousElementSibling.innerHTML++;
     } else if (response.status == 403) {
         alert("Действие недоступно");
     } else if (response.status == 401) {
-        window.location.href = "http://localhost:3000/entry/exit";
+        window.location.href = "/entry/exit";
     } else {
         alert("Ошибка, попробуйте позже");
     }
 }
 
 async function decreaseCountCart(id, element) {
-    let response = await fetch("http://localhost:3000/cart/decrease?id=" + id);
+    let response = await fetch("/cart/decrease?id=" + id);
     if (response.status == 200) {
         element.nextElementSibling.innerHTML--;
         if (element.nextElementSibling.innerHTML == 0) {
@@ -61,22 +61,22 @@ async function decreaseCountCart(id, element) {
     } else if (response.status == 403) {
         alert("Действие недоступно");
     } else if (response.status == 401) {
-        window.location.href = "http://localhost:3000/entry/exit";
+        window.location.href = "/entry/exit";
     } else {
         alert("Ошибка, попробуйте позже");
     }
 }
 
 async function completeOrder(element) {
-    let response = await fetch("http://localhost:3000/cart/complete");
+    let response = await fetch("/cart/complete");
     if (response.status == 200) {
-        window.location.href = "http://localhost:3000/cart/carts";
+        window.location.href = "/cart/carts";
     } else if (response.status == 403) {
         alert("Действие недоступно");
     } else if (response.status == 500) {
         alert("Ошибка сервера, попробуйте позже");
     } else if (response.status == 401) {
-        window.location.href = "http://localhost:3000/entry/exit";
+        window.location.href = "/entry/exit";
     } else {
         alert("Ошибка, попробуйте позже");
     }

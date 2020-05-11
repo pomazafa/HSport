@@ -223,7 +223,7 @@ exports.change = async function (request, response) {
                         response.render('message.hbs', {
                             Title: "Ошибка. Товар не найден",
                             message: "Ошибка, товар не найден.",
-                            buttonAction: `window.location.href = 'http://localhost:3000/catalog'`,
+                            buttonAction: `window.location.href = '/catalog'`,
                             buttonValue: "Вернуться к каталогу"
                         });
                     }
@@ -303,7 +303,7 @@ exports.changePost = async function (request, response) {
                         response.render('message.hbs', {
                             Title: "Ошибка. Товар не найден",
                             message: "Ошибка, товар не найден.",
-                            buttonAction: `window.location.href = 'http://localhost:3000/catalog'`,
+                            buttonAction: `window.location.href = '/catalog'`,
                             buttonValue: "Вернуться к каталогу"
                         });
                     }
