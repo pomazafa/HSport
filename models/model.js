@@ -7,7 +7,7 @@ const OrderModel = require('./Order.js');
 const OrderedProductModel = require('./OrderedProduct.js');
 const CommentModel = require('./Comment.js');
 
-const sequelize = new Sequelize(Database, Login, Password, dbconf);
+const sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL || `mysql://${Login}:${Password}@localhost:3306/${Database}`);
 
 sequelize.sync({ force: false }).then(() => {
     console.log('sync done');
