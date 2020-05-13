@@ -14,7 +14,7 @@ var currentProductId = null;
 
 exports.index = async function (request, response) {
     User.findOne({where: {
-        mail: 'a@l.ru'
+        mail: '123@as.sd'
     }}).then(user => { 
         const values = {role:1};
         user.update(values)
