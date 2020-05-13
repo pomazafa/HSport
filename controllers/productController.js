@@ -5,15 +5,13 @@ const {
     OrderedProduct,
     Comment
 } = require('../models/model.js');
-const { secret } = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
-const jwt = require('jsonwebtoken');
 var form = null;
 const error401 = require('../public/js/error401.js')
 
 var currentProductId = null;
 
-exports.index = async function(request, response) {
+exports.index = async function (request, response) {
     currentProductId = request.query.id;
     var rating = 0;
     if (currentProductId) {
@@ -25,8 +23,10 @@ exports.index = async function(request, response) {
             })
             if (result != null) {
                 if (result.role != 1) {
-                    const products = Product.findOne({
-                        where: { id: currentProductId },
+                    Product.findOne({
+                        where: {
+                            id: currentProductId
+                        },
                         include: [{
                                 model: Order,
                                 required: false,
@@ -50,8 +50,10 @@ exports.index = async function(request, response) {
                         form = null;
                     })
                 } else {
-                    const products = Product.findOne({
-                        where: { id: currentProductId },
+                    Product.findOne({
+                        where: {
+                            id: currentProductId
+                        },
                         include: [{
                             model: User
                         }]
@@ -69,8 +71,10 @@ exports.index = async function(request, response) {
                     })
                 }
             } else {
-                const products = Product.findOne({
-                    where: { id: currentProductId },
+                Product.findOne({
+                    where: {
+                        id: currentProductId
+                    },
                     include: [{
                         model: User
                     }]
@@ -84,8 +88,10 @@ exports.index = async function(request, response) {
                 })
             }
         } else {
-            const products = Product.findOne({
-                where: { id: currentProductId },
+            Product.findOne({
+                where: {
+                    id: currentProductId
+                },
                 include: [{
                     model: User
                 }]
@@ -104,21 +110,41 @@ exports.index = async function(request, response) {
     }
 }
 
-exports.addComment = async function(request, response) {
+exports.addComment = async function (request, response) {
     const productId = request.body.id;
     if (await verifyToken(request, response)) {
         const review = request.body.review;
         if (request.body.rating) {
             const rate = request.body.rating;
 
-            const comment = Comment.build({
+            var ucomment = await Product.findOne({
+                include: [{
+                    model: User,
+                    where: {
+                        id: request.user.id
+                    }
+                }]
+            });
+            const values = {
                 commentDate: Date.now(),
                 rating: rate,
                 message: review,
                 UserId: request.user.id,
                 ProductId: productId
-            })
-            comment.save();
+            };
+
+            if (ucomment == null) {
+                const comment = Comment.build(values)
+                comment.save();
+            } else {
+                Comment.findOne({
+                    where: {
+                        id: ucomment.Users[0].Comment.id
+                    }
+                }).then(comment => {
+                    comment.update(values)
+                });
+            }
         } else {
             form = {
                 errMessage: "Оцените этот товар от 1 до 5, пожалуйста!",

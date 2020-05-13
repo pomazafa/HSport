@@ -14,7 +14,7 @@ const cartRouter = require("./routes/cartRouter.js");
 const entryRouter = require("./routes/entryRouter.js");
 const profileRouter = require("./routes/profileRouter.js");
 const productRouter = require("./routes/productRouter.js");
-const models = require("./models/model.js")
+const error404 = require("./public/js/error404");
 
 app.use(cookieParser());
 
@@ -58,12 +58,7 @@ app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 
 app.use(function(req, res, next) {
-    res.render('message.hbs', {
-            Title: "Страница не найдена",
-            message: "Кажется, такой страницы не существует, попробуйте перейти в наш каталог, нажав на кнопку!",
-            buttonAction: "window.location.href = 'http://localhost:3000/catalog'",
-            buttonValue: "К каталогу"
-        });
+    error404(req, res);
 });
 
 app.listen(process.env.PORT || 3000);
