@@ -1,147 +1,153 @@
 <div class="grey-section">
    <div class="container">
-      <div class="goods-cards tab__item active">
-         <div class="goods-cards__item">
-            <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
-               {{Product.productName}}</h4>
-            <div class="goods-cards__img">
-               {{#if Product.imageExt}}
-               <img src="/static/images/products/{{Product.productName}}{{Product.imageExt}}"
-                  alt="{{Product.productName}}">
-               {{else}}
-               <img src="/static/images/products/default.png" alt="{{Product.productName}}">
-               {{/if}}
-            </div>
-            <div class="goods-cards__content">
-               <h4 class="block-title mobile-hidden">{{Product.productName}}</h4>
-               <div class="goods-cards__rating rating__group">
-                  <fieldset>
-                     <input class="rating__input" type="radio" name="{{Product.productName}}"
-                        id="{{Product.productName}}-1" value="1" {{#when Rating 1}}checked{{/when}}>
-                     <label class="rating__star" for="{{Product.productName}}-1" aria-label="Ужасно"></label>
-
-                     <input class="rating__input" type="radio" name="{{Product.productName}}"
-                        id="{{Product.productName}}-2" value="2" {{#when Rating 2}}checked{{/when}}>
-                     <label class="rating__star" for="{{Product.productName}}-2" aria-label="Сносно"></label>
-
-                     <input class="rating__input" type="radio" name="{{Product.productName}}"
-                        id="{{Product.productName}}-3" value="3" {{#when Rating 3}}checked{{/when}}>
-                     <label class="rating__star" for="{{Product.productName}}-3" aria-label="Нормально"></label>
-
-                     <input class="rating__input" type="radio" name="{{Product.productName}}"
-                        id="{{Product.productName}}-4" value="4" {{#when Rating 4}}checked{{/when}}>
-                     <label class="rating__star" for="{{Product.productName}}-4" aria-label="Хорошо"></label>
-
-                     <input class="rating__input" type="radio" name="{{Product.productName}}"
-                        id="{{Product.productName}}-5" value="5" {{#when Rating 5}}checked{{/when}}>
-                     <label class="rating__star" for="{{Product.productName}}-5" aria-label="Отлично"></label>
-                  </fieldset>
-                  <div class="rating__focus"></div>
+      <div class="comments-wrpper">
+         <div class="goods-cards tab__item active">
+            <div>
+            <div class="goods-cards__item">
+               <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
+                  {{Product.productName}}</h4>
+               <div class="goods-cards__img">
+                  {{#if Product.imageExt}}
+                  <img src="/static/images/products/{{Product.productName}}{{Product.imageExt}}"
+                     alt="{{Product.productName}}">
+                  {{else}}
+                  <img src="/static/images/products/default.png" alt="{{Product.productName}}">
+                  {{/if}}
                </div>
+               <div class="goods-cards__content">
+                  <h4 class="block-title mobile-hidden">{{Product.productName}}</h4>
+                  <div class="goods-cards__rating rating__group">
+                     <fieldset>
+                        <input class="rating__input" type="radio" name="{{Product.productName}}"
+                           id="{{Product.productName}}-1" value="1" {{#when Rating 1}}checked{{/when}}>
+                        <label class="rating__star" for="{{Product.productName}}-1" aria-label="Ужасно"></label>
 
-               <p class="block-text">{{Product.productDescription}}</p>
-               {{#if Product.brand}}
-               <p class="block-text">Бренд: {{Product.brand}}</p>
-               {{/if}}
-               <p class="goods-cards__price px13"><span>{{Product.productPrice}} руб.</span></p>
-               <div class="goods-action">
-                  <div class="goods-action__item">
-                     {{#if Product.Orders.0.OrderedProduct.countOfProducts}}
-                     <div class="goods-action__item-content">
-                        <button class="btn-cart btn-cart--minus"
-                           onclick="decreaseCountCart({{Product.id}}, this)"></button>
-                        <h4 class="goods-action__title">{{Product.Orders.0.OrderedProduct.countOfProducts}}</h4>
-                        <button class="btn-cart btn-cart--plus"
-                           onclick="increaseCountCart({{Product.id}}, this)"></button>
+                        <input class="rating__input" type="radio" name="{{Product.productName}}"
+                           id="{{Product.productName}}-2" value="2" {{#when Rating 2}}checked{{/when}}>
+                        <label class="rating__star" for="{{Product.productName}}-2" aria-label="Сносно"></label>
+
+                        <input class="rating__input" type="radio" name="{{Product.productName}}"
+                           id="{{Product.productName}}-3" value="3" {{#when Rating 3}}checked{{/when}}>
+                        <label class="rating__star" for="{{Product.productName}}-3" aria-label="Нормально"></label>
+
+                        <input class="rating__input" type="radio" name="{{Product.productName}}"
+                           id="{{Product.productName}}-4" value="4" {{#when Rating 4}}checked{{/when}}>
+                        <label class="rating__star" for="{{Product.productName}}-4" aria-label="Хорошо"></label>
+
+                        <input class="rating__input" type="radio" name="{{Product.productName}}"
+                           id="{{Product.productName}}-5" value="5" {{#when Rating 5}}checked{{/when}}>
+                        <label class="rating__star" for="{{Product.productName}}-5" aria-label="Отлично"></label>
+                     </fieldset>
+                     <div class="rating__focus"></div>
+                  </div>
+
+                  <p class="block-text">{{Product.productDescription}}</p>
+                  {{#if Product.brand}}
+                  <p class="block-text">Бренд: {{Product.brand}}</p>
+                  {{/if}}
+                  <p class="goods-cards__price px13"><span>{{Product.productPrice}} руб.</span></p>
+                  <div class="goods-action">
+                     <div class="goods-action__item">
+                        {{#if Product.Orders.0.OrderedProduct.countOfProducts}}
+                        <div class="goods-action__item-content">
+                           <button class="btn-cart btn-cart--minus"
+                              onclick="decreaseCountCart({{Product.id}}, this)"></button>
+                           <h4 class="goods-action__title">{{Product.Orders.0.OrderedProduct.countOfProducts}}</h4>
+                           <button class="btn-cart btn-cart--plus"
+                              onclick="increaseCountCart({{Product.id}}, this)"></button>
+                        </div>
+                        {{else}}
+                        <button class="btn-gray" onclick="addToCart('{{Product.id}}', this)">В корзину</button>
+                        {{/if}}
                      </div>
-                     {{else}}
-                     <button class="btn-gray" onclick="addToCart('{{Product.id}}', this)">В корзину</button>
-                     {{/if}}
                   </div>
                </div>
             </div>
+            {{#if isAuth}}
+            <form class="form-comment" action="/product/addComment" method="POST">
+
+               <span>{{errMessage}}</span>
+               <input type="text" style="display: none;" name="id" value="{{Product.id}}"></input>
+               <p class="form-comment__your-text">Вы можете оставить свой отзыв!</p>
+               <p>{{form.errMessage}}</p>
+
+               <p class="rating__text">Ваша оценка:</p>
+
+               <div class="goods-cards__rating rating__group">
+                  <input class="rating__input" type="radio" name="rating" id="rating-1" value="1">
+                  <label class="rating__star" for="rating-1" aria-label="Ужасно"></label>
+
+                  <input class="rating__input" type="radio" name="rating" id="rating-2" value="2">
+                  <label class="rating__star" for="rating-2" aria-label="Сносно"></label>
+
+                  <input class="rating__input" type="radio" name="rating" id="rating-3" value="3">
+                  <label class="rating__star" for="rating-3" aria-label="Нормально"></label>
+
+                  <input class="rating__input" type="radio" name="rating" id="rating-4" value="4">
+                  <label class="rating__star" for="rating-4" aria-label="Хорошо"></label>
+
+                  <input class="rating__input" type="radio" name="rating" id="rating-5" value="5">
+                  <label class="rating__star" for="rating-5" aria-label="Отлично"></label>
+
+                  <div class="rating__focus"></div>
+               </div>
+               <div>
+                  <textarea class="form-add__textarea" id="review" name="review"
+                     placeholder="Ваш отзыв...">{{form.review}}</textarea>
+               </div>
+
+               <button class="btn-gray form-comment__btn" type="submit">Отправить</button>
+            </form>
+            {{else}}
+            <label>Чтобы оставить отзыв о товаре, войдите в свой аккаунт!</label>
+            {{/if}}
+         </div>
+         </div>
+         <div class="comments">
+            <p class="comments___title">
+               Отзывы о &laquo;{{Product.productName}}&raquo;
+            </p>
+            {{#each Product.Users}}
+            <div class="comment">
+               <div class="comment-head">
+                  <p class="comment__name">
+                     {{#if this.name}}
+                     {{this.name}}
+                     {{else}}
+                     Аноним
+                     {{/if}}
+                  </p>
+                  <div class="goods-cards__rating rating__group">
+                     <fieldset>
+                        <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-1"
+                           value="1" {{#when this.Comment.rating 1}}checked{{/when}}>
+                        <label class="rating__star" for="{{this.Comment.id}}-1" aria-label="Ужасно"></label>
+
+                        <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-2"
+                           value="2" {{#when this.Comment.rating 2}}checked{{/when}}>
+                        <label class="rating__star" for="{{this.Comment.id}}-2" aria-label="Сносно"></label>
+
+                        <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-3"
+                           value="3" {{#when this.Comment.rating 3}}checked{{/when}}>
+                        <label class="rating__star" for="{{this.Comment.id}}-3" aria-label="Нормально"></label>
+
+                        <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-4"
+                           value="4" {{#when this.Comment.rating 4}}checked{{/when}}>
+                        <label class="rating__star" for="{{this.Comment.id}}-4" aria-label="Хорошо"></label>
+
+                        <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-5"
+                           value="5" {{#when this.Comment.rating 5}}checked{{/when}}>
+                        <label class="rating__star" for="{{this.Comment.id}}-5" aria-label="Отлично"></label>
+                     </fieldset>
+                     <div class="rating__focus"></div>
+                  </div>
+               </div>
+               <p class="comment__text">{{this.Comment.message}}</p>
+            </div>
+            {{/each}}
          </div>
       </div>
    </div>
-
-   {{#each Product.Users}}
-   <label>
-      {{#if this.name}}
-      {{this.name}}
-      {{else}}
-      Аноним
-      {{/if}}
-   </label>
-   <div class="goods-cards__rating rating__group">
-      <fieldset>
-         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-1" value="1"
-            {{#when this.Comment.rating 1}}checked{{/when}}>
-         <label class="rating__star" for="{{this.Comment.id}}-1" aria-label="Ужасно"></label>
-
-         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-2" value="2"
-            {{#when this.Comment.rating 2}}checked{{/when}}>
-         <label class="rating__star" for="{{this.Comment.id}}-2" aria-label="Сносно"></label>
-
-         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-3" value="3"
-            {{#when this.Comment.rating 3}}checked{{/when}}>
-         <label class="rating__star" for="{{this.Comment.id}}-3" aria-label="Нормально"></label>
-
-         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-4" value="4"
-            {{#when this.Comment.rating 4}}checked{{/when}}>
-         <label class="rating__star" for="{{this.Comment.id}}-4" aria-label="Хорошо"></label>
-
-         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-5" value="5"
-            {{#when this.Comment.rating 5}}checked{{/when}}>
-         <label class="rating__star" for="{{this.Comment.id}}-5" aria-label="Отлично"></label>
-      </fieldset>
-      <div class="rating__focus"></div>
-   </div>
-   <div>
-      <label>{{this.Comment.message}}</label>
-   </div>
-
-   {{/each}}
-
-   {{#if isAuth}}
-
-   <div class="container">
-      <form action="/product/addComment" method="POST">
-
-         <span>{{errMessage}}</span>
-         <input type="text" style="visibility: hidden;" name="id" value="{{Product.id}}"></input>
-         <label>Вы можете оставить свой отзыв!</label>
-         <label>{{form.errMessage}}</label>
-
-         <div class="goods-cards__rating rating__group">
-            <input class="rating__input" type="radio" name="rating" id="rating-1" value="1">
-            <label class="rating__star" for="rating-1" aria-label="Ужасно"></label>
-
-            <input class="rating__input" type="radio" name="rating" id="rating-2" value="2">
-            <label class="rating__star" for="rating-2" aria-label="Сносно"></label>
-
-            <input class="rating__input" type="radio" name="rating" id="rating-3" value="3">
-            <label class="rating__star" for="rating-3" aria-label="Нормально"></label>
-
-            <input class="rating__input" type="radio" name="rating" id="rating-4" value="4">
-            <label class="rating__star" for="rating-4" aria-label="Хорошо"></label>
-
-            <input class="rating__input" type="radio" name="rating" id="rating-5" value="5">
-            <label class="rating__star" for="rating-5" aria-label="Отлично"></label>
-
-            <div class="rating__focus"></div>
-         </div>
-         <div>
-            <label for="review">Текст отзыва:</label>
-            <textarea id="review" name="review">{{form.review}}</textarea>
-         </div>
-
-         <button class="btn-gray" type="submit">Отправить</button>
-      </form>
-   </div>
-   {{else}}
-   <label>Чтобы оставить отзыв о товаре, войдите в свой аккаунт!</label>
-   {{/if}}
-
 </div>
 
 <script type="text/javascript" src="/static/js/cart.js"></script>

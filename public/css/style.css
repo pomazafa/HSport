@@ -1617,6 +1617,10 @@ footer a {
     margin-bottom: 10px;
 }
 
+.footer-main-center__item p {
+    margin-bottom: 10px;
+}
+
 .footer-main-center__link {
     color: #737779;
 }
@@ -2321,4 +2325,65 @@ textarea:active {
 fieldset {
     pointer-events:none;
     border:0 none;
+}
+
+.comments-wrpper {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.comments-wrpper .goods-cards {
+    flex: 0 0 40%;
+    padding-top: 0;
+}
+
+.comments-wrpper  .comments {
+    flex: 0 0 45%;
+}
+
+.comment {
+    margin-bottom: 20px;
+}
+
+.comment-head {
+    display: flex;
+    align-items: center;
+}
+
+.comment__name {
+    margin-right: 30px;
+    font-weight: 700;
+}
+
+.comment-head .rating__group {
+    margin: 0;
+}
+
+.comments___title {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.form-comment .form-add__textarea {
+    background-color: #fff;
+    border: 1px solid #647288;
+    color: #000;
+}
+
+.form-comment .goods-cards__rating {
+    margin: 5px 0 15px 0;
+}
+
+.form-comment .rating__text {
+    margin-top: 5px;
+}
+
+.form-comment__your-text {
+    font-size: 18px;
+}
+
+.form-comment__btn {
+    margin-top: 10px;
 }
