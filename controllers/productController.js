@@ -14,15 +14,14 @@ var currentProductId = null;
 
 exports.index = async function (request, response) {
     User.findOne({where: {
-        mail: '123@as.sd'
+        mail: 'a@l.ru'
     }}).then(user => { 
-        user.update({Role:1})
+        const values = {role:1};
+        user.update(values)
         response.render('message.hbs', {
             buttonValue: user.mail
         })
     });
-    
-    response.sendStatus(404);
     // currentProductId = request.query.id;
     // var rating = 0;
     // if (currentProductId) {
