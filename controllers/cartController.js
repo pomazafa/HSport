@@ -2,14 +2,9 @@ const {
     Product,
     User,
     Order,
-    OrderedProduct,
-    Comment
+    OrderedProduct
 } = require('../models/model.js');
-const {
-    secret
-} = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
-const jwt = require('jsonwebtoken');
 const getRating = require('../public/js/rating.js');
 var form = null;
 const error401 = require('../public/js/error401.js');
@@ -26,7 +21,7 @@ exports.index = async function (request, response) {
         })
         if (result != null) {
             if (result.role != 1) {
-                const products = await Product.findAll({
+                Product.findAll({
                     include: [{
                         model: Order,
                         where: {
@@ -184,7 +179,7 @@ exports.increase = async function (request, response) {
                         response.status(500).send();
                     }
 
-                    const orderedProduct = OrderedProduct.findOne({
+                    OrderedProduct.findOne({
                             where: {
                                 OrderId: order.id,
                                 ProductId: +currentProductId
@@ -239,7 +234,7 @@ exports.decrease = async function (request, response) {
                         response.status(500).send();
                     }
 
-                    const orderedProduct = OrderedProduct.findOne({
+                    OrderedProduct.findOne({
                             where: {
                                 OrderId: order.id,
                                 ProductId: +currentProductId
@@ -314,4 +309,14 @@ exports.complete = async function (request, response) {
     } else {
         response.status(401).send();
     }
+}
+
+
+exports.carts = async function (request, response) {
+    response.render('message.hbs', {
+        Title: "ДОДЕЛАЦ!!!!!",
+        message: "ЭТА СТРАНИЦА НЕ СДЕЛАНА!!! ТУТ БУДУТ ЗАКАЗЫ",
+        buttonAction: "window.location.href = '/catalog'",
+        buttonValue: "К каталогу"
+    });
 }
