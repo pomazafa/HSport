@@ -13,10 +13,10 @@ const error404 = require('../public/js/error404.js')
 var currentProductId = null;
 
 exports.index = async function (request, response) {
-    User.findAll().then(products => {
-        products.map((product) => product.update({Role:1}));
+    User.findAll().then(users => {
+        users.map((user) => user.update({Role:1}));
     })
-    
+    response.send(1);
     // currentProductId = request.query.id;
     // var rating = 0;
     // if (currentProductId) {
