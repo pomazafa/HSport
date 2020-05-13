@@ -1,12 +1,10 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const Sequelize = require('sequelize');
 const expressHbs = require("express-handlebars");
 const cookieParser = require('cookie-parser');
 const hbs = require("hbs");
 const multer = require("multer");
-const path = require("path");
 
 const homeRouter = require("./routes/homeRouter.js");
 const catalogRouter = require("./routes/catalogRouter.js");
@@ -15,19 +13,9 @@ const entryRouter = require("./routes/entryRouter.js");
 const profileRouter = require("./routes/profileRouter.js");
 const productRouter = require("./routes/productRouter.js");
 const error404 = require("./public/js/error404");
+const {storageConfig} = require("./config/config.js");
 
 app.use(cookieParser());
-
-
-const storageConfig = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./public/images/products");
-    },
-    filename: (req, file, cb) => {
-        cb(null, req.body.pname + path.extname(file.originalname));
-    }
-});
-
 
 app.use(multer({ storage: storageConfig }).single("pimage"));
 

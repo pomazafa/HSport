@@ -1,21 +1,17 @@
 const {
     Product,
     User,
-    Order,
-    OrderedProduct,
-    Comment
+    Order
 } = require('../models/model.js');
-const {
-    secret
-} = require('../config/config.js');
 const verifyToken = require('../public/js/func.js');
 const getRating = require('../public/js/rating.js');
-const jwt = require('jsonwebtoken');
 const path = require('path');
+const multer = require("multer");
 
 var form = null;
 var errMessage = null;
 
+const storageConfig = require("../config/config.js");
 
 exports.index = async function (request, response) {
     if (await verifyToken(request, response)) {
@@ -26,7 +22,7 @@ exports.index = async function (request, response) {
         })
         if (result != null) {
             if (result.role == 1) {
-                const products = await Product.findAll({
+                Product.findAll({
                         include: [{
                             model: User
                         }]
@@ -43,7 +39,7 @@ exports.index = async function (request, response) {
                         })
                     });
             } else {
-                const products = await Product.findAll({
+                Product.findAll({
                     include: [{
                             model: User
                         },
@@ -68,7 +64,7 @@ exports.index = async function (request, response) {
                 });
             }
         } else {
-            const products = await Product.findAll({
+            roduct.findAll({
                 include: [{
                     model: User
                 }]
@@ -83,7 +79,7 @@ exports.index = async function (request, response) {
             });
         }
     } else {
-        const products = await Product.findAll({
+        Product.findAll({
             include: [{
                 model: User
             }]
@@ -175,6 +171,23 @@ exports.addPost = async function (request, response) {
                         imageExt: fileExt
                     })
                     product.save();
+
+                    const upload = multer({
+                        storageConfig
+                    }).single('pimage')
+                    upload(request, response, function (err) {
+                        if (err) {
+                            response.render('message.hbs', {
+                                Title: "Ошибка загрузки файла",
+                                message: "Произошла ошибка при загрузке файла: " + err,
+                                buttonAction: "window.location.href = '/catalog'",
+                                buttonValue: "К каталогу",
+                                isAuth: true,
+                                isAdmin: true
+                            });
+                        }
+                    })
+
                     response.redirect('/catalog');
                 }
             }

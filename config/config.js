@@ -1,3 +1,6 @@
+const multer = require("multer");
+const path = require("path");
+
 module.exports = {
     secret: 'SecretJWT',
     dbconf: {
@@ -12,5 +15,13 @@ module.exports = {
     },
     Database: 'HSport', 
     Login: 'pomazafa',
-    Password: 'pomazafaP1'
+    Password: 'pomazafaP1',
+    storageConfig: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, "./public/images/products");
+        },
+        filename: (req, file, cb) => {
+            cb(null, req.body.pname + path.extname(file.originalname));
+        }
+    })
 }
