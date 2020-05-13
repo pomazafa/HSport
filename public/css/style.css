@@ -1331,6 +1331,7 @@ header {
 }
 
 .brands-cards__column {
+    width: 100% !important;
     margin: 0 auto;
     padding: 0px 27px;
 }
