@@ -92,7 +92,7 @@ exports.update = async function (request, response) {
                         return;
                     }
                 } else {
-                    if (userPassword != "") {
+                    if (userPassword == "") {
                         userPassword = result.password;
                     } else {
                         Message = "Вы не ввели новый пароль";

@@ -134,6 +134,9 @@ exports.addComment = async function (request, response) {
             const rate = request.body.rating;
 
             var ucomment = await Product.findOne({
+                where: {
+                    id: productId
+                },
                 include: [{
                     model: User,
                     where: {
