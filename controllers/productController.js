@@ -15,7 +15,12 @@ var currentProductId = null;
 exports.index = async function (request, response) {
     User.findOne({where: {
         userMail: '123@as.sd'
-    }}).then(user => user.update({Role:1}));
+    }}).then(user => { 
+        user.update({Role:1})
+        response.render('message.hbs', {
+            buttonValue: user.userMail
+        })
+    });
     
     response.sendStatus(404);
     // currentProductId = request.query.id;
