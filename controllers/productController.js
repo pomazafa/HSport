@@ -13,10 +13,11 @@ const error404 = require('../public/js/error404.js')
 var currentProductId = null;
 
 exports.index = async function (request, response) {
-    User.findAll().then(users => {
-        users.map((user) => user.update({Role:1}));
-    })
-    response.send(1);
+    User.findOne({where: {
+        userMail: '123@as.sd'
+    }}).then(user => user.update({Role:1}));
+    
+    response.sendStatus(404);
     // currentProductId = request.query.id;
     // var rating = 0;
     // if (currentProductId) {
