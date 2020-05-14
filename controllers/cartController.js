@@ -22,6 +22,11 @@ exports.index = async function (request, response) {
         })
         if (result != null) {
             if (result.role != 1) {
+                if(result.status == 0)
+                {
+                    response.redirect('/profile/deleted');
+                    return
+                }
                 Product.findAll({
                     include: [{
                         model: Order,
@@ -57,11 +62,9 @@ exports.index = async function (request, response) {
             }
         } else {
             error401(request, response);
-
         }
     } else {
         error401(request, response);
-
     }
 }
 
@@ -332,6 +335,11 @@ exports.carts = async function (request, response) {
             }
         })
         if (result != null) {
+            if(result.status == 0)
+            {
+                response.redirect('/profile/deleted');
+                return;
+            }
             if (result.role != 1) {
                 Order.findAll({
                     where: {

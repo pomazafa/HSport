@@ -13,15 +13,6 @@ const error404 = require('../public/js/error404.js')
 var currentProductId = null;
 
 exports.index = async function (request, response) {
-    // User.findOne({where: {
-    //     mail: '123@as.sd'
-    // }}).then(user => { 
-    //     const values = {role:1};
-    //     user.update(values)
-    //     response.render('message.hbs', {
-    //         buttonValue: user.mail
-    //     })
-    // });
     currentProductId = request.query.id;
     var rating = 0;
     if (currentProductId) {
@@ -129,10 +120,19 @@ exports.index = async function (request, response) {
 exports.addComment = async function (request, response) {
     const productId = request.body.id;
     if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if(result.status == 0)
+        {
+            response.redirect('/profile/deleted');
+            return;
+        }
         const review = request.body.review;
         if (request.body.rating) {
             const rate = request.body.rating;
-
             var ucomment = await Product.findOne({
                 where: {
                     id: productId

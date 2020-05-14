@@ -159,14 +159,20 @@ exports.deleted = async function (request, response) {
                 if (result != null) {
                     if (result.status == 0) {
                         if (result.role == 1) {
-                            response.render('deleted.hbs', {
+                            response.render('message.hbs', {
+                                Title: 'Профиль удалён',
+                                message: "Профиль удалён.",
+                                buttonAction: "window.location.href='/profile/restore';",
+                                buttonValue: "Восстановить аккаунт",
                                 isAuth: true,
-                                isAdmin: true,
-                                Title: 'Профиль удалён'
-                            })
+                                isAdmin: true
+                            });
                         } else {
-                            response.render('deleted.hbs', {
+                            response.render('message.hbs', {
                                 isAuth: true,
+                                message: "Профиль удалён.",
+                                buttonAction: "window.location.href='/profile/restore';",
+                                buttonValue: "Восстановить аккаунт",
                                 Title: 'Профиль удалён'
                             })
                         }
@@ -175,7 +181,6 @@ exports.deleted = async function (request, response) {
                     }
                 } else {
                     error401(request, response);
-
                 }
             })
     } else {
