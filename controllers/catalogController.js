@@ -108,6 +108,7 @@ exports.add = async function (request, response) {
                     Title: 'Добавление товара',
                     errMessage: errMessage,
                     isAuth: true,
+                    isAdmin: true,
                     submitMessage: "Добавить",
                     submitAction: `/catalog/add`,
                     form: form

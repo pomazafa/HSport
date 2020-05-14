@@ -49,12 +49,21 @@ async function decreaseCountCart(id, element) {
     if (response.status == 200) {
         element.nextElementSibling.innerHTML--;
         if (element.nextElementSibling.innerHTML == 0) {
-            if(!(window.location.toString().includes('catalog') || window.location.toString().includes('product')))
-            {
+            if (!(window.location.toString().includes('catalog') || window.location.toString().includes('product'))) {
                 element.closest('.goods-cards__item').style.display = "none";
-            }
-            else
-            {
+                var flagElement = false;
+
+                var list = document.getElementsByClassName('goods-cards__item')
+                for (let element of list) {
+                    if (element.style.display != "none") {
+                        flagElement = true;
+                        break;
+                    }
+                }
+                if (!flagElement) {
+                    window.location.href = '/catalog';
+                }
+            } else {
                 element.closest('.goods-action__item').innerHTML = "<button class=\"btn-gray\" onclick=\"addToCart(" + id + ", this)\">В корзину</button>"
             }
         }

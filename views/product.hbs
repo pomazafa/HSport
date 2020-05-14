@@ -130,6 +130,11 @@
                      Аноним
                      {{/if}}
                   </p>
+
+                  <p>
+                      {{#formatTime this.Comment.commentDate}} {{/formatTime}}
+                  </p>
+
                   <div class="goods-cards__rating rating__group">
                      <fieldset>
                         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-1"

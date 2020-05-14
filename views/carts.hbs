@@ -1,0 +1,32 @@
+<div class="grey-section">
+    <div class="container">
+        <div>
+            {{#each Orders}}
+           <p> 
+               {{#when this.orderStatus 'created'}}
+                    В корзине
+               {{/when}}
+
+               {{#when this.orderStatus 'being processed'}}
+                    Обрабатывается
+               {{/when}}
+
+               {{#when this.orderStatus 'pickup'}}
+                    Ожидается самовывоз
+               {{/when}}
+
+               {{#when this.orderStatus 'processed'}}
+                    Завершён
+               {{/when}}
+               </p>
+               <p>
+                    {{#formatTime this.orderDate}} {{/formatTime}}
+               </p>
+
+               <p>
+                   {{this.sumPrice}}
+               </p>
+            {{/each}}
+        </div>
+    </div>
+</div>

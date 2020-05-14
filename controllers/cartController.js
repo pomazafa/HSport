@@ -6,6 +6,7 @@ const {
 } = require('../models/model.js');
 const verifyToken = require('../public/js/func.js');
 const getRating = require('../public/js/rating.js');
+const getPrice = require('../public/js/price.js');
 var form = null;
 const error401 = require('../public/js/error401.js');
 const errorAdmin = require('../public/js/errorAdmin.js');
@@ -29,28 +30,38 @@ exports.index = async function (request, response) {
                             orderStatus: 'created'
                         }
                     }, {
-                            model: User
+                        model: User
                     }]
                 }).then(products => {
-                    getRating(products)
-                    response.render('cart.hbs', {
-                        Title: 'Корзина',
-                        Products: products.map(product => Object.assign(product.toJSON(), {
-                            rating: product.rating
-                        })),
-                        isAuth: true
-                    })
+                    if (products.length != 0) {
+                        getRating(products)
+                        response.render('cart.hbs', {
+                            Title: 'Корзина',
+                            Products: products.map(product => Object.assign(product.toJSON(), {
+                                rating: product.rating
+                            })),
+                            isAuth: true
+                        })
+                    } else {
+                        response.render('message.hbs', {
+                            Title: 'Корзина',
+                            message: "Корзина пуста",
+                            buttonAction: "window.location.href = '/catalog'",
+                            buttonValue: "К каталогу",
+                            isAuth: true
+                        });
+                    }
                 })
             } else {
                 errorAdmin(request, response);
             }
         } else {
-        error401(request, response);
-            
+            error401(request, response);
+
         }
     } else {
         error401(request, response);
-        
+
     }
 }
 
@@ -74,7 +85,8 @@ exports.add = async function (request, response) {
                     if (order == null) {
                         order = await Order.create({
                             orderStatus: 'created',
-                            UserId: request.user.id
+                            UserId: request.user.id,
+                            orderDate: new Date()
                         });
                     }
 
@@ -295,7 +307,8 @@ exports.complete = async function (request, response) {
                     return;
                 } else {
                     const values = {
-                        orderStatus: 'being processed'
+                        orderStatus: 'being processed',
+                        orderDate: new Date()
                     }
                     order.update(values);
                 }
@@ -311,12 +324,51 @@ exports.complete = async function (request, response) {
     }
 }
 
-
 exports.carts = async function (request, response) {
-    response.render('message.hbs', {
-        Title: "ДОДЕЛАЦ!!!!!",
-        message: "ЭТА СТРАНИЦА НЕ СДЕЛАНА!!! ТУТ БУДУТ ЗАКАЗЫ",
-        buttonAction: "window.location.href = '/catalog'",
-        buttonValue: "К каталогу"
-    });
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.role != 1) {
+                Order.findAll({
+                    where: {
+                        UserId: request.user.id
+                    },
+                    include: [
+                        {
+                            model: Product
+                        }
+                    ]
+                }).then(orders => {
+                    if (orders.length != 0) {
+                        getPrice(orders)
+                        response.render('carts.hbs', {
+                            Title: 'Мои заказы',
+                            Orders: orders.map(order => Object.assign(order.toJSON(), {
+                                sumPrice: order.orderPrice
+                            })),
+                            isAuth: true
+                        })
+                    } else {
+                        response.render('message.hbs', {
+                            Title: 'Мои заказы',
+                            message: "У Вас нет ни одного заказа.",
+                            buttonAction: "window.location.href = '/catalog'",
+                            buttonValue: "К каталогу",
+                            isAuth: true
+                        });
+                    }
+                })
+            } else {
+                errorAdmin(request, response);
+            }
+        } else {
+            error401(request, response);
+        }
+    } else {
+        error401(request, response);
+    }
 }
