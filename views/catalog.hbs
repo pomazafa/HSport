@@ -6,8 +6,8 @@
                 <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
                     {{this.productName}}</h4>
                 <div class="goods-cards__img">
-                    {{#if this.imageExt}}
-                    <img src="/static/images/products/{{this.productName}}{{this.imageExt}}" alt="{{this.productName}}">
+                    {{#if this.imageUrl}}
+                    <img src="{{this.imageUrl}}" alt="{{this.productName}}">
                     {{else}}
                     <img src="/static/images/products/default.png" alt="{{this.productName}}">
                     {{/if}}

@@ -8,6 +8,12 @@ const getRating = require('../public/js/rating.js');
 const path = require('path');
 const multer = require("multer");
 
+const cloudinary = require('cloudinary').v2;
+const {
+    cloudinaryConfig
+} = require('../config/config.js');
+cloudinary.config(cloudinaryConfig)
+
 var form = null;
 var errMessage = null;
 
@@ -156,47 +162,56 @@ exports.addPost = async function (request, response) {
                     errMessage = "Товар с данным наименованием уже существует.";
                     response.redirect('/catalog/add');
                 } else {
-                    const filedata = request.file;
-                    var fileExt;
-                    if (!filedata) {
-                        fileExt = null;
-                    } else {
-                        fileExt = path.extname(filedata.originalname);
-                    }
 
-                    const product = Product.build({
+                    Product.create({
                         productName: pname,
                         productDescription: pdescription,
                         brand: pbrand,
-                        productPrice: pprice,
-                        imageExt: fileExt
+                        productPrice: pprice
+                    }).then(product => {
+                        const upload = multer({
+                            storageConfig
+                        }).single('pimage')
+                        upload(request, response, function (err) {
+                            if (err) {
+                                response.render('message.hbs', {
+                                    Title: "Ошибка загрузки файла",
+                                    message: "Произошла ошибка при загрузке файла: " + err,
+                                    buttonAction: "window.location.href = '/catalog'",
+                                    buttonValue: "К каталогу",
+                                    isAuth: true,
+                                    isAdmin: true
+                                });
+                            }
+                            // SEND FILE TO CLOUDINARY
+                            const path = request.file.path;
+                            cloudinary.uploader.upload(
+                                path, {
+                                    public_id: `product/${product.id}`,
+                                    tags: `product`
+                                }, // directory and tags are optional
+                                function (err, image) {
+                                    if (err)
+                                        return console.log(err)
+                                    console.log('file uploaded to Cloudinary')
+                                    // remove file from server
+                                    const fs = require('fs')
+                                    fs.unlinkSync(path)
+                                    product.update({
+                                        imageUrl: image.secure_url
+                                    });
+                                }
+                            )
+                        })
+                        return response.redirect('/catalog');
                     })
-                    product.save();
-
-                    const upload = multer({
-                        storageConfig
-                    }).single('pimage')
-                    upload(request, response, function (err) {
-                        if (err) {
-                            response.render('message.hbs', {
-                                Title: "Ошибка загрузки файла",
-                                message: "Произошла ошибка при загрузке файла: " + err,
-                                buttonAction: "window.location.href = '/catalog'",
-                                buttonValue: "К каталогу",
-                                isAuth: true,
-                                isAdmin: true
-                            });
-                        }
-                    })
-
-                    response.redirect('/catalog');
                 }
             }
-            response.redirect('/catalog');
+            return response.redirect('/catalog');
         }
-        response.redirect('/catalog');
+        return response.redirect('/catalog');
     }
-    response.redirect('/catalog');
+    return response.redirect('/catalog');
 }
 
 exports.change = async function (request, response) {
@@ -293,26 +308,36 @@ exports.changePost = async function (request, response) {
                             errMessage = "Товар с данным наименованием уже существует.";
                             response.redirect(`/catalog/change?id=` + productId);
                         } else {
-
-                            const filedata = request.file;
-                            var fileExt;
-                            if (!filedata) {
-                                fileExt = productToChange.imageExt;
-                            } else {
-                                fileExt = path.extname(filedata.originalname);
-                            }
-
                             const values = {
                                 productName: pname,
                                 productDescription: pdescription,
                                 brand: pbrand,
-                                productPrice: pprice,
-                                imageExt: fileExt
+                                productPrice: pprice
                             };
-                            productToChange.update(values);
 
-                            response.redirect('/catalog');
+                            // SEND FILE TO CLOUDINARY
+                            const path = request.file.path
+                            if (path) {
+
+                                cloudinary.uploader.upload(
+                                    path, {
+                                        public_id: `product/${product.id}`,
+                                        tags: `product`
+                                    }, // directory and tags are optional
+                                    function (err, image) {
+                                        if (err)
+                                            return console.log(err)
+                                        console.log('file uploaded to Cloudinary')
+                                        // remove file from server
+                                        const fs = require('fs')
+                                        fs.unlinkSync(path)
+                                        values.imageUrl = image.secure_url
+                                    });
+                            }
                         }
+                        productToChange.update(values);
+
+                        response.redirect('/catalog');
                     } else {
                         response.render('message.hbs', {
                             Title: "Ошибка. Товар не найден",

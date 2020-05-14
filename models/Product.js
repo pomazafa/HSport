@@ -7,7 +7,7 @@ module.exports = function(sequelize) {
         productDescription: { type: Sequelize.STRING, allowNull: true },
         brand: { type: Sequelize.STRING, allowNull: true },
         productPrice: { type: Sequelize.DOUBLE(7, 2), allowNull: false, validate: { min: 0.01 } },
-        imageExt: { type: Sequelize.STRING, allowNull: true }
+        imageUrl: { type: Sequelize.STRING, allowNull: true }
     }, {
         sequelize,
         modelName: 'Product',

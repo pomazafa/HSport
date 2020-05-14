@@ -23,5 +23,10 @@ module.exports = {
         filename: (req, file, cb) => {
             cb(null, req.body.pname + path.extname(file.originalname));
         }
-    })
+    }),
+    cloudinaryConfig: {
+        cloud_name: 'dmltbnspa',
+        api_key: '645627975893984',
+        api_secret: 'S30nTcpToYYogOROWNzjKFpUo9E'
+    }
 }
