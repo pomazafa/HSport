@@ -185,7 +185,7 @@ exports.addPost = async function (request, response) {
                             }
                             // SEND FILE TO CLOUDINARY
                             const path = request.file.path;
-                            cloudinary.uploader.upload(
+                            await cloudinary.uploader.upload(
                                 path, {
                                     public_id: `product/${product.id}`,
                                     tags: `product`
@@ -308,6 +308,7 @@ exports.changePost = async function (request, response) {
                             errMessage = "Товар с данным наименованием уже существует.";
                             response.redirect(`/catalog/change?id=` + productId);
                         } else {
+
                             const values = {
                                 productName: pname,
                                 productDescription: pdescription,
@@ -315,11 +316,12 @@ exports.changePost = async function (request, response) {
                                 productPrice: pprice
                             };
 
+                            productToChange.update(values);
+
                             // SEND FILE TO CLOUDINARY
                             const path = request.file.path
                             if (path) {
-
-                                cloudinary.uploader.upload(
+                                await cloudinary.uploader.upload(
                                     path, {
                                         public_id: `product/${product.id}`,
                                         tags: `product`
@@ -331,13 +333,11 @@ exports.changePost = async function (request, response) {
                                         // remove file from server
                                         const fs = require('fs')
                                         fs.unlinkSync(path)
-                                        values.imageUrl = image.secure_url
+                                        productToChange.update({imageUrl: image.secure_url});
                                     });
                             }
                         }
-                        productToChange.update(values);
-
-                        response.redirect('/catalog');
+                        return response.redirect('/catalog');
                     } else {
                         response.render('message.hbs', {
                             Title: "Ошибка. Товар не найден",
@@ -347,12 +347,12 @@ exports.changePost = async function (request, response) {
                         });
                     }
                 } else {
-                    response.redirect('/catalog');
+                    return response.redirect('/catalog');
                 }
             }
-            response.redirect('/catalog');
+            return response.redirect('/catalog');
         }
-        response.redirect('/catalog');
+        return response.redirect('/catalog');
     }
-    response.redirect('/catalog');
+    return response.redirect('/catalog');
 }
