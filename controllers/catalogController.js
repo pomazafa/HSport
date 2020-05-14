@@ -168,11 +168,11 @@ exports.addPost = async function (request, response) {
                         productDescription: pdescription,
                         brand: pbrand,
                         productPrice: pprice
-                    }).then(product => {
+                    }).then(async function(product) {
                         const upload = multer({
                             storageConfig
                         }).single('pimage')
-                        upload(request, response, function (err) {
+                        await upload(request, response, async function (err) {
                             if (err) {
                                 response.render('message.hbs', {
                                     Title: "Ошибка загрузки файла",
