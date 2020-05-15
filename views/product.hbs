@@ -77,7 +77,7 @@
                </div>
             </div>
             {{#if isAuth}}
-            <form class="form-comment" action="/product/addComment" method="POST">
+            <form class="form-comment" name="comment" action="/product/addComment" method="POST">
 
                <span>{{errMessage}}</span>
                <input type="text" style="display: none;" name="id" value="{{Product.id}}"></input>
@@ -173,3 +173,40 @@
 </div>
 
 <script type="text/javascript" src="/static/js/cart.js"></script>
+
+<script type="text/javascript">
+   // создать подключение
+
+   var HOST = location.origin.replace(/^http/, 'ws')
+   var socket = new WebSocket(HOST);
+
+
+   console.log("Создаём подключение")
+
+   // отправить сообщение из формы comment
+   document.forms.comment.onsubmit = function () {
+      var outgoingMessage = {
+         event: 'add-rating-sub'
+      };
+      console.log("отправляем сообщение")
+
+      socket.send(JSON.stringify(outgoingMessage));
+      return false;
+   };
+
+   // обработчик входящих сообщений
+   socket.onmessage = function (event) {
+      var incomingMessage = event.data;
+      console.log("получаем сообщение " + event.data)
+      showMessage(incomingMessage);
+   };
+
+   function showMessage(message) {
+
+      //найти рейтинг на странице и обновить
+
+      var messageElem = document.createElement('div');
+      messageElem.appendChild(document.createTextNode(message));
+      document.getElementById('subscribe').appendChild(messageElem);
+   }
+</script>

@@ -5,6 +5,7 @@ const expressHbs = require("express-handlebars");
 const cookieParser = require('cookie-parser');
 const hbs = require("hbs");
 const multer = require("multer");
+const http = require("http");
 
 const homeRouter = require("./routes/homeRouter.js");
 const catalogRouter = require("./routes/catalogRouter.js");
@@ -13,9 +14,8 @@ const entryRouter = require("./routes/entryRouter.js");
 const profileRouter = require("./routes/profileRouter.js");
 const productRouter = require("./routes/productRouter.js");
 const error404 = require("./public/js/error404");
-const {
-    storageConfig
-} = require("./config/config.js");
+const { storageConfig } = require("./config/config.js");
+const wsServer = require("./ws/WSServer.js").wsServer;
 
 app.use(cookieParser());
 
@@ -67,4 +67,8 @@ app.use(function (req, res, next) {
     error404(req, res);
 });
 
-app.listen(process.env.PORT || 3000);
+const server = http.createServer(app);
+
+server.listen(process.env.PORT || 3000);
+
+wsServer(server);
