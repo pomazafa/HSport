@@ -19,8 +19,6 @@ module.exports = class RatingUpdateSubscribers {
 	}
 
 	removeClient(products, client) {
-		console.log('remove: ');
-		console.log(products);
 		products.forEach((productName) => {
 			if (!this.clientList[productName]) {
 				return;

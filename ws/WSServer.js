@@ -27,9 +27,6 @@ module.exports.wsServer = (httpServer) => {
 
 module.exports.notifyRatingUpdate = (productName, rating) => {
 	const clients = ratingUpdateSubscribers.clientList[productName];
-	console.log('clients', clients);
-	console.log('productName', productName);
-	console.log('rating', rating);
 	if (!clients) {
 		return;
 	}

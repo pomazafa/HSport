@@ -22,7 +22,6 @@ module.exports = function WSNotify(productName) {
                 }
             }
             notifyRatingUpdate(productName, product.rating);
-            console.log('notifyRatingUpdate ', productName, product.rating);
         }
     })
 }

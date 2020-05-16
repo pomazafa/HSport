@@ -189,8 +189,6 @@
       products.push(element.innerText)
    }
 
-   console.log("Создаём подключение")
-
    socket.onopen = function () {
       const outgoingMessage = {
          event: 'add-rating-sub',
@@ -209,9 +207,7 @@
       return false;
    }
 
-   // обработчик входящих сообщений
    socket.onmessage = function (event) {
-      // console.log(event.data);
       const message = JSON.parse(event.data);
       if (message.event == "rating-update") {
          var data = message.data;
@@ -220,7 +216,6 @@
    };
 
    function showMessage(message) {
-
       document.getElementById(`${message.productName}-${message.rating}`).checked = true;
    }
 </script>
