@@ -5,9 +5,6 @@ const ratingUpdateSubscribers = new RatingUpdateSubscribers();
 
 module.exports.wsServer = (httpServer) => {
 
-	console.log(httpServer + "____________");
-
-
 	const ws = new WebSocket.Server({
 		server: httpServer
 	});
@@ -17,19 +14,20 @@ module.exports.wsServer = (httpServer) => {
 			const parsedMessage = JSON.parse(message);
 			switch (parsedMessage.event) {
 				case 'add-rating-sub':
-					ratingUpdateSubscribers.addClient(parsedMessage.productId, ws);
+					ratingUpdateSubscribers.addClient(parsedMessage.products, ws);
 					break;
 
 				case 'remove-rating-sub':
-					ratingUpdateSubscribers.removeClient(parsedMessage.productId, ws);
+					ratingUpdateSubscribers.removeClient(parsedMessage.products, ws);
 					break;
 			}
 		})
 	})
 }
 
-module.exports.notifyRatingUpdate = (productId, rating) => {
-	const clients = ratingUpdateSubscribers.clientList[productId];
+module.exports.notifyRatingUpdate = (productName, rating) => {
+	const clients = ratingUpdateSubscribers.clientList[productName];
+	console.log('clients', clients);
 	if (!clients) {
 		return;
 	}
@@ -38,7 +36,7 @@ module.exports.notifyRatingUpdate = (productId, rating) => {
 		c.send(JSON.stringify({
 			event: 'rating-update',
 			data: {
-				productId: productId,
+				productName: productName,
 				rating: rating
 			}
 		}))

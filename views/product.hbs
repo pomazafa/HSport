@@ -7,14 +7,14 @@
                   {{Product.productName}}</h4>
                <div class="goods-cards__img">
                   {{#if Product.imageUrl}}
-                  <img src="{{Product.imageUrl}}"
-                     alt="{{Product.productName}}">
+                  <img src="{{Product.imageUrl}}" alt="{{Product.productName}}">
                   {{else}}
                   <img src="/static/images/products/default.png" alt="{{Product.productName}}">
                   {{/if}}
                </div>
                <div class="goods-cards__content">
-                  <h4 class="block-title mobile-hidden">{{Product.productName}}</h4>
+                  <p style="display: none;" class="product" value="{{Product.id}}"></p>
+                  <h4 class="block-title mobile-hidden product-name">{{Product.productName}}</h4>
                   <div class="goods-cards__rating rating__group">
                      <fieldset>
                         <input class="rating__input" type="radio" name="{{Product.productName}}"
@@ -78,6 +78,7 @@
             </div>
             {{#if isAuth}}
             <form class="form-comment" name="comment" action="/product/addComment" method="POST">
+
 
                <span>{{errMessage}}</span>
                <input type="text" style="display: none;" name="id" value="{{Product.id}}"></input>
@@ -183,30 +184,37 @@
 
    console.log("Создаём подключение")
 
-   // отправить сообщение из формы comment
-   document.forms.comment.onsubmit = function () {
-      var outgoingMessage = {
-         event: 'add-rating-sub'
-      };
-      console.log("отправляем сообщение")
+   window.onload = function () {
+      //найти все товары и передать в сообщении
 
+      const productsElements = document.getElementsByClassName('product-name');
+
+      const products = []
+
+      for (let element of productsElements) {
+         products.push(element.innerText)
+      }
+
+      const outgoingMessage = {
+         event: 'add-rating-sub',
+         products: products
+      };
       socket.send(JSON.stringify(outgoingMessage));
       return false;
    };
 
    // обработчик входящих сообщений
    socket.onmessage = function (event) {
-      var incomingMessage = event.data;
-      console.log("получаем сообщение " + event.data)
-      showMessage(incomingMessage);
+     // console.log(event.data);
+      const message = JSON.parse(event.data);
+      if (message.event == "rating-update") {
+         var data = message.data;
+         showMessage(data);
+      }
    };
 
    function showMessage(message) {
 
-      //найти рейтинг на странице и обновить
-
-      var messageElem = document.createElement('div');
-      messageElem.appendChild(document.createTextNode(message));
-      document.getElementById('subscribe').appendChild(messageElem);
+      document.getElementById(`${message.productName}-${message.rating}`).checked = true;
    }
 </script>

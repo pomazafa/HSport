@@ -2,13 +2,13 @@ const {
     Product,
     User,
     Order,
-    OrderedProduct,
     Comment
 } = require('../models/model.js');
 const verifyToken = require('../public/js/func.js');
 var form = null;
 const error401 = require('../public/js/error401.js')
 const error404 = require('../public/js/error404.js')
+const WSNotify = require('../public/js/WSNotify.js');
 
 var currentProductId = null;
 
@@ -40,21 +40,19 @@ exports.index = async function (request, response) {
                             }
                         ]
                     }).then(product => {
-                        if(product)
-                        {product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
-                        response.render('product.hbs', {
-                            Title: product.productName,
-                            Rating: Math.round(rating / product.toJSON().Users.length),
-                            Product: product.toJSON(),
-                            form: form,
-                            isAuth: true
-                        })
-                        form = null;
-                    }
-                    else
-                    {
-                        error404(request, response);
-                    }
+                        if (product) {
+                            product.toJSON().Users.forEach((user) => rating += user.Comment.rating)
+                            response.render('product.hbs', {
+                                Title: product.productName,
+                                Rating: Math.round(rating / product.toJSON().Users.length),
+                                Product: product.toJSON(),
+                                form: form,
+                                isAuth: true
+                            })
+                            form = null;
+                        } else {
+                            error404(request, response);
+                        }
                     })
                 } else {
                     Product.findOne({
@@ -125,8 +123,7 @@ exports.addComment = async function (request, response) {
                 id: request.user.id
             }
         })
-        if(result.status == 0)
-        {
+        if (result.status == 0) {
             response.redirect('/profile/deleted');
             return;
         }
@@ -155,14 +152,22 @@ exports.addComment = async function (request, response) {
             if (ucomment == null) {
                 const comment = Comment.build(values)
                 comment.save();
+                Product.findOne({
+                    where: {
+                        id: productId
+                    }
+                }).then(product => {
+                    WSNotify(product.productName);
+                });
             } else {
-                Comment.findOne({
+                await Comment.findOne({
                     where: {
                         id: ucomment.Users[0].Comment.id
                     }
                 }).then(comment => {
-                    comment.update(values)
+                    comment.update(values);
                 });
+                WSNotify(ucomment.productName);
             }
         } else {
             form = {
