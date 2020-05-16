@@ -3,7 +3,7 @@
         <div class="goods-cards">
             {{#each Products}}
             <div class="goods-cards__item">
-                <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
+                <h4 class="block-title mobile-display product-name" style="font-size: 18px; margin-bottom: 16px;">
                     {{this.productName}}</h4>
                 <div class="goods-cards__img">
                     {{#if this.imageUrl}}
@@ -77,5 +77,53 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    const HOST = location.origin.replace(/^http/, 'ws')
+    const socket = new WebSocket(HOST);
+
+
+    let products = [];
+
+    socket.onopen = function () {
+        const productsElements = document.getElementsByClassName('product-name');
+        console.log(productsElements);
+
+        for (let element of productsElements) {
+            products.push(element.innerText)
+        }
+        const outgoingMessage = {
+            event: 'add-rating-sub',
+            products: products
+        };
+        socket.send(JSON.stringify(outgoingMessage));
+        return false;
+    };
+
+    socket.onclose = function () {
+        console.log('closing');
+
+        const outgoingMessage = {
+            event: 'remove-rating-sub',
+            products: products
+        };
+        socket.send(JSON.stringify(outgoingMessage));
+        return false;
+    }
+
+    socket.onmessage = function (event) {
+        const message = JSON.parse(event.data);
+        console.log(message);
+        if (message.event == "rating-update") {
+            var data = message.data;
+            showMessage(data);
+        }
+    };
+
+    function showMessage(message) {
+        console.log(message);
+        document.getElementById(`${message.productName}-${message.rating}`).checked = true;
+    }
+</script>
 
 <script type="text/javascript" src="/static/js/cart.js"></script>

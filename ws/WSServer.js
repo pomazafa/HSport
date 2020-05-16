@@ -28,10 +28,11 @@ module.exports.wsServer = (httpServer) => {
 module.exports.notifyRatingUpdate = (productName, rating) => {
 	const clients = ratingUpdateSubscribers.clientList[productName];
 	console.log('clients', clients);
+	console.log('productName', productName);
+	console.log('rating', rating);
 	if (!clients) {
 		return;
 	}
-
 	clients.forEach(c => {
 		c.send(JSON.stringify({
 			event: 'rating-update',

@@ -13,7 +13,7 @@
                {{/if}}
             </div>
             <div class="goods-cards__content">
-               <h4 class="block-title mobile-hidden">{{this.productName}}</h4>
+               <h4 class="block-title mobile-hidden product-name">{{this.productName}}</h4>
                <div class="goods-cards__rating rating__group">
                   <fieldset>
                      <input class="rating__input" type="radio" name="{{this.productName}}" id="{{this.productName}}-1"
@@ -65,5 +65,48 @@
       <button class="btn-gray" onclick="completeOrder(this)">Отправить заказ</button>
    </div>
 </div>
+
+
+<script type="text/javascript">
+    const HOST = location.origin.replace(/^http/, 'ws')
+    const socket = new WebSocket(HOST);
+
+    let products = [];
+
+    socket.onopen = function () {
+        const productsElements = document.getElementsByClassName('product-name');
+        for (let element of productsElements) {
+            products.push(element.innerText)
+        }
+        const outgoingMessage = {
+            event: 'add-rating-sub',
+            products: products
+        };
+        socket.send(JSON.stringify(outgoingMessage));
+        return false;
+    };
+
+    socket.onclose = function () {
+        const outgoingMessage = {
+            event: 'remove-rating-sub',
+            products: products
+        };
+        socket.send(JSON.stringify(outgoingMessage));
+        return false;
+    }
+
+    socket.onmessage = function (event) {
+        const message = JSON.parse(event.data);
+        if (message.event == "rating-update") {
+            var data = message.data;
+            showMessage(data);
+        }
+    };
+
+    function showMessage(message) {
+        console.log(message);
+        document.getElementById(`${message.productName}-${message.rating}`).checked = true;
+    }
+</script>
 
 <script type="text/javascript" src="/static/js/cart.js"></script>
