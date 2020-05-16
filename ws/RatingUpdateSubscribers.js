@@ -9,8 +9,6 @@ module.exports = class RatingUpdateSubscribers {
 			const subscribers = this.clientList[productName];
 			if (subscribers) {
 				if (!subscribers.includes(client)) {
-					console.log('add: ');
-					console.log(subscribers);
 					subscribers.push(client);
 				} 
 			}

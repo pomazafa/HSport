@@ -178,23 +178,20 @@
 <script type="text/javascript">
    // создать подключение
 
-   var HOST = location.origin.replace(/^http/, 'ws')
-   var socket = new WebSocket(HOST);
+   const HOST = location.origin.replace(/^http/, 'ws')
+   const socket = new WebSocket(HOST);
 
+   const productsElements = document.getElementsByClassName('product-name');
+
+   let products = [];
+
+   for (let element of productsElements) {
+      products.push(element.innerText)
+   }
 
    console.log("Создаём подключение")
 
-   window.onload = function () {
-      //найти все товары и передать в сообщении
-
-      const productsElements = document.getElementsByClassName('product-name');
-
-      const products = []
-
-      for (let element of productsElements) {
-         products.push(element.innerText)
-      }
-
+   socket.onopen = function () {
       const outgoingMessage = {
          event: 'add-rating-sub',
          products: products
@@ -203,9 +200,18 @@
       return false;
    };
 
+   socket.onclose = function () {
+      const outgoingMessage = {
+         event: 'remove-rating-sub',
+         products: products
+      };
+      socket.send(JSON.stringify(outgoingMessage));
+      return false;
+   }
+
    // обработчик входящих сообщений
    socket.onmessage = function (event) {
-     // console.log(event.data);
+      // console.log(event.data);
       const message = JSON.parse(event.data);
       if (message.event == "rating-update") {
          var data = message.data;
