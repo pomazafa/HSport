@@ -148,27 +148,27 @@ exports.addComment = async function (request, response) {
                 UserId: request.user.id,
                 ProductId: productId
             };
+            Product.findOne({
+                where: {
+                    id: productId
+                }
+            }).then(async product => {
+                if (ucomment == null) {
+                    const comment = await Comment.create(values)
+                    WSNotify(product.productName, comment);
 
-            if (ucomment == null) {
-                const comment = Comment.build(values)
-                comment.save();
-                Product.findOne({
-                    where: {
-                        id: productId
-                    }
-                }).then(product => {
-                    WSNotify(product.productName);
-                });
-            } else {
-                await Comment.findOne({
-                    where: {
-                        id: ucomment.Users[0].Comment.id
-                    }
-                }).then(comment => {
-                    comment.update(values);
-                });
-                WSNotify(ucomment.productName);
-            }
+                } else {
+                    const comment = await Comment.findOne({
+                        where: {
+                            id: ucomment.Users[0].Comment.id
+                        }
+                    }).then(comment => {
+                        comment.update(values);
+                        return comment;
+                    });
+                    WSNotify(product.productName, comment);
+                }
+            })
         } else {
             form = {
                 errMessage: "Оцените этот товар от 1 до 5, пожалуйста!",

@@ -25,7 +25,7 @@ module.exports.wsServer = (httpServer) => {
 	})
 }
 
-module.exports.notifyRatingUpdate = (productName, rating) => {
+module.exports.notifyRatingUpdate = (productName, rating, comment) => {
 	const clients = ratingUpdateSubscribers.clientList[productName];
 	if (!clients) {
 		return;
@@ -35,7 +35,8 @@ module.exports.notifyRatingUpdate = (productName, rating) => {
 			event: 'rating-update',
 			data: {
 				productName: productName,
-				rating: rating
+				rating: rating,
+				comment: comment
 			}
 		}))
 	})

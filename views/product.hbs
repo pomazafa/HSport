@@ -106,7 +106,7 @@
                   <div class="rating__focus"></div>
                </div>
                <div>
-                  <textarea class="form-add__textarea" id="review" name="review"
+                  <textarea class="form-add__textarea" maxlength="255" id="review" name="review"
                      placeholder="Ваш отзыв...">{{form.review}}</textarea>
                </div>
 
@@ -120,6 +120,7 @@
             <p class="comments___title">
                Отзывы о &laquo;{{Product.productName}}&raquo;
             </p>
+            {{#if Product.Users.0.Comment.rating}}
             {{#each Product.Users}}
             <div class="comment">
                <div class="comment-head">
@@ -168,6 +169,9 @@
                <p class="comment__text">{{this.Comment.message}}</p>
             </div>
             {{/each}}
+            {{else}}
+            <p>Отзывов о данном товаре пока нет. Оставьте свой!</p>
+            {{/if}}
          </div>
       </div>
    </div>
@@ -176,8 +180,6 @@
 <script type="text/javascript" src="/static/js/cart.js"></script>
 
 <script type="text/javascript">
-   // создать подключение
-
    const HOST = location.origin.replace(/^http/, 'ws')
    const socket = new WebSocket(HOST);
 
@@ -216,6 +218,15 @@
    };
 
    function showMessage(message) {
+      console.log(message);
+
       document.getElementById(`${message.productName}-${message.rating}`).checked = true;
+
+      let comments = document.getElementsByClassName("comments");
+
+      if(!comments[0].lastElementChild.classList.contains("comment"))
+      {
+         comments[0].removeChild(comments[0].lastElementChild);
+      }
    }
 </script>

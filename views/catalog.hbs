@@ -1,6 +1,7 @@
 <div class="grey-section">
     <div class="container">
         <div class="goods-cards">
+            {{#if Products.0.productName}}
             {{#each Products}}
             <div class="goods-cards__item">
                 <h4 class="block-title mobile-display" style="font-size: 18px; margin-bottom: 16px;">
@@ -74,6 +75,9 @@
                 </div>
             </div>
             {{/each}}
+            {{else}}
+            <p>Товаров на данный момент нет. Зайдите позже</p>
+            {{/if}}
         </div>
     </div>
 </div>
