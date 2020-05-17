@@ -134,11 +134,9 @@
                      [Удалённый пользователь]
                      {{/when}}
                   </p>
-
                   <p class="comment-date">
                      {{#formatTime this.Comment.commentDate}} {{/formatTime}}
                   </p>
-
                   <div class="goods-cards__rating rating__group">
                      <fieldset>
                         <input class="rating__input" type="radio" name="{{this.Comment.id}}" id="{{this.Comment.id}}-1"
@@ -263,7 +261,80 @@
       }
       else
       {
+         let htmlinput = "";
+         htmlinput += "<div class=\"comment\">"+
+            "<div class=\"comment-head\">" +
+                  "<p class=\"comment__name\">";
+                     if(message.user.status == 1)
+                     {
+                        if(message.user.name)
+                        {
+                           htmlinput += message.user.name;
+                        }
+                        else
+                        {
+                           htmlinput += "Аноним";
+                        }
+                     }
+                     else
+                     {
+                        htmlinput += "[Удалённый пользователь]";
+                     }
+                     htmlinput += "</p><p class=\"comment-date\">";
+                     htmlinput += getDateHelper(message.comment.commentDate);
+                     htmlinput += "</p><div class=\"goods-cards__rating rating__group\">" +
+                        "<fieldset>" +
+                           "<input class=\"rating__input\" type=\"radio\" name=\"";
+                           htmlinput += message.comment.id; 
+                           htmlinput += "\" id=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-1\" value=\"1\"";
+                           if(message.rating == 1)
+                              htmlinput += "checked";
+                           htmlinput += "><label class=\"rating__star\" for=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-1\" aria-label=\"Ужасно\"></label><input class=\"rating__input\" type=\"radio\" name=\"";
+                           htmlinput += message.comment.id; 
+                           htmlinput += "\" id=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-2\" value=\"2\"";
+                           if(message.rating == 2)
+                              htmlinput += "checked";
+                           htmlinput += "><label class=\"rating__star\" for=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-2\" aria-label=\"Сносно\"></label><input class=\"rating__input\" type=\"radio\" name=\"";
+                           htmlinput += message.comment.id; 
+                           htmlinput += "\" id=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-3\" value=\"3\"";
+                           if(message.rating == 3)
+                              htmlinput += "checked";
+                           htmlinput += "><label class=\"rating__star\" for=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-3\" aria-label=\"Нормально\"></label><input class=\"rating__input\" type=\"radio\" name=\"";
+                           htmlinput += message.comment.id; 
+                           htmlinput += "\" id=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-4\" value=\"4\"";
+                           if(message.rating == 4)
+                              htmlinput += "checked";
+                           htmlinput += "><label class=\"rating__star\" for=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-4\" aria-label=\"Хорошо\"></label><input class=\"rating__input\" type=\"radio\" name=\"";
+                           htmlinput += message.comment.id; 
+                           htmlinput += "\" id=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-5\" value=\"5\"";
+                           if(message.rating == 5)
+                              comments[0].innerHTML += "checked";
+                           htmlinput += "><label class=\"rating__star\" for=\"";
+                           htmlinput += message.comment.id;
+                           htmlinput += "-5\" aria-label=\"Отлично\"></label>"+
+                           "</fieldset><div class=\"rating__focus\"></div></div></div><p class=\"comment__text\">";
+                  htmlinput += message.comment.message;
+                  htmlinput += "</p></div>";
 
+                  comments[0].innerHTML += htmlinput;
       }
    }
 </script>

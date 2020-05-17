@@ -155,7 +155,7 @@ exports.addComment = async function (request, response) {
             }).then(async product => {
                 if (ucomment == null) {
                     const comment = await Comment.create(values)
-                    WSNotify(product.productName, comment);
+                    WSNotify(product.productName, comment, request.user);
 
                 } else {
                     Comment.findOne({
@@ -166,7 +166,7 @@ exports.addComment = async function (request, response) {
                         await comment.update(values);
                         return comment;
                     }).then(comment => {
-                        WSNotify(product.productName, comment);
+                        WSNotify(product.productName, comment, request.user);
                     });
                 }
             })

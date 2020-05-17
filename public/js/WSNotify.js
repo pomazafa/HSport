@@ -4,7 +4,7 @@ const {
     User
 } = require('../../models/model.js');
 
-module.exports = function WSNotify(productName, comment) {
+module.exports = function WSNotify(productName, comment, user) {
     Product.findOne({
         where: {
             productName: productName
@@ -21,7 +21,7 @@ module.exports = function WSNotify(productName, comment) {
                     product.rating = Math.round(product.rating / product.Users.length);
                 }
             }
-            notifyRatingUpdate(productName, product.rating, comment);
+            notifyRatingUpdate(productName, product.rating, comment, user);
         }
     })
 }
