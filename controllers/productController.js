@@ -158,15 +158,16 @@ exports.addComment = async function (request, response) {
                     WSNotify(product.productName, comment);
 
                 } else {
-                    const comment = await Comment.findOne({
+                    Comment.findOne({
                         where: {
                             id: ucomment.Users[0].Comment.id
                         }
-                    }).then(comment => {
-                        comment.update(values);
+                    }).then(async comment => {
+                        await comment.update(values);
                         return comment;
+                    }).then(comment => {
+                        WSNotify(product.productName, comment);
                     });
-                    WSNotify(product.productName, comment);
                 }
             })
         } else {

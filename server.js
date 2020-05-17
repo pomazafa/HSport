@@ -32,7 +32,6 @@ app.engine("hbs", expressHbs({
             return options.inverse(this);
         },
         formatTime: function (myDate) {
-            var year = myDate.get
             var minute = myDate.getMinutes();
             var second = myDate.getSeconds();
             if (minute < 10) {
@@ -41,7 +40,7 @@ app.engine("hbs", expressHbs({
             if (second < 10) {
                 second = "0" + second;
             }
-            return myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate() + " " + myDate.getHours() + ":" + minute + ":" + second;
+            return  myDate.getDate() + '.' + (myDate.getMonth() + 1) + '.' + myDate.getFullYear()+ " " + myDate.getHours() + ":" + minute + ":" + second;
         }
     },
     defaultLayout: "main",
