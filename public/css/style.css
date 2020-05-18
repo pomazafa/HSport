@@ -2388,3 +2388,28 @@ fieldset {
 .form-comment__btn {
     margin-top: 10px;
 }
+
+.table__wrapper {
+    padding-top: 100px;
+    height: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.table th {
+    padding: 10px;
+    border: 2px solid #407288;
+    background: #336073;
+    color: white;
+}
+
+.table td {
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #407288;
+    border-top: none;
+}

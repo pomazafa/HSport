@@ -1,9 +1,5 @@
 const {
-    Product,
-    User,
-    Order,
-    OrderedProduct,
-    Comment
+    User
 } = require('../models/model.js');
 
 const { secret } = require('../config/config.js');

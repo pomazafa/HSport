@@ -1,6 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const Product = require('./Product.js');
-const User = require('./User.js');
+const { Sequelize } = require('sequelize');
 
 module.exports = function(sequelize) {
     const Comment = sequelize.define('Comment', {

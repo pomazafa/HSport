@@ -1,32 +1,44 @@
-<div class="grey-section">
-    <div class="container">
-        <div>
-            {{#each Orders}}
-           <p> 
-               {{#when this.orderStatus 'created'}}
-                    В корзине
-               {{/when}}
+<div class="grey-section table__wrapper ">
+   <div class="container">
+      <div>
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>Номер заказа</th>
+                  <th>Статус</th>
+                  <th>Дата обновления</th>
+                  <th>Сумма</th>
+               </tr>
+            </thead>
+            <tbody>
 
-               {{#when this.orderStatus 'being processed'}}
-                    Обрабатывается
-               {{/when}}
+         {{#each Orders}}
 
-               {{#when this.orderStatus 'pickup'}}
-                    Ожидается самовывоз
-               {{/when}}
+               <tr>
+                  <td>{{this.id}}</td>
+                  <td>
+                     {{#when this.orderStatus 'created'}}
+                     В корзине
+                     {{/when}}
 
-               {{#when this.orderStatus 'processed'}}
-                    Завершён
-               {{/when}}
-               </p>
-               <p>
-                    {{#formatTime this.orderDate}} {{/formatTime}}
-               </p>
+                     {{#when this.orderStatus 'being processed'}}
+                     Обрабатывается
+                     {{/when}}
 
-               <p>
-                   {{this.sumPrice}}
-               </p>
-            {{/each}}
-        </div>
-    </div>
+                     {{#when this.orderStatus 'pickup'}}
+                     Ожидается самовывоз
+                     {{/when}}
+
+                     {{#when this.orderStatus 'processed'}}
+                     Завершён
+                     {{/when}}
+                  </td>
+                  <td>{{#formatTime this.orderDate}} {{/formatTime}}</td>
+                  <td>{{this.sumPrice}}</td>
+               </tr>
+         {{/each}}
+            </tbody>
+         </table>
+      </div>
+   </div>
 </div>
