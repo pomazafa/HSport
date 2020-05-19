@@ -202,5 +202,8 @@ $(".sub-header__menu").on("click", "a", function (event) {
 	}
 });
 
+$('tr[data-href]').on("click", function() {
+    document.location = $(this).data('href');
+});
 //---
 });

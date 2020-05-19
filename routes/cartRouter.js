@@ -9,5 +9,6 @@ cartRouter.get('/increase', cartController.increase);
 cartRouter.get('/decrease', cartController.decrease);
 cartRouter.get('/complete', cartController.complete);
 cartRouter.get('/carts', cartController.carts);
+cartRouter.get('/cart/:id', cartController.cart);
 
 module.exports = cartRouter;

@@ -204,7 +204,6 @@ exports.increase = async function (request, response) {
                             let values = {
                                 countOfProducts: (orderedProduct.countOfProducts + 1)
                             }
-
                             orderedProduct.update(values);
 
                         })
@@ -371,7 +370,62 @@ exports.carts = async function (request, response) {
                     }
                 })
             } else {
-                errorAdmin(request, response);
+                Order.findAll({
+                    include: [
+                        {
+                            model: Product
+                        },
+                        {
+                            model: User
+                        }
+                    ]
+                }).then(orders => {
+                    if (orders.length != 0) {
+                        getPrice(orders)
+                        response.render('carts.hbs', {
+                            Title: 'Все заказы',
+                            Orders: orders.map(order => Object.assign(order.toJSON(), {
+                                sumPrice: order.orderPrice
+                            })),
+                            isAuth: true,
+                            isAdmin: true
+                        })
+                    } else {
+                        response.render('message.hbs', {
+                            Title: 'Все заказы',
+                            message: "Ни одного заказа нет",
+                            buttonAction: "window.location.href = '/catalog'",
+                            buttonValue: "К каталогу",
+                            isAuth: true,
+                            isAdmin: true
+                        });
+                    }
+                })
+            }
+        } else {
+            error401(request, response);
+        }
+    } else {
+        error401(request, response);
+    }
+}
+
+exports.cart = async function (request, response) {
+    const cartId = req.params.id;
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if(result.status == 0)
+            {
+                    //проверить, что это его заказ
+            }
+            else
+            {
+                    
             }
         } else {
             error401(request, response);

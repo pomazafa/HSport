@@ -5,17 +5,17 @@
             <thead>
                <tr>
                   <th>Номер заказа</th>
+                  <th>Заказчик</th>
                   <th>Статус</th>
                   <th>Дата обновления</th>
                   <th>Сумма</th>
                </tr>
             </thead>
             <tbody>
-
          {{#each Orders}}
-
-               <tr>
+               <tr data-href="/cart/{{this.id}}">
                   <td>{{this.id}}</td>
+                  <td>{{this.User.mail}}</td>
                   <td>
                      {{#when this.orderStatus 'created'}}
                      В корзине
