@@ -168,7 +168,7 @@ exports.addPost = async function (request, response) {
                         productDescription: pdescription,
                         brand: pbrand,
                         productPrice: pprice
-                    }).then(async function(product) {
+                    }).then(async function (product) {
                         const upload = multer({
                             storageConfig
                         }).single('pimage')
@@ -183,25 +183,26 @@ exports.addPost = async function (request, response) {
                                     isAdmin: true
                                 });
                             }
-                            // SEND FILE TO CLOUDINARY
-                            const path = request.file.path;
-                            await cloudinary.uploader.upload(
-                                path, {
-                                    public_id: `product/${product.id}`,
-                                    tags: `product`
-                                }, // directory and tags are optional
-                                function (err, image) {
-                                    if (err)
-                                        return console.log(err)
-                                    console.log('file uploaded to Cloudinary')
-                                    // remove file from server
-                                    const fs = require('fs')
-                                    fs.unlinkSync(path)
-                                    product.update({
-                                        imageUrl: image.secure_url
-                                    });
-                                }
-                            )
+                            if (request.file) {
+                                const path = request.file.path;
+                                await cloudinary.uploader.upload(
+                                    path, {
+                                        public_id: `product/${product.id}`,
+                                        tags: `product`
+                                    },
+                                    function (err, image) {
+                                        if (err)
+                                            return console.log(err)
+                                        console.log('file uploaded to Cloudinary')
+                                        // remove file from server
+                                        const fs = require('fs')
+                                        fs.unlinkSync(path)
+                                        product.update({
+                                            imageUrl: image.secure_url
+                                        });
+                                    }
+                                )
+                            }
                         })
                         return response.redirect('/catalog');
                     })
@@ -317,24 +318,26 @@ exports.changePost = async function (request, response) {
                             };
 
                             productToChange.update(values);
-
-                            // SEND FILE TO CLOUDINARY
-                            const path = request.file.path
-                            if (path) {
-                                await cloudinary.uploader.upload(
-                                    path, {
-                                        public_id: `product/${product.id}`,
-                                        tags: `product`
-                                    }, // directory and tags are optional
-                                    function (err, image) {
-                                        if (err)
-                                            return console.log(err)
-                                        console.log('file uploaded to Cloudinary')
-                                        // remove file from server
-                                        const fs = require('fs')
-                                        fs.unlinkSync(path)
-                                        productToChange.update({imageUrl: image.secure_url});
-                                    });
+                            if (request.file) {
+                                const path = request.file.path
+                                if (path) {
+                                    await cloudinary.uploader.upload(
+                                        path, {
+                                            public_id: `product/${product.id}`,
+                                            tags: `product`
+                                        }, // directory and tags are optional
+                                        function (err, image) {
+                                            if (err)
+                                                return console.log(err)
+                                            console.log('file uploaded to Cloudinary')
+                                            // remove file from server
+                                            const fs = require('fs')
+                                            fs.unlinkSync(path)
+                                            productToChange.update({
+                                                imageUrl: image.secure_url
+                                            });
+                                        });
+                                }
                             }
                         }
                         return response.redirect('/catalog');
