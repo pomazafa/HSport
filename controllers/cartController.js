@@ -9,6 +9,7 @@ const getRating = require('../public/js/rating.js');
 const getPrice = require('../public/js/price.js');
 var form = null;
 const error401 = require('../public/js/error401.js');
+const error404 = require('../public/js/error404.js');
 const errorAdmin = require('../public/js/errorAdmin.js');
 
 var currentProductId = null;
@@ -22,8 +23,7 @@ exports.index = async function (request, response) {
         })
         if (result != null) {
             if (result.role != 1) {
-                if(result.status == 0)
-                {
+                if (result.status == 0) {
                     response.redirect('/profile/deleted');
                     return
                 }
@@ -45,7 +45,9 @@ exports.index = async function (request, response) {
                             Products: products.map(product => Object.assign(product.toJSON(), {
                                 rating: product.rating
                             })),
-                            isAuth: true
+                            isAuth: true,
+                            buttonAction: "completeOrder(this)",
+                            buttonValue: "Подтвердить заказ"
                         })
                     } else {
                         response.render('message.hbs', {
@@ -77,6 +79,10 @@ exports.add = async function (request, response) {
             }
         })
         if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
             if (result.role != 1) {
                 try {
                     var order = await Order.findOne({
@@ -135,6 +141,10 @@ exports.remove = async function (request, response) {
             }
         })
         if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
             if (result.role != 1) {
                 try {
                     var order = await Order.findOne({
@@ -182,6 +192,10 @@ exports.increase = async function (request, response) {
             }
         })
         if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
             if (result.role != 1) {
                 try {
                     var order = await Order.findOne({
@@ -228,7 +242,6 @@ exports.increase = async function (request, response) {
 
 exports.decrease = async function (request, response) {
     currentProductId = request.query.id;
-    console.log(currentProductId)
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -236,6 +249,10 @@ exports.decrease = async function (request, response) {
             }
         })
         if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
             if (result.role != 1) {
                 try {
                     var order = await Order.findOne({
@@ -247,7 +264,6 @@ exports.decrease = async function (request, response) {
                     if (order == null) {
                         response.status(500).send();
                     }
-
                     OrderedProduct.findOne({
                             where: {
                                 OrderId: order.id,
@@ -255,7 +271,6 @@ exports.decrease = async function (request, response) {
                             }
                         })
                         .then(orderedProduct => {
-
                             if (orderedProduct.countOfProducts > 1) {
                                 let values = {
                                     countOfProducts: (orderedProduct.countOfProducts - 1)
@@ -270,7 +285,6 @@ exports.decrease = async function (request, response) {
                                 });
                             }
                         })
-
                     response.status(200).send();
                 } catch (e) {
                     console.log(e);
@@ -334,8 +348,7 @@ exports.carts = async function (request, response) {
             }
         })
         if (result != null) {
-            if(result.status == 0)
-            {
+            if (result.status == 0) {
                 response.redirect('/profile/deleted');
                 return;
             }
@@ -344,11 +357,11 @@ exports.carts = async function (request, response) {
                     where: {
                         UserId: request.user.id
                     },
-                    include: [
-                        {
-                            model: Product
-                        }
-                    ]
+                    include: [{
+                        model: Product
+                    }, {
+                        model: User
+                    }]
                 }).then(orders => {
                     if (orders.length != 0) {
                         getPrice(orders)
@@ -371,8 +384,7 @@ exports.carts = async function (request, response) {
                 })
             } else {
                 Order.findAll({
-                    include: [
-                        {
+                    include: [{
                             model: Product
                         },
                         {
@@ -411,7 +423,7 @@ exports.carts = async function (request, response) {
 }
 
 exports.cart = async function (request, response) {
-    const cartId = req.params.id;
+    const orderId = request.params.id;
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -419,13 +431,216 @@ exports.cart = async function (request, response) {
             }
         })
         if (result != null) {
-            if(result.status == 0)
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
+            if (result.role == 0) {
+                Product.findAll({
+                    include: [{
+                        model: Order,
+                        where: {
+                            UserId: result.id,
+                            id: orderId
+                        }
+                    }, {
+                        model: User
+                    }]
+                }).then(products => {
+                    if (products.length != 0) {
+                        if (products[0].Orders[0].orderStatus == 'created') {
+                            response.redirect('/cart');
+                            return;
+                        }
+                        getRating(products)
+                        response.render('cart.hbs', {
+                            Title: 'Заказ',
+                            Products: products.map(product => Object.assign(product.toJSON(), {
+                                rating: product.rating
+                            })),
+                            isAuth: true,
+                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonValue: "Вернуться"
+                        })
+                    } else {
+                        response.render('message.hbs', {
+                            Title: 'Ошибка',
+                            message: "Информации о заказе нет",
+                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonValue: "Вернуться к заказам",
+                            isAuth: true
+                        });
+                    }
+                })
+            } else {
+                Product.findAll({
+                    include: [{
+                        model: Order,
+                        where: {
+                            id: orderId
+                        }
+                    }]
+                }).then(products => {
+                    if (products.length != 0) {
+                        getRating(products)
+
+                        if (products[0].Orders[0].orderStatus == 'being processed') {
+
+                            response.render('cart.hbs', {
+                                Title: 'Заказ',
+                                Products: products.map(product => Object.assign(product.toJSON(), {
+                                    rating: product.rating
+                                })),
+                                isAuth: true,
+                                isAdmin: true,
+                                buttonAction: (`window.location.href = '/cart/ready/${orderId}'`),
+                                buttonValue: "Готов к самовывозу"
+                            })
+                        } else {
+                            if (products[0].Orders[0].orderStatus == 'pickup') {
+
+                                response.render('cart.hbs', {
+                                    Title: 'Заказ',
+                                    Products: products.map(product => Object.assign(product.toJSON(), {
+                                        rating: product.rating
+                                    })),
+                                    isAuth: true,
+                                    isAdmin: true,
+                                    buttonAction: (`window.location.href = '/cart/done/${orderId}'`),
+                                    buttonValue: "Завершить заказ"
+                                })
+                            }
+                            else 
+                            {
+                                response.render('cart.hbs', {
+                                    Title: 'Заказ',
+                                    Products: products.map(product => Object.assign(product.toJSON(), {
+                                        rating: product.rating
+                                    })),
+                                    isAuth: true,
+                                    isAdmin: true,
+                                    buttonAction: (`window.location.href = '/cart/carts'`),
+                                    buttonValue: "Вернуться"
+                                })
+                            }
+                        }
+                    } else {
+                        response.render('message.hbs', {
+                            Title: 'Ошибка',
+                            message: "Информации о заказе нет",
+                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonValue: "К заказам",
+                            isAuth: true,
+                            isAdmin: true
+                        });
+                    }
+                })
+            }
+        } else {
+            error401(request, response);
+        }
+    } else {
+        error401(request, response);
+    }
+}
+
+exports.ready = async function (request, response) {
+    const orderId = request.params.id;
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
+            if(result.role == 1)
             {
-                    //проверить, что это его заказ
+                Order.findOne({
+                    where: {
+                        id: orderId
+                    }
+                }).then(order => {
+                    if(order){
+                        order.update(
+                            {
+                                orderStatus: 'pickup',
+                                orderDate: new Date()
+                            }
+                        )
+                        response.redirect('/cart/carts');
+                    }
+                    else{
+                        response.render('message.hbs', {
+                            Title: 'Ошибка',
+                            message: "Произошла ошибка при обновлении статуса заказа. Попробуйте позже",
+                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonValue: "Вернуться",
+                            isAuth: true,
+                            isAdmin: true
+                        });
+                    }
+                })
             }
             else
             {
-                    
+                error404(request, response);
+            }
+        } else {
+            error401(request, response);
+        }
+    } else {
+        error401(request, response);
+    }
+}
+
+exports.done = async function (request, response) {
+    const orderId = request.params.id;
+    if (await verifyToken(request, response)) {
+        const result = await User.findOne({
+            where: {
+                id: request.user.id
+            }
+        })
+        if (result != null) {
+            if (result.status == 0) {
+                response.redirect('/profile/deleted');
+                return
+            }
+            if(result.role == 1)
+            {
+                Order.findOne({
+                    where: {
+                        id: orderId
+                    }
+                }).then(order => {
+                    if(order){
+                        order.update(
+                            {
+                                orderStatus: 'processed',
+                                orderDate: new Date()
+                            }
+                        )
+                        response.redirect('/cart/carts');
+                    }
+                    else{
+                        response.render('message.hbs', {
+                            Title: 'Ошибка',
+                            message: "Произошла ошибка при обновлении статуса заказа. Попробуйте позже",
+                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonValue: "Вернуться",
+                            isAuth: true,
+                            isAdmin: true
+                        });
+                    }
+                })
+            }
+            else
+            {
+                error404(request, response);
             }
         } else {
             error401(request, response);
