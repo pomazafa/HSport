@@ -81,7 +81,7 @@
                <span>{{errMessage}}</span>
                <input type="text" style="display: none;" name="id" value="{{Product.id}}"></input>
                <p class="form-comment__your-text">Вы можете оставить свой отзыв!</p>
-               <p>{{form.errMessage}}</p>
+               <p class="form-comment__text-error">{{form.errMessage}}</p>
 
                <p class="rating__text">Ваша оценка:</p>
 
@@ -111,7 +111,7 @@
                <button class="btn-gray form-comment__btn" type="submit">Отправить</button>
             </form>
             {{else}}
-            <label>Чтобы оставить отзыв о товаре, войдите в свой аккаунт!</label>
+            <p>Чтобы оставить отзыв о товаре, войдите в свой аккаунт!</p>
             {{/if}}
          </div>
          <div class="comments">
@@ -133,9 +133,6 @@
                      {{#when this.status 0}}
                      [Удалённый пользователь]
                      {{/when}}
-                  </p>
-                  <p class="comment-date">
-                     {{#formatTime this.Comment.commentDate}} {{/formatTime}}
                   </p>
                   <div class="goods-cards__rating rating__group">
                      <fieldset>
@@ -161,6 +158,9 @@
                      </fieldset>
                      <div class="rating__focus"></div>
                   </div>
+                  <p class="comment-date">
+                     {{#formatTime this.Comment.commentDate}} {{/formatTime}}
+                  </p>
                </div>
                <p class="comment__text">{{this.Comment.message}}</p>
             </div>
@@ -280,9 +280,8 @@
                      {
                         htmlinput += "[Удалённый пользователь]";
                      }
-                     htmlinput += "</p><p class=\"comment-date\">";
-                     htmlinput += getDateHelper(message.comment.commentDate);
-                     htmlinput += "</p><div class=\"goods-cards__rating rating__group\">" +
+                     htmlinput += "</p>";
+                     htmlinput += "<div class=\"goods-cards__rating rating__group\">" +
                         "<fieldset>" +
                            "<input class=\"rating__input\" type=\"radio\" name=\"";
                            htmlinput += message.comment.id; 
@@ -330,7 +329,10 @@
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-5\" aria-label=\"Отлично\"></label>"+
-                           "</fieldset><div class=\"rating__focus\"></div></div></div><p class=\"comment__text\">";
+                           "</fieldset>";
+                  htmlinput += "<p class=\"comment-date\">";
+                  htmlinput += getDateHelper(message.comment.commentDate);
+                  htmlinput += "</p><div class=\"rating__focus\"></div></div></div><p class=\"comment__text\">";
                   htmlinput += message.comment.message;
                   htmlinput += "</p></div>";
                   comments[0].innerHTML += htmlinput;

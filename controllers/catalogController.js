@@ -193,8 +193,6 @@ exports.addPost = async function (request, response) {
                                     function (err, image) {
                                         if (err)
                                             return console.log(err)
-                                        console.log('file uploaded to Cloudinary')
-                                        // remove file from server
                                         const fs = require('fs')
                                         fs.unlinkSync(path)
                                         product.update({
@@ -325,12 +323,10 @@ exports.changePost = async function (request, response) {
                                         path, {
                                             public_id: `product/${product.id}`,
                                             tags: `product`
-                                        }, // directory and tags are optional
+                                        },
                                         function (err, image) {
                                             if (err)
                                                 return console.log(err)
-                                            console.log('file uploaded to Cloudinary')
-                                            // remove file from server
                                             const fs = require('fs')
                                             fs.unlinkSync(path)
                                             productToChange.update({

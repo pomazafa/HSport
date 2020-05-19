@@ -240,7 +240,7 @@ header {
 }
 
 .header-curtain.active .sub-header__menu-item a:hover {
-    color: #46caf7;
+    color: #34577b;
 }
 
 @media (max-width: 991.98px) {
@@ -600,12 +600,12 @@ header {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #38C0EC;
+    background-color: #3a6189;
 }
 
 .sub-header .header-actions__item:hover,
 .sub-header .header-actions__item:focus {
-    background-color: #46caf7;
+    background-color: #34577b;
 }
 
 .header-img {
@@ -717,7 +717,7 @@ header {
     margin-left: 5px;
     position: relative;
     top: 3px;
-    background: #38C0EC;
+    background: #3a6189;
 }
 
 .header-slider__decor-namber {
@@ -727,7 +727,7 @@ header {
     font-family: Roboto;
     font-weight: 900;
     font-size: 33.75rem;
-    color: #38C0EC;
+    color: #3a6189;
     opacity: 0.08;
 }
 
@@ -771,7 +771,7 @@ header {
     max-width: 100%;
     height: 2px;
     margin-top: 22px;
-    background: #38C0EC;
+    background: #3a6189;
 }
 
 @media (max-width: 1182px) {
@@ -895,7 +895,7 @@ header {
 
 .header-slider-nav__item.active {
     font-weight: 500;
-    background: #38C0EC;
+    background: #3a6189;
     color: #fff;
     border-radius: 50%;
 }
@@ -1040,7 +1040,7 @@ header {
     justify-content: space-between;
     height: 100%;
     padding: 24px 22px;
-    background: #38C0EC;
+    background: #3a6189;
     border-radius: 4px;
     -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.11);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.11);
@@ -1085,7 +1085,7 @@ header {
 }
 
 .categories-nav__item.active .categories-nav__item-btn {
-    background: #38C0EC;
+    background: #3a6189;
     color: #fff;
     border-radius: 4px;
 }
@@ -1282,7 +1282,7 @@ header {
 
 .goods-action-btn:active,
 .goods-action-btn:hover {
-    background: #38C0EC;
+    background: #3a6189;
 }
 
 .goods-action-btn:active svg path,
@@ -1439,11 +1439,11 @@ header {
 
 .reviews-cards__read {
     font-weight: 600;
-    color: #38C0EC;
+    color: #3a6189;
 }
 
 .reviews-cards__read:hover {
-    color: #46caf7;
+    color: #34577b;
 }
 
 .reviews-cards__date {
@@ -1496,6 +1496,10 @@ header {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.11);
 }
 
+.about-us-slider.slick-slider .slick-list .slick-track {
+    max-height: 230px;
+}
+
 @media (max-width: 767.98px) {
     .about-us-slider {
         margin-right: 0;
@@ -1512,8 +1516,9 @@ header {
     border-radius: 4px;
 }
 
-.about-us-slider__image {
+.about-us-slider__image img {
     width: 335px;
+    height: 100%;
 }
 
 .map {
@@ -1802,7 +1807,7 @@ footer a {
 .some-form__line-required input[type=email],
 .some-form__line-required input[type=tel],
 .some-form__line-required input[type=text] {
-    border-color: #38C0EC;
+    border-color: #3a6189;
 }
 
 .some-form__line-required .some-form__hint {
@@ -1836,7 +1841,7 @@ footer a {
 .some-formline-required input[type=email],
 .some-formline-required input[type=tel],
 .some-formline-required input[type=text] {
-    border-color: #38C0EC;
+    border-color: #3a6189;
 }
 
 .some-formline-required .some-formhint {
@@ -1957,7 +1962,7 @@ input:focus,
 input:active,
 textarea:focus,
 textarea:active {
-    outline: 1px groove #46caf7;
+    outline: 1px groove #34577b;
     outline-offset: 1px;
 }
 
@@ -1965,7 +1970,7 @@ textarea:active {
 .btn-gray {
     display: inline-block;
     text-align: center;
-    background: #38C0EC;
+    background: #3a6189;
     color: #fff;
     font-size: 15px;
     line-height: 1;
@@ -1980,7 +1985,7 @@ textarea:active {
 .btn:focus,
 .btn-gray:hover,
 .btn-gray:focus {
-    background: #46caf7;
+    background: #34577b;
     -webkit-transition: ease 0.2s;
     -o-transition: ease 0.2s;
     transition: ease 0.2s;
@@ -2005,7 +2010,7 @@ textarea:active {
 }
 
 .blue-arrow {
-    background-color: #38C0EC;
+    background-color: #3a6189;
     background-image: url(/static/images/white-arrow.svg);
 }
 
@@ -2116,6 +2121,7 @@ textarea:active {
 
 .slick-slider .slick-arrow.slick-next {
     right: 0px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.11);
 }
 
 .slick-slider .slick-dots {
@@ -2150,7 +2156,7 @@ textarea:active {
 
 .slick-slider .slick-dots li.slick-active button {
     font-weight: 500;
-    background: #38C0EC;
+    background: #3a6189;
     color: #fff;
     border-radius: 50%;
 }
@@ -2198,7 +2204,7 @@ textarea:active {
 }
 
 .important {
-    color: #38C0EC;
+    color: #3a6189;
 }
 
 .visually-hidden:not(:focus):not(:active) {
@@ -2296,7 +2302,7 @@ textarea:active {
 }
 
 .btn-cart:hover {
-    background-color: #38C0EC;
+    background-color: #3a6189;
 }
 
 .btn-cart--minus::after, .btn-cart--plus::after {
@@ -2354,8 +2360,16 @@ fieldset {
 }
 
 .comment__name {
-    margin-right: 30px;
+    margin-right: 20px;
     font-weight: 700;
+}
+
+.comment-date {
+    margin-left: 20px;
+}
+
+.comment__text {
+    word-break: break-word;
 }
 
 .comment-head .rating__group {
@@ -2385,12 +2399,16 @@ fieldset {
     font-size: 18px;
 }
 
+.form-comment__text-error {
+    color: tomato;
+}
+
 .form-comment__btn {
     margin-top: 10px;
 }
 
 .table__wrapper {
-    padding-top: 100px;
+    padding: 100px 0;
     height: 100%;
 }
 
@@ -2407,9 +2425,48 @@ fieldset {
     color: white;
 }
 
+.table tbody tr:hover {
+    background: #d7e0e3;
+    cursor: pointer;
+}
+
 .table td {
     padding: 10px;
     text-align: center;
     border: 2px solid #407288;
     border-top: none;
 }
+
+.form-add__error-message {
+    color: tomato;
+}
+
+.cart__wpapper {
+    padding-bottom: 60px;
+}
+
+.message__wrapper {
+    height: 100%;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.message__title {
+    width: 440px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+}
+
+.message__btn {
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
