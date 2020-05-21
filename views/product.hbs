@@ -288,7 +288,7 @@
                            htmlinput += "\" id=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-1\" value=\"1\" ";
-                           if(message.rating == 1)
+                           if(message.comment.rating == 1)
                               htmlinput += "checked";
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
@@ -297,7 +297,7 @@
                            htmlinput += "\" id=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-2\" value=\"2\" ";
-                           if(message.rating == 2)
+                           if(message.comment.rating == 2)
                               htmlinput += "checked";
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
@@ -306,7 +306,7 @@
                            htmlinput += "\" id=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-3\" value=\"3\" ";
-                           if(message.rating == 3)
+                           if(message.comment.rating == 3)
                               htmlinput += "checked";
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
@@ -315,7 +315,7 @@
                            htmlinput += "\" id=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-4\" value=\"4\" ";
-                           if(message.rating == 4)
+                           if(message.comment.rating == 4)
                               htmlinput += "checked";
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
@@ -324,15 +324,15 @@
                            htmlinput += "\" id=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-5\" value=\"5\" ";
-                           if(message.rating == 5)
+                           if(message.comment.rating == 5)
                               htmlinput += "checked";
                            htmlinput += "><label class=\"rating__star\" for=\"";
                            htmlinput += message.comment.id;
                            htmlinput += "-5\" aria-label=\"Отлично\"></label>"+
-                           "</fieldset>";
-                  htmlinput += "<p class=\"comment-date\">";
+                           "</fieldset><div class=\"rating__focus\"></div></div>";
+                           htmlinput += "<p class=\"comment-date\">";
                   htmlinput += getDateHelper(message.comment.commentDate);
-                  htmlinput += "</p><div class=\"rating__focus\"></div></div></div><p class=\"comment__text\">";
+                  htmlinput += "</p></div><p class=\"comment__text\">";
                   htmlinput += message.comment.message;
                   htmlinput += "</p></div>";
                   comments[0].innerHTML += htmlinput;
