@@ -233,7 +233,7 @@
       if (!comments[0].lastElementChild.classList.contains("comment")) {
          comments[0].removeChild(comments[0].lastElementChild);
       }
-      comment = document.getElementById(`${message.comment.id}-${message.rating}`);
+      comment = document.getElementById(`${message.comment.id}-${message.comment.rating}`);
       if (comment) {
          comment.checked = true;
          let commentDate = null;
