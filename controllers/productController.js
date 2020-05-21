@@ -156,7 +156,6 @@ exports.addComment = async function (request, response) {
                 if (ucomment == null) {
                     const comment = await Comment.create(values)
                     WSNotify(product.productName, comment, request.user);
-
                 } else {
                     Comment.findOne({
                         where: {

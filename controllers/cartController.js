@@ -340,7 +340,7 @@ exports.complete = async function (request, response) {
     }
 }
 
-exports.carts = async function (request, response) {
+exports.orders = async function (request, response) {
     if (await verifyToken(request, response)) {
         const result = await User.findOne({
             where: {
@@ -365,7 +365,7 @@ exports.carts = async function (request, response) {
                 }).then(orders => {
                     if (orders.length != 0) {
                         getPrice(orders)
-                        response.render('carts.hbs', {
+                        response.render('orders.hbs', {
                             Title: 'Мои заказы',
                             Orders: orders.map(order => Object.assign(order.toJSON(), {
                                 sumPrice: order.orderPrice
@@ -394,7 +394,7 @@ exports.carts = async function (request, response) {
                 }).then(orders => {
                     if (orders.length != 0) {
                         getPrice(orders)
-                        response.render('carts.hbs', {
+                        response.render('orders.hbs', {
                             Title: 'Все заказы',
                             Orders: orders.map(order => Object.assign(order.toJSON(), {
                                 sumPrice: order.orderPrice
@@ -459,14 +459,14 @@ exports.cart = async function (request, response) {
                                 rating: product.rating
                             })),
                             isAuth: true,
-                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonAction: "window.location.href = '/cart/orders'",
                             buttonValue: "Вернуться"
                         })
                     } else {
                         response.render('message.hbs', {
                             Title: 'Ошибка',
                             message: "Информации о заказе нет",
-                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonAction: "window.location.href = '/cart/orders'",
                             buttonValue: "Вернуться к заказам",
                             isAuth: true
                         });
@@ -519,7 +519,7 @@ exports.cart = async function (request, response) {
                                     })),
                                     isAuth: true,
                                     isAdmin: true,
-                                    buttonAction: (`window.location.href = '/cart/carts'`),
+                                    buttonAction: (`window.location.href = '/cart/orders'`),
                                     buttonValue: "Вернуться"
                                 })
                             }
@@ -528,7 +528,7 @@ exports.cart = async function (request, response) {
                         response.render('message.hbs', {
                             Title: 'Ошибка',
                             message: "Информации о заказе нет",
-                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonAction: "window.location.href = '/cart/orders'",
                             buttonValue: "К заказам",
                             isAuth: true,
                             isAdmin: true
@@ -571,13 +571,13 @@ exports.ready = async function (request, response) {
                                 orderDate: new Date()
                             }
                         )
-                        response.redirect('/cart/carts');
+                        response.redirect('/cart/orders');
                     }
                     else{
                         response.render('message.hbs', {
                             Title: 'Ошибка',
                             message: "Произошла ошибка при обновлении статуса заказа. Попробуйте позже",
-                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonAction: "window.location.href = '/cart/orders'",
                             buttonValue: "Вернуться",
                             isAuth: true,
                             isAdmin: true
@@ -624,13 +624,13 @@ exports.done = async function (request, response) {
                                 orderDate: new Date()
                             }
                         )
-                        response.redirect('/cart/carts');
+                        response.redirect('/cart/orders');
                     }
                     else{
                         response.render('message.hbs', {
                             Title: 'Ошибка',
                             message: "Произошла ошибка при обновлении статуса заказа. Попробуйте позже",
-                            buttonAction: "window.location.href = '/cart/carts'",
+                            buttonAction: "window.location.href = '/cart/orders'",
                             buttonValue: "Вернуться",
                             isAuth: true,
                             isAdmin: true

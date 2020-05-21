@@ -79,7 +79,7 @@ async function decreaseCountCart(id, element) {
 async function completeOrder(element) {
     let response = await fetch("/cart/complete");
     if (response.status == 200) {
-        window.location.href = "/cart/carts";
+        window.location.href = "/cart/orders";
     } else if (response.status == 403) {
         alert("Действие недоступно");
     } else if (response.status == 500) {
