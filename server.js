@@ -33,14 +33,14 @@ app.engine("hbs", expressHbs({
         },
         formatTime: function (myDate) {
             var minute = myDate.getMinutes();
-            var second = myDate.getSeconds();
+            var month = myDate.getMonth() + 1;
             if (minute < 10) {
                 minute = "0" + minute;
             }
-            if (second < 10) {
-                second = "0" + second;
+            if (month < 10) {
+                month = "0" + month;
             }
-            return  myDate.getDate() + '.' + (myDate.getMonth() + 1) + '.' + myDate.getFullYear()+ " " + myDate.getHours() + ":" + minute + ":" + second;
+            return  myDate.getDate() + '.' + month + '.' + myDate.getFullYear()+ " " + myDate.getHours() + ":" + minute + ":" + second;
         }
     },
     defaultLayout: "main",
