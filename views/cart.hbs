@@ -51,11 +51,15 @@
                            fill="#BABABA" />
                      </svg>
                   </button>
+                  {{#if ../isOrder}}
+                  <h4 class="goods-action__title">Количество: {{this.Orders.0.OrderedProduct.countOfProducts}}</h4>
+                  {{else}}
                   <div class="goods-action__item-content">
                      <button class="btn-cart btn-cart--minus" onclick="decreaseCountCart({{this.id}}, this)"></button>
                      <h4 class="goods-action__title">{{this.Orders.0.OrderedProduct.countOfProducts}}</h4>
                      <button class="btn-cart btn-cart--plus" onclick="increaseCountCart({{this.id}}, this)"></button>
                   </div>
+                  {{/if}}
                </div>
             </div>
          </div>

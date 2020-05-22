@@ -460,7 +460,8 @@ exports.cart = async function (request, response) {
                             })),
                             isAuth: true,
                             buttonAction: "window.location.href = '/cart/orders'",
-                            buttonValue: "Вернуться"
+                            buttonValue: "Вернуться",
+                            isOrder: true
                         })
                     } else {
                         response.render('message.hbs', {
@@ -479,7 +480,11 @@ exports.cart = async function (request, response) {
                         where: {
                             id: orderId
                         }
-                    }]
+                    },
+                    {
+                        model: User
+                    }
+                ]
                 }).then(products => {
                     if (products.length != 0) {
                         getRating(products)
@@ -494,7 +499,8 @@ exports.cart = async function (request, response) {
                                 isAuth: true,
                                 isAdmin: true,
                                 buttonAction: (`window.location.href = '/cart/ready/${orderId}'`),
-                                buttonValue: "Готов к самовывозу"
+                                buttonValue: "Готов к самовывозу",
+                                isOrder: true
                             })
                         } else {
                             if (products[0].Orders[0].orderStatus == 'pickup') {
@@ -507,7 +513,8 @@ exports.cart = async function (request, response) {
                                     isAuth: true,
                                     isAdmin: true,
                                     buttonAction: (`window.location.href = '/cart/done/${orderId}'`),
-                                    buttonValue: "Завершить заказ"
+                                    buttonValue: "Завершить заказ",
+                                    isOrder: true
                                 })
                             }
                             else 
@@ -520,7 +527,8 @@ exports.cart = async function (request, response) {
                                     isAuth: true,
                                     isAdmin: true,
                                     buttonAction: (`window.location.href = '/cart/orders'`),
-                                    buttonValue: "Вернуться"
+                                    buttonValue: "Вернуться",
+                                    isOrder: true
                                 })
                             }
                         }
