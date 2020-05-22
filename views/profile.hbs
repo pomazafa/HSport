@@ -5,12 +5,12 @@
 
             <span class="content__label">{{Message}}</span>
 
-            <input class="content__input" name="name" type="text" placeholder="Имя" value="{{User.name}}">
-            <input class="content__input" name="surname" type="text" placeholder="Фамилия" value="{{User.surname}}">
+            <input class="content__input" name="name" maxlength="255" type="text" placeholder="Имя" value="{{User.name}}">
+            <input class="content__input" name="surname" maxlength="255" type="text" placeholder="Фамилия" value="{{User.surname}}">
             <input class="content__input" type="tel" name="tel" placeholder="Номер телефона" value="{{User.phone}}"
                data-mask="phone">
             <div class="form-group">
-               <input class="content__input" name="mail" value="{{User.mail}}" type="email" placeholder="Почта*"
+               <input class="content__input" name="mail" maxlength="255" value="{{User.mail}}" type="email" placeholder="Почта*"
                   data-validate>
                <span class="some-form__hint">Обязательно для заполнения</span>
             </div>

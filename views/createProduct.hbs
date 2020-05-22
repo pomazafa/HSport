@@ -7,17 +7,17 @@
 
         <div class="form-add__item">
             <label class="form-add__label" for="pname">Название продукта:</label>
-            <input class="content__input form-add__input" type="text" id="pname" name="pname" value="{{form.pname}}"></input>
+            <input class="content__input form-add__input" maxlength="255" type="text" id="pname" name="pname" value="{{form.pname}}"></input>
         </div>
 
         <div class="form-add__item">
             <label class="form-add__label" for="pdescription">Описание:</label>
-            <textarea class="form-add__textarea" id="pdescription" name="pdescription">{{form.pdescription}}</textarea>
+            <textarea class="form-add__textarea" maxlength="255" id="pdescription" name="pdescription">{{form.pdescription}}</textarea>
         </div>
 
         <div class="form-add__item">
             <label class="form-add__label" for="pbrand">Бренд:</label>
-            <input class="content__input form-add__input" type="text" id="pbrand" name="pbrand" value="{{form.pbrand}}"></input>
+            <input class="content__input form-add__input" maxlength="255" type="text" id="pbrand" name="pbrand" value="{{form.pbrand}}"></input>
         </div>
 
         <div class="form-add__item">
@@ -27,7 +27,7 @@
 
         <div class="form-add__item">
             <label class="form-add__label" for="pprice">Цена:</label>
-            <input class="content__input form-add__input" type="number" id="pprice" name="pprice" min="0.01" step="0.01" value="{{form.pprice}}"></input>
+            <input class="content__input form-add__input" max="99999.99" type="number" id="pprice" name="pprice" min="0.01" step="0.01" value="{{form.pprice}}"></input>
         </div>
 
         <button class="btn-gray content__btn" type="submit" id="addProduct">{{submitMessage}}</button>
