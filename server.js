@@ -40,7 +40,7 @@ app.engine("hbs", expressHbs({
             if (month < 10) {
                 month = "0" + month;
             }
-            return  myDate.getDate() + '.' + month + '.' + myDate.getFullYear()+ " " + myDate.getHours() + ":" + minute + ":" + second;
+            return  myDate.getDate() + '.' + month + '.' + myDate.getFullYear()+ " " + myDate.getHours() + ":" + minute;
         }
     },
     defaultLayout: "main",
