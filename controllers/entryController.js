@@ -97,7 +97,6 @@ exports.authenticate = async function(request, response) {
                 secure: false, // set to true if your using https
             });
             response.redirect('/');
-            //response.end('token = ' + token);
         } else {
             form = {
                 mailA: userMail,
